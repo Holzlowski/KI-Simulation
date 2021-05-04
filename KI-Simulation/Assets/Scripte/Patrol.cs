@@ -13,12 +13,15 @@ public class Patrol : MonoBehaviour
     public float y;
 
     NavMeshAgent theAgent;
+    Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
         theAgent = GetComponent<NavMeshAgent>();
+        anim = GetComponent<Animator>();
         destination.position = new Vector3(Random.Range(minX, maxX), y, Random.Range(minZ, maxZ));
+        anim.SetBool("isPatroling", true);
     }
 
     // Update is called once per frame
