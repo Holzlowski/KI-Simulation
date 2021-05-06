@@ -262,10 +262,10 @@ GameObject:
   - component: {fileID: 493387960}
   - component: {fileID: 493387959}
   - component: {fileID: 493387958}
-  - component: {fileID: 493387957}
   - component: {fileID: 493387962}
   - component: {fileID: 493387963}
   - component: {fileID: 493387964}
+  - component: {fileID: 493387957}
   m_Layer: 0
   m_Name: Prey
   m_TagString: Prey
@@ -282,15 +282,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 493387956}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19492f4af8ececf4098c1bb6c0027698, type: 3}
+  m_Script: {fileID: 11500000, guid: a7bb2e74a181e214da06b8d68e456592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {fileID: 241214418}
-  minX: -13
-  maxX: 13
-  minZ: -13
-  maxZ: 13
-  y: 0.5
+  DistanceFlee: 5
 --- !u!135 &493387958
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -362,7 +357,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 493387956}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.82, y: 0.5, z: -10.16}
+  m_LocalPosition: {x: -0.62, y: 0.5, z: -6.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -615,10 +610,9 @@ GameObject:
   - component: {fileID: 1250883790}
   - component: {fileID: 1250883795}
   - component: {fileID: 1250883797}
-  - component: {fileID: 1250883794}
   m_Layer: 0
   m_Name: Hunter
-  m_TagString: Untagged
+  m_TagString: Hunter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -700,19 +694,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1250883794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1250883789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc35384c82412da45a42aa99b4cee9ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  huntRange: 10
 --- !u!195 &1250883795
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -727,7 +708,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 1
+  m_StoppingDistance: 1.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
