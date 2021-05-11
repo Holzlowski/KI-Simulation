@@ -8,7 +8,7 @@ public class PreyAnim : MonoBehaviour
 
     private Transform hunter;
     private NavMeshAgent agent;
-    public float DistanceFlee;
+    public float distanceFlee;
     Animator anim;
 
     // Start is called before the first frame update
@@ -23,7 +23,7 @@ public class PreyAnim : MonoBehaviour
     void Update()
     {
         float distance = Vector3.Distance(agent.transform.position, hunter.position);
-        if (distance < DistanceFlee)
+        if (distance < distanceFlee)
         {
             anim.SetBool("isFleeing", true);
             anim.SetBool("isPatroling", false);
@@ -32,5 +32,10 @@ public class PreyAnim : MonoBehaviour
             anim.SetBool("isPatroling", true);
             anim.SetBool("isFleeing", false);
         }
+    }
+
+    public float getDistanceFlee() 
+    {
+        return distanceFlee;
     }
 }

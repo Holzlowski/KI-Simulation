@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class IdleBehavior : StateMachineBehaviour
-{   
+public class FollowBehaviorHunter : StateMachineBehaviour
+{
     private Transform target;
     private NavMeshAgent agent;
-    public float huntRange;
-    private PreyAnim prey;
+    private float huntRange;
+    HunterAnim hunter;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        hunter = animator.GetComponent<HunterAnim>();
+        huntRange = hunter.getHuntRange();
         agent = animator.GetComponent<NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Prey").transform;
     }
@@ -23,7 +25,9 @@ public class IdleBehavior : StateMachineBehaviour
         float distance = Vector3.Distance(agent.transform.position, target.position); 
        if(distance < huntRange)
         {
-            animator.SetBool("isFollowing", true);
+            agent.SetDestination(target.position);
+        } else {
+            animator.SetBool("isFollowing", false);
         }
     }
 
