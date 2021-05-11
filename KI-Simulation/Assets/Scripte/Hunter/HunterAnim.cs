@@ -26,8 +26,7 @@ public class HunterAnim : MonoBehaviour
         if (distance < huntRange)
         {
             anim.SetBool("isFollowing", true);
-
-        } 
+        }
     }
 
     public float getHuntRange() 

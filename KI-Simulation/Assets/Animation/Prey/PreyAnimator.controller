@@ -86,10 +86,10 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -1253523750735557411}
-    m_Position: {x: 350, y: 250, z: 0}
+    m_Position: {x: 490, y: 270, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5585370953101384594}
-    m_Position: {x: 570, y: 180, z: 0}
+    m_Position: {x: 350, y: 140, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8482765824305472522}
     m_Position: {x: 470, y: 20, z: 0}
@@ -369,6 +369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DistanceFlee: 5
+  fleeSpeed: 4.5
 --- !u!1102 &-147451193064762416
 AnimatorState:
   serializedVersion: 6
