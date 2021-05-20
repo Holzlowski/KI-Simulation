@@ -1360,6 +1360,7 @@ GameObject:
   - component: {fileID: 7423567203501390115}
   - component: {fileID: 1585285902}
   - component: {fileID: 1585285903}
+  - component: {fileID: 357572995081836055}
   m_Layer: 0
   m_Name: Robber
   m_TagString: Untagged
@@ -1394,7 +1395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e045118f1298efc4ea117af824bf0249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 5298817567208150824, guid: ff84a8b3e673b8b42bfed9969b21fbb8, type: 3}
 --- !u!195 &1585285903
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1417,6 +1418,19 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &357572995081836055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7438494788967298231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b01c31666f52a2468284337436dcf01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
 --- !u!1 &7654464796460211274
 GameObject:
   m_ObjectHideFlags: 0
