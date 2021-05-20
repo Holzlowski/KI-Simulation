@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Prey
   - Hunter
+  - cop
+  - hide
+  - waypoint
   layers:
   - Default
   - TransparentFX
