@@ -9,6 +9,7 @@ TagManager:
   - cop
   - hide
   - waypoint
+  - Plant
   layers:
   - Default
   - TransparentFX

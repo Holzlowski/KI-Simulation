@@ -13,11 +13,15 @@ public class HungerAllg : MonoBehaviour
 
     public Slider lifeSlider;
     public float life;
+    public float minusHunger;
 
     public float damage;
 
-    float maxLife = 100f;
-    float maxHunger = 100f;
+    private float maxLife = 100f;
+    private float maxHunger = 100f;
+    private bool isLow = false;
+    private bool isHungry = false;
+    private bool isVeryHungry = false;
 
     // Start is called before the first frame update
     void Start()
@@ -33,23 +37,62 @@ public class HungerAllg : MonoBehaviour
         hungerSlider.value = hunger;
         lifeSlider.value = life;
 
-        hunger -= 5f * Time.deltaTime; 
+        hunger -= minusHunger * Time.deltaTime; 
 
         if(hunger < 0f)
         {
             hunger = 0;
         }
+        if(hunger > maxHunger)
+        {
+            hunger = maxHunger;
+        }
 
-        if(hunger == 0f)
+        if(hunger == 0f) //hunger empty does deamage
         {
          life -= damage * Time.deltaTime;
+        } else if (hunger <= maxHunger/2)  //if half live object is hungry (start searching)
+        {
+            anim.SetBool("isHungry", true);
+            isHungry = true;
+        } else if(hunger > maxHunger*0.6 && life < maxLife) // full Hunger heals missing life
+        {
+            life += 1f * Time.deltaTime;
         }
 
-        if (hunger < maxHunger/2) {
-            anim.SetBool("isPatroling", true);
+        if(isHungry && hunger > maxHunger*0.95) 
+        {
+            isHungry = false;
+            anim.SetBool("isHungry", false);
         }
 
+        
         if (life <= 0) {
+            Destroy(gameObject);
+        } else if (life <= life/4)
+        {
+            anim.SetBool("isLow", true);
+            isLow = true;
+        } else if (isLow && life > life/4)
+        {
+            anim.SetBool("isLow", false);
+        }
+    }
+
+    public void eating(float value) {
+        Debug.Log(value);
+        if(hunger < maxHunger) {
+            this.hunger += value;
+            if (hunger > maxHunger) {
+                hunger = maxHunger;
+                anim.SetBool("isHungry", false);
+            }
+        }
+    }
+
+    public void getdamage(float value) {
+        life -= value;
+        if(life <= 0) {
             Destroy(gameObject);
         }
     }
