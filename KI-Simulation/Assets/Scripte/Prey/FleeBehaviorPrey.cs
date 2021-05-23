@@ -6,36 +6,52 @@ using UnityEngine.AI;
 public class FleeBehaviorPrey : StateMachineBehaviour
 {
 
-    private Transform hunter;
+    private List<GameObject> hunters;
     private NavMeshAgent agent;
-    private float distanceFlee;
+    public float distanceView;
     public float fleeSpeed;
     private float normalSpeed;
     PreyAnim prey;
 
+    private bool hasToFlee;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        hunter = GameObject.FindGameObjectWithTag("Hunter").transform;
+        hunters = new List<GameObject>();
+        foreach(GameObject hunter in GameObject.FindGameObjectsWithTag("Hunter"))
+        {
+            hunters.Add(hunter);
+        }
+
         agent = animator.GetComponent<NavMeshAgent>();
         prey = animator.GetComponent<PreyAnim>();
 
-        distanceFlee = prey.getDistanceFlee();
+        distanceView = prey.getDistanceView();
         normalSpeed = agent.speed;
         agent.speed = fleeSpeed;
+        hasToFlee = false;
+       
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        float distance = Vector3.Distance(agent.transform.position, hunter.transform.position);
-        if (distance < distanceFlee*1.5)
-        {
-            Vector3 moveAway = agent.transform.position - hunter.transform.position;
-            Vector3 newPos = agent.transform.position + moveAway;
 
-            agent.SetDestination(newPos);
-        } else {
+        foreach(GameObject hunter in hunters)
+        {
+            float distance = Vector3.Distance(agent.transform.position, hunter.transform.position);
+            if (distance < distanceView*1.5)
+            {
+                Vector3 moveAway = agent.transform.position - hunter.transform.position;
+                Vector3 newPos = agent.transform.position + moveAway;
+
+                agent.SetDestination(newPos);
+                hasToFlee = true;
+            }
+        }
+        if(!hasToFlee)
+        {
             animator.SetBool("isFleeing", false);
         }
     }

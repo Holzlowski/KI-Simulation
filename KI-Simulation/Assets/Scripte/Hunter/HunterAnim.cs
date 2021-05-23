@@ -6,15 +6,22 @@ using UnityEngine.AI;
 public class HunterAnim : MonoBehaviour
 {
 
-    private Transform prey;
+    List<GameObject> preys;
     private NavMeshAgent agent;
     public float huntRange;
     Animator anim;
+    private GameObject target;
+
+    bool isHungry;
 
     // Start is called before the first frame update
     void Start()
     {
-        prey = GameObject.FindGameObjectWithTag("Prey").transform;
+        preys = new List<GameObject>();
+        foreach(GameObject prey in GameObject.FindGameObjectsWithTag("Prey"))
+        {
+            preys.Add(prey);
+        }
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>(); 
     }
@@ -22,15 +29,35 @@ public class HunterAnim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float distance = Vector3.Distance(agent.transform.position, prey.position);
-        if (distance < huntRange)
+        foreach(GameObject prey in preys)
         {
+            float distance = Vector3.Distance(agent.transform.position, prey.transform.position);
+            if (distance < huntRange)
+            {
+            target = prey;
             anim.SetBool("isFollowing", true);
+            }
+        }
+
+        isHungry = anim.GetBool("isHungry");
+        if(isHungry) 
+        {
+            anim.SetBool("isPatroling", true);
         }
     }
 
     public float getHuntRange() 
     {
         return huntRange;
+    }
+
+    public GameObject getTarget()
+    {
+        return target;
+    }
+
+    public void setTarget(GameObject target)
+    {
+        this.target = target;
     }
 }

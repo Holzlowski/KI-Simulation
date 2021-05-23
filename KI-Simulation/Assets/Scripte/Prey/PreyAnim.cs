@@ -6,36 +6,80 @@ using UnityEngine.AI;
 public class PreyAnim : MonoBehaviour
 {
 
-    private Transform hunter;
+    public Transform target;
     private NavMeshAgent agent;
-    public float distanceFlee;
+
+    public float distanceView;
     Animator anim;
+    List<GameObject> plants;
+    List<GameObject> hunters;
+    public GameObject theHunter = null;
 
     // Start is called before the first frame update
     void Start()
     {
-        hunter = GameObject.FindGameObjectWithTag("Hunter").transform;
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+
+        hunters = new List<GameObject>();
+        foreach(GameObject hunter in GameObject.FindGameObjectsWithTag("Hunter"))
+        {
+            hunters.Add(hunter);
+        }
+
+        plants = new List<GameObject>();
+        foreach(GameObject plant in GameObject.FindGameObjectsWithTag("Plant"))
+        {
+            plants.Add(plant);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        float distance = Vector3.Distance(agent.transform.position, hunter.position);
-        if (distance < distanceFlee)
-        {
-            anim.SetBool("isFleeing", true);
-            anim.SetBool("isPatroling", false);
+        bool fleeing = anim.GetBool("isFleeing");
+        bool eating = anim.GetBool("isEating");
 
+        foreach(GameObject hunter in hunters)
+        {
+            float distanceToHunter = Vector3.Distance(agent.transform.position, hunter.transform.position);
+            if (!fleeing && hunter && distanceToHunter < distanceView)
+            {
+                target = null;  
+                anim.SetBool("isFleeing", true);  
+            }
+        }
+
+        if(target != null) {
+            float distanceToTarget = Vector3.Distance(agent.transform.position, target.position);
+            agent.SetDestination(target.position);
+            if(!eating && distanceToTarget <= 2)
+            {
+                anim.SetBool("isEating", true);
+            }
         } else {
-            anim.SetBool("isPatroling", true);
-            anim.SetBool("isFleeing", false);
+            anim.SetBool("isWander", true);
         }
     }
 
-    public float getDistanceFlee() 
+    public float getDistanceView() 
     {
-        return distanceFlee;
+        return distanceView;
+    }
+
+    public List<GameObject> getPlants()
+    {
+        return plants;
+    }
+
+    public void setTarget(Transform target)
+    {
+        this.target = target;
+        agent.SetDestination(target.position);
+    }
+
+    public List<GameObject> getHunters()
+    {
+        return hunters;
     }
 }
