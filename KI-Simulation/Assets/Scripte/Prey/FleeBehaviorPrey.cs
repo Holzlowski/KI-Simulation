@@ -12,48 +12,51 @@ public class FleeBehaviorPrey : StateMachineBehaviour
     public float fleeSpeed;
     private float normalSpeed;
     PreyAnim prey;
+    public GameObject theHunter;
 
     private bool hasToFlee;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        hunters = new List<GameObject>();
-        foreach(GameObject hunter in GameObject.FindGameObjectsWithTag("Hunter"))
-        {
-            hunters.Add(hunter);
-        }
+        //hunters = new List<GameObject>();
+        //foreach(GameObject hunter in GameObject.FindGameObjectsWithTag("Hunter"))
+        //{
+        //    hunters.Add(hunter);
+        //}
 
         agent = animator.GetComponent<NavMeshAgent>();
-        prey = animator.GetComponent<PreyAnim>();
+        //prey = animator.GetComponent<PreyAnim>();
+        //distanceView = prey.getDistanceView();
 
-        distanceView = prey.getDistanceView();
+        distanceView = animator.GetComponent<PreyAnim>().getDistanceView();
+        hunters = animator.GetComponent<PreyAnim>().getHunters();
         normalSpeed = agent.speed;
         agent.speed = fleeSpeed;
-        hasToFlee = false;
+        hasToFlee = true;
+        theHunter = animator.GetComponent<PreyAnim>().theHunter;
        
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
-        foreach(GameObject hunter in hunters)
+        if (theHunter != null)
         {
-            float distance = Vector3.Distance(agent.transform.position, hunter.transform.position);
+            float distance = Vector3.Distance(agent.transform.position, theHunter.transform.position);
             if (distance < distanceView*1.5)
             {
-                Vector3 moveAway = agent.transform.position - hunter.transform.position;
-                Vector3 newPos = agent.transform.position + moveAway;
+                animator.SetBool("isFleeing", false);
+            } else {
+            
+            Vector3 moveAway = agent.transform.position - theHunter.transform.position;
+            Vector3 newPos = agent.transform.position + moveAway;
 
-                agent.SetDestination(newPos);
-                hasToFlee = true;
+            agent.SetDestination(newPos);
             }
-        }
-        if(!hasToFlee)
-        {
+        } else {
             animator.SetBool("isFleeing", false);
-        }
+        }  
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

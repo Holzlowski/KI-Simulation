@@ -13,7 +13,7 @@ public class PreyAnim : MonoBehaviour
     Animator anim;
     List<GameObject> plants;
     List<GameObject> hunters;
-    public GameObject theHunter = null;
+    public GameObject theHunter;
 
     // Start is called before the first frame update
     void Start()
@@ -40,15 +40,23 @@ public class PreyAnim : MonoBehaviour
         bool fleeing = anim.GetBool("isFleeing");
         bool eating = anim.GetBool("isEating");
 
-        foreach(GameObject hunter in hunters)
+        if(!fleeing) 
         {
-            float distanceToHunter = Vector3.Distance(agent.transform.position, hunter.transform.position);
-            if (!fleeing && hunter && distanceToHunter < distanceView)
+            foreach(GameObject hunter in hunters)
             {
-                target = null;  
-                anim.SetBool("isFleeing", true);  
+                if(hunter)
+                {
+                    float distanceToHunter = Vector3.Distance(agent.transform.position, hunter.transform.position);
+                    if (distanceToHunter < distanceView)
+                    {
+                        target = null;  
+                        theHunter = hunter;
+                        anim.SetBool("isFleeing", true);  
+                    }
+                }
             }
         }
+        
 
         if(target != null) {
             float distanceToTarget = Vector3.Distance(agent.transform.position, target.position);
@@ -75,7 +83,10 @@ public class PreyAnim : MonoBehaviour
     public void setTarget(Transform target)
     {
         this.target = target;
-        agent.SetDestination(target.position);
+        if(target != null) 
+        {
+            agent.SetDestination(target.position);
+        }
     }
 
     public List<GameObject> getHunters()
