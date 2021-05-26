@@ -6,29 +6,30 @@ using UnityEngine.AI;
 public class PatrolBehavior : StateMachineBehaviour
 {
     private NavMeshAgent agent;
-    private Transform destination;
-    public float minX;
-    public float maxX;
-    public float minZ;
-    public float maxZ;
-    public float y;
+
+    float wanderRadius = 10;
+    float wanderDistance = 10;
+    float wanderJitter = 10;
+    Vector3 wanderTarget;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        destination = GameObject.Find("PatrolDestination").transform;
         agent = animator.GetComponent<NavMeshAgent>();
-        destination.position = new Vector3(Random.Range(minX, maxX), y, Random.Range(minZ, maxZ));
+        wanderTarget = Vector3.zero;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agent.SetDestination(destination.position);
-        if(Vector3.Distance(destination.position, agent.transform.position) < 0.2f)
-        {
-            destination.position = new Vector3(Random.Range(minX, maxX), y, Random.Range(minZ, maxZ));
-        }
+        wanderTarget += new Vector3(Random.Range(-1.0f, 1.0f) * wanderJitter, 0, Random.Range(-1.0f, 1.0f) * wanderJitter);
+        wanderTarget.Normalize();
+        wanderTarget *= wanderRadius;
+
+        Vector3 targetLocal = wanderTarget + new Vector3(0, 0, wanderDistance);
+        Vector3 targetWorld = agent.gameObject.transform.InverseTransformVector(targetLocal);
+
+        agent.SetDestination(targetWorld);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

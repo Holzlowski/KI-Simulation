@@ -21,7 +21,6 @@ public class HungerAllg : MonoBehaviour
     private float maxHunger = 100f;
     private bool isLow = false;
     private bool isHungry = false;
-    private bool isVeryHungry = false;
 
     // Start is called before the first frame update
     void Start()
@@ -80,7 +79,6 @@ public class HungerAllg : MonoBehaviour
     }
 
     public void eating(float value) {
-        Debug.Log(value);
         if(hunger < maxHunger) {
             this.hunger += value;
             if (hunger > maxHunger) {
