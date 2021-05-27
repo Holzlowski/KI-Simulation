@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Chase : NPCBaseFSM
+public class Chase : FSMBase
 {
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -13,10 +13,12 @@ public class Chase : NPCBaseFSM
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        agent.SetDestination(prey.transform.position);
+        /*
         //rotate towards target
-        var direction = opponent.transform.position - NPC.transform.position;
-        NPC.transform.rotation = Quaternion.Slerp(NPC.transform.rotation, Quaternion.LookRotation(direction), rotSpeed * Time.deltaTime);
-        NPC.transform.Translate(0, 0, Time.deltaTime);
+        hunter.transform.rotation = Quaternion.Slerp(hunter.transform.rotation, Quaternion.LookRotation(direction), rotSpeed * Time.deltaTime);
+        hunter.transform.Translate(0, 0, Time.deltaTime*speed);
+        */
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
@@ -24,16 +26,4 @@ public class Chase : NPCBaseFSM
     {
         
     }
-
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
 }
