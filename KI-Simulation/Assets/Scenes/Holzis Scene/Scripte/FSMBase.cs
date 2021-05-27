@@ -9,6 +9,8 @@ public class FSMBase : StateMachineBehaviour
     public NavMeshAgent agent;
     public GameObject prey;
     public Vector3 wanderTarget = Vector3.zero;
+
+    public float attackSpeed;
     public float speed = 2f;
     public float rotSpeed = 2f;
     public float accuracy = 2f;
