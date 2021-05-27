@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 public class PreyAnim : MonoBehaviour
 {
@@ -9,11 +10,13 @@ public class PreyAnim : MonoBehaviour
     public Transform target;
     private NavMeshAgent agent;
 
-    public float distanceView;
+    public float distanceView { get; private set; }
     Animator anim;
     List<GameObject> plants;
     List<GameObject> hunters;
     public GameObject theHunter;
+
+    public static Action OnTargetChanged;
 
     // Start is called before the first frame update
     void Start()
@@ -38,8 +41,8 @@ public class PreyAnim : MonoBehaviour
     void Update()
     {
         bool fleeing = anim.GetBool("isFleeing");
-        bool eating = anim.GetBool("isEating");
 
+        //checking if prey has to flee
         if(!fleeing) 
         {
             foreach(GameObject hunter in hunters)
@@ -56,23 +59,6 @@ public class PreyAnim : MonoBehaviour
                 }
             }
         }
-        
-
-        if(target != null) {
-            float distanceToTarget = Vector3.Distance(agent.transform.position, target.position);
-            agent.SetDestination(target.position);
-            if(!eating && distanceToTarget <= 2)
-            {
-                anim.SetBool("isEating", true);
-            }
-        } else {
-            anim.SetBool("isWander", true);
-        }
-    }
-
-    public float getDistanceView() 
-    {
-        return distanceView;
     }
 
     public List<GameObject> getPlants()
@@ -85,7 +71,21 @@ public class PreyAnim : MonoBehaviour
         this.target = target;
         if(target != null) 
         {
+            bool eating = anim.GetBool("isEating");
+            bool tired = anim.GetBool("isTired");
+            float distanceToTarget = Vector3.Distance(agent.transform.position, target.position);
             agent.SetDestination(target.position);
+
+            if(distanceToTarget <= 2)
+            {
+                if(tired)
+                {
+                    anim.SetBool("isSleeping", true);
+                } else if (eating) 
+                {
+                    anim.SetBool("isEating", true);
+                }
+            }
         }
     }
 
