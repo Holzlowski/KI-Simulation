@@ -14,28 +14,16 @@ public class FleeBehaviorPrey : StateMachineBehaviour
     PreyAnim prey;
     public GameObject theHunter;
 
-    private bool hasToFlee;
-
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //hunters = new List<GameObject>();
-        //foreach(GameObject hunter in GameObject.FindGameObjectsWithTag("Hunter"))
-        //{
-        //    hunters.Add(hunter);
-        //}
-
         agent = animator.GetComponent<NavMeshAgent>();
-        //prey = animator.GetComponent<PreyAnim>();
-        //distanceView = prey.getDistanceView();
 
         distanceView = animator.GetComponent<PreyAnim>().getDistanceView();
         hunters = animator.GetComponent<PreyAnim>().getHunters();
         normalSpeed = agent.speed;
         agent.speed = fleeSpeed;
-        hasToFlee = true;
-        theHunter = animator.GetComponent<PreyAnim>().theHunter;
-       
+        theHunter = animator.GetComponent<PreyAnim>().theHunter; 
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
