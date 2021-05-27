@@ -5,17 +5,19 @@ using UnityEngine.AI;
 
 public class FSMBase : StateMachineBehaviour
 {
-    public GameObject NPC;
+    public GameObject hunter;
     public NavMeshAgent agent;
     public GameObject prey;
+    public Vector3 wanderTarget = Vector3.zero;
     public float speed = 2f;
     public float rotSpeed = 2f;
     public float accuracy = 2f;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        NPC = animator.gameObject;
-        agent = NPC.GetComponent<NavMeshAgent>();
+        hunter = animator.gameObject;
+        agent = hunter.GetComponent<NavMeshAgent>();
+        prey = GameObject.FindGameObjectWithTag("Prey");
     }
 
 }
