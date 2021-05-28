@@ -27,7 +27,7 @@ public class WanderPrey : StateMachineBehaviour
        prey = animator.GetComponent<PreyAnim>();
        wanderTarget = Vector3.zero;
 
-       distanceView = prey.getDistanceView();
+       distanceView = prey.distanceView;
        plants = prey.getPlants();
     }
 

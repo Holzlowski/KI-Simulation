@@ -19,7 +19,7 @@ public class FleeBehaviorPrey : StateMachineBehaviour
     {
         agent = animator.GetComponent<NavMeshAgent>();
 
-        distanceView = animator.GetComponent<PreyAnim>().getDistanceView();
+        distanceView = animator.GetComponent<PreyAnim>().distanceView;
         hunters = animator.GetComponent<PreyAnim>().getHunters();
         normalSpeed = agent.speed;
         agent.speed = fleeSpeed;
