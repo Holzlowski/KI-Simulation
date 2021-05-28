@@ -41,6 +41,7 @@ public class PreyAnim : MonoBehaviour
     void Update()
     {
         bool fleeing = anim.GetBool("isFleeing");
+        bool wander = anim.GetBool("isWander");
 
         //checking if prey has to flee
         if(!fleeing) 
@@ -58,6 +59,10 @@ public class PreyAnim : MonoBehaviour
                     }
                 }
             }
+        }
+        if (!wander && !fleeing)
+        {
+            anim.SetBool("isWander", true);
         }
     }
 
