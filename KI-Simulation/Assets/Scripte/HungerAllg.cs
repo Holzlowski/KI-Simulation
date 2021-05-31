@@ -14,6 +14,7 @@ public class HungerAllg : MonoBehaviour
     public Slider lifeSlider;
     public float life;
     public float minusHunger;
+    float healWithBite;
 
     public float damage;
 
@@ -27,7 +28,12 @@ public class HungerAllg : MonoBehaviour
     {
         hunger = maxHunger;
         life = maxLife;
-        anim = GetComponent<Animator>(); 
+        anim = GetComponent<Animator>();
+       
+        if(GetComponent<Hunter>() != null)
+        {
+            this.healWithBite = GetComponent<Hunter>().healWithBite;
+        }
     }
 
     // Update is called once per frame
@@ -79,6 +85,11 @@ public class HungerAllg : MonoBehaviour
     }
 
     public void eating(float value) {
+        if(healWithBite != 0)
+        {
+            value = healWithBite;
+        }
+        Debug.Log(""+value);
         if(hunger < maxHunger) {
             this.hunger += value;
             if (hunger > maxHunger) {

@@ -19,11 +19,20 @@ public class FSMBase : StateMachineBehaviour
     {
         hunter = animator.gameObject;
         agent = hunter.GetComponent<NavMeshAgent>();
+<<<<<<< Updated upstream
         prey = hunter.GetComponent<Hunter>().prey;
+=======
+       
+>>>>>>> Stashed changes
 
         agent.speed = speed;
         agent.angularSpeed = rotSpeed;
         agent.acceleration = acceleration;
+    }
+
+    public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        prey = hunter.GetComponent<Hunter>().prey;
     }
 
 }

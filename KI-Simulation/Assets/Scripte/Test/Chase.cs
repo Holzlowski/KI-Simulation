@@ -13,7 +13,9 @@ public class Chase : FSMBase
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(prey != null)
+        base.OnStateUpdate(animator, stateInfo, layerIndex);
+
+        if (prey != null)
         {
             agent.SetDestination(prey.transform.position);  
         }
