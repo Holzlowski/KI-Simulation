@@ -94,4 +94,6 @@ public class HungerAllg : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+
 }
