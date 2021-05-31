@@ -18,15 +18,6 @@ public class Attack : FSMBase
         if (prey != null)
         {
             agent.SetDestination(prey.transform.position);
-<<<<<<< Updated upstream
-
-            if (hunter.GetComponent<Hunter>().hit == true)
-            {
-                prey.GetComponent<HungerAllg>().getdamage(damage);
-                Debug.Log("Ich hab was getroffen");
-            }
-=======
->>>>>>> Stashed changes
         }
         else
         {
