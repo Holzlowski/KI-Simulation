@@ -7,9 +7,9 @@ public class WanderPrey : StateMachineBehaviour
 {
 
     NavMeshAgent agent;
-    private float distanceView;
+    public float distanceView;
     PreyAnim prey;
-    List<GameObject> plants;
+    public List<GameObject> plants;
 
     float wanderRadius = 10;
     float wanderDistance = 10;
@@ -17,7 +17,6 @@ public class WanderPrey : StateMachineBehaviour
     Vector3 wanderTarget;
 
     bool isHungry;
-    bool hasTarget = false;
     private GameObject target;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -35,26 +34,26 @@ public class WanderPrey : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     { 
         isHungry = animator.GetBool("isHungry");
-        if (isHungry && !hasTarget) {
+        if (isHungry) 
+        {
             foreach(GameObject plant in plants)
-            if(Vector3.Distance(agent.transform.position, plant.transform.position) <= distanceView)
             {
-                prey.setTarget(plant.transform);
-                animator.SetBool("isWander", false);
+                if(Vector3.Distance(agent.transform.position, plant.transform.position) <= distanceView)
+                {
+                    animator.GetComponent<PreyAnim>().target = plant.transform;
+                    animator.SetBool("hasTarget", true);
+                    animator.SetBool("isWander", false);
+                }
             }
         }
-        
-        if(!hasTarget)
-        {
-            wanderTarget += new Vector3(Random.Range(-1.0f, 1.0f) * wanderJitter, 0, Random.Range(-1.0f, 1.0f) * wanderJitter);
-            wanderTarget.Normalize();
-            wanderTarget *= wanderRadius;
+        wanderTarget += new Vector3(Random.Range(-1.0f, 1.0f) * wanderJitter, 0, Random.Range(-1.0f, 1.0f) * wanderJitter);
+        wanderTarget.Normalize();
+        wanderTarget *= wanderRadius;
 
-            Vector3 targetLocal = wanderTarget + new Vector3(0, 0, wanderDistance);
-            Vector3 targetWorld = agent.gameObject.transform.InverseTransformVector(targetLocal);
+        Vector3 targetLocal = wanderTarget + new Vector3(0, 0, wanderDistance);
+        Vector3 targetWorld = agent.gameObject.transform.InverseTransformVector(targetLocal);
 
-            agent.SetDestination(targetWorld);
-        } 
+        agent.SetDestination(targetWorld);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

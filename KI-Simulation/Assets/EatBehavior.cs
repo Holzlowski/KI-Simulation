@@ -3,41 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EatingPrey : StateMachineBehaviour
+public class EatBehavior : StateMachineBehaviour
 {
-    bool hungry;
-    NavMeshAgent agent;
-    //private float normalSpeed;
-    PreyAnim prey;
+    HungerAllg hunger;
+    public float value;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agent = animator.GetComponent<NavMeshAgent>();
-        prey = animator.GetComponent<PreyAnim>();
-        //normalSpeed = agent.speed;
-        //agent.speed = 0;
+       hunger = animator.GetComponent<HungerAllg>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        hungry = animator.GetBool("isHungry");
-        if(hungry)
-        {
-            Debug.Log("NOM");
-            animator.SetTrigger("Eat");
-        } else {
-            Debug.Log("fertig mit NOM");
-            animator.GetComponent<PreyAnim>().target = null;
-            animator.SetBool("isEating", false);
-        }
+       
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //agent.speed = normalSpeed;
-        animator.ResetTrigger("Eat");
+       hunger.eating(value);
     }
 }

@@ -17,7 +17,7 @@ public class Attack : FSMBase
         {
             agent.SetDestination(prey.transform.position);
 
-            if (hunter.GetComponent<HunterDistance>().hit == true)
+            if (hunter.GetComponent<Hunter>().hit == true)
             {
                 prey.GetComponent<HungerAllg>().getdamage(damage);
                 Debug.Log("Ich hab was getroffen");

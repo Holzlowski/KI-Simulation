@@ -7,7 +7,7 @@ using System;
 public class PreyAnim : MonoBehaviour
 {
 
-    public Transform target;
+    public Transform target { get; set; }
     private NavMeshAgent agent;
 
     public float distanceView { get; private set; }
@@ -23,6 +23,7 @@ public class PreyAnim : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+        distanceView = 8f;
 
         hunters = new List<GameObject>();
         foreach(GameObject hunter in GameObject.FindGameObjectsWithTag("Hunter"))
@@ -42,6 +43,8 @@ public class PreyAnim : MonoBehaviour
     {
         bool fleeing = anim.GetBool("isFleeing");
         bool wander = anim.GetBool("isWander");
+        bool hasTarget = anim.GetBool("hasTarget");
+        bool eating = anim.GetBool("isEating");
 
         //checking if prey has to flee
         if(!fleeing) 
@@ -60,7 +63,7 @@ public class PreyAnim : MonoBehaviour
                 }
             }
         }
-        if (!wander && !fleeing)
+        if (!wander && !fleeing && !hasTarget && !eating)
         {
             anim.SetBool("isWander", true);
         }
@@ -69,29 +72,6 @@ public class PreyAnim : MonoBehaviour
     public List<GameObject> getPlants()
     {
         return plants;
-    }
-
-    public void setTarget(Transform target)
-    {
-        this.target = target;
-        if(target != null) 
-        {
-            bool eating = anim.GetBool("isEating");
-            bool tired = anim.GetBool("isTired");
-            float distanceToTarget = Vector3.Distance(agent.transform.position, target.position);
-            agent.SetDestination(target.position);
-
-            if(distanceToTarget <= 2)
-            {
-                if(tired)
-                {
-                    anim.SetBool("isSleeping", true);
-                } else if (eating) 
-                {
-                    anim.SetBool("isEating", true);
-                }
-            }
-        }
     }
 
     public List<GameObject> getHunters()
