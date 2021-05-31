@@ -26,4 +26,9 @@ public class FSMBase : StateMachineBehaviour
         agent.acceleration = acceleration;
     }
 
+    public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        prey = hunter.GetComponent<Hunter>().prey;
+    }
+
 }

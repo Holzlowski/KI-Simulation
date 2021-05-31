@@ -13,15 +13,11 @@ public class Attack : FSMBase
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(prey != null)
+        base.OnStateUpdate(animator, stateInfo, layerIndex);
+
+        if (prey != null)
         {
             agent.SetDestination(prey.transform.position);
-
-            if (hunter.GetComponent<Hunter>().hit == true)
-            {
-                prey.GetComponent<HungerAllg>().getdamage(damage);
-                Debug.Log("Ich hab was getroffen");
-            }
         }
         else
         {
