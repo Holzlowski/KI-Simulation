@@ -13,12 +13,15 @@ public class Chase : FSMBase
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agent.SetDestination(prey.transform.position);
+        if(prey != null)
+        {
+            agent.SetDestination(prey.transform.position);  
+        }
         /*
-        //rotate towards target
-        hunter.transform.rotation = Quaternion.Slerp(hunter.transform.rotation, Quaternion.LookRotation(direction), rotSpeed * Time.deltaTime);
-        hunter.transform.Translate(0, 0, Time.deltaTime*speed);
-        */
+            //rotate towards target
+            hunter.transform.rotation = Quaternion.Slerp(hunter.transform.rotation, Quaternion.LookRotation(direction), rotSpeed * Time.deltaTime);
+            hunter.transform.Translate(0, 0, Time.deltaTime*speed);
+            */
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

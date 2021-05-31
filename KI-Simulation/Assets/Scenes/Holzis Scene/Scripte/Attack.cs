@@ -13,8 +13,20 @@ public class Attack : FSMBase
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-       // Vector3 direction = prey.transform.position - hunter.transform.position;
-       // hunter.transform.rotation = Quaternion.Slerp(hunter.transform.rotation, Quaternion.LookRotation(direction), rotSpeed * Time.deltaTime);
+        if(prey != null)
+        {
+            agent.SetDestination(prey.transform.position);
+
+            if (hunter.GetComponent<HunterDistance>().hit == true)
+            {
+                prey.GetComponent<HungerAllg>().getdamage(damage);
+                Debug.Log("Ich hab was getroffen");
+            }
+        }
+        else
+        {
+            animator.SetBool("noTarget", true);
+        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

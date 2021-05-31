@@ -10,16 +10,20 @@ public class FSMBase : StateMachineBehaviour
     public GameObject prey;
     public Vector3 wanderTarget = Vector3.zero;
 
-    public float attackSpeed;
-    public float speed = 2f;
-    public float rotSpeed = 2f;
-    public float accuracy = 2f;
+    public float speed;
+    public float rotSpeed;
+    public float acceleration;
+    public float damage;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         hunter = animator.gameObject;
         agent = hunter.GetComponent<NavMeshAgent>();
-        prey = GameObject.FindGameObjectWithTag("Prey");
+        prey = hunter.GetComponent<HunterDistance>().prey;
+
+        agent.speed = speed;
+        agent.angularSpeed = rotSpeed;
+        agent.acceleration = acceleration;
     }
 
 }
