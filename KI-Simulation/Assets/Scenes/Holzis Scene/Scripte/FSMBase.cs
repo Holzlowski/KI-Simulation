@@ -19,7 +19,7 @@ public class FSMBase : StateMachineBehaviour
     {
         hunter = animator.gameObject;
         agent = hunter.GetComponent<NavMeshAgent>();
-        prey = hunter.GetComponent<HunterDistance>().prey;
+        prey = hunter.GetComponent<Hunter>().prey;
 
         agent.speed = speed;
         agent.angularSpeed = rotSpeed;
