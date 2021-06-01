@@ -16,6 +16,7 @@ public class SleepBehaviour : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
        if(TimeManager.Hour == sleepEnd)
+
        {
            animator.SetBool("isTired", false);
            animator.SetBool("isSleeping", false);

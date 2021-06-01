@@ -16,6 +16,7 @@ public class Hunter : MonoBehaviour
     public float damage;
     public float healWithBite;
 
+    //GameObject[] preys;
     List<GameObject> preys;
 
     // Start is called before the first frame update
@@ -24,51 +25,64 @@ public class Hunter : MonoBehaviour
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 
+        /*
+        for(int i = 0; i < preys.Length; i++)
+        {
+            preys[i] = GameObject.FindGameObjectsWithTag("Prey")[i];
+        }
+        */
+   
         preys = new List<GameObject>();
         foreach (GameObject p in GameObject.FindGameObjectsWithTag("Prey")) 
         {
             preys.Add(p);
         }
+ 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(preys != null)
-        {
-            closestPrey();
-            
-            direction = prey.transform.position - this.transform.position;
-            Debug.DrawRay(this.transform.position, direction, Color.green);
+        hungerVal = GetComponent<HungerAllg>().hunger;
+        anim.SetFloat("hunger", hungerVal);
 
-        }
-        else
+         if(preys.Count==0)
         {
             Debug.Log("Gibt keine Preys mehr");
             anim.SetFloat("distance", 100);
         }
 
-        hungerVal = GetComponent<HungerAllg>().hunger;
-        anim.SetFloat("hunger", hungerVal);
+        if (preys.Count > 0)
+        {
+            closestPrey();
+            
+            if(prey != null)
+            {
+                direction = prey.transform.position - this.transform.position;
+                Debug.DrawRay(this.transform.position, direction, Color.green);
+            }
+        }
     }
 
     void closestPrey()
     {
         float distance = Mathf.Infinity;
 
-        foreach(GameObject p in preys)
-        {
-            if(p == null)
+            for (int i = 0; i < preys.Count; i++)
             {
-                preys.Remove(p);
+            GameObject p = preys[i];
+
+                if (p == null)
+                {            
+                    preys.Remove(p);
+                }
+                else if (Vector3.Distance(transform.position, p.transform.position) < distance)
+                {
+                    prey = p;
+                    distance = Vector3.Distance(transform.position, p.transform.position);
+                }
             }
-            else if (Vector3.Distance(transform.position, p.transform.position) < distance)
-            {
-                prey = p;
-                distance = Vector3.Distance(transform.position, p.transform.position);
-            }
-        }
-        anim.SetFloat("distance", distance);
+            anim.SetFloat("distance", distance);
     }
 
     void makeDamage(float damage)
@@ -78,6 +92,24 @@ public class Hunter : MonoBehaviour
     }
 
 }
+
+/*
+       foreach (GameObject p in preys)
+            {
+                if (p == null)
+                {
+                    preys.Remove(p);
+                }
+                else if (Vector3.Distance(transform.position, p.transform.position) < distance)
+                {
+                    prey = p;
+                    distance = Vector3.Distance(transform.position, p.transform.position);
+                }
+            }
+            anim.SetFloat("distance", distance);
+*/
+
+
 /*
         //Debug.Log(hit);
 

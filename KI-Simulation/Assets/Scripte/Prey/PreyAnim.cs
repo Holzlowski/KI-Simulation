@@ -19,7 +19,6 @@ public class PreyAnim : MonoBehaviour
     List<GameObject> hunters;
     public GameObject theHunter;
     public GameObject nest;
-
     private bool fleeing;
 
     public static Action OnTargetChanged;
@@ -64,6 +63,7 @@ public class PreyAnim : MonoBehaviour
         bool eating = anim.GetBool("isEating");
         bool sleeps =anim.GetBool("isSleeping");
 
+
         //checking if prey has to flee
         if(!fleeing) 
         {
@@ -90,9 +90,8 @@ public class PreyAnim : MonoBehaviour
 
     private void TimeCheck()
     {
-        
-
         if(TimeManager.Hour == sleepStart && fleeing == false)
+
         {
             anim.SetBool("isWander", false);
             anim.SetBool("isTired", true);
