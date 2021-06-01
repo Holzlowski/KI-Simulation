@@ -8,14 +8,18 @@ public class PreyAnim : MonoBehaviour
 {
 
     public Transform target { get; set; }
+    public float sleepStart;
+    public float sleepEnd; 
+
     private NavMeshAgent agent;
 
-    public float distanceView { get; private set; }
+    public float distanceView;
     Animator anim;
     List<GameObject> plants;
     List<GameObject> hunters;
     public GameObject theHunter;
     public GameObject nest;
+    private bool fleeing;
 
     public static Action OnTargetChanged;
 
@@ -36,7 +40,6 @@ public class PreyAnim : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        distanceView = 8f;
 
         hunters = new List<GameObject>();
         foreach(GameObject hunter in GameObject.FindGameObjectsWithTag("Hunter"))
@@ -54,11 +57,12 @@ public class PreyAnim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool fleeing = anim.GetBool("isFleeing");
+        fleeing = anim.GetBool("isFleeing");
         bool wander = anim.GetBool("isWander");
         bool hasTarget = anim.GetBool("hasTarget");
         bool eating = anim.GetBool("isEating");
-        bool tired =anim.GetBool("isTired");
+        bool sleeps =anim.GetBool("isSleeping");
+
 
         //checking if prey has to flee
         if(!fleeing) 
@@ -70,14 +74,15 @@ public class PreyAnim : MonoBehaviour
                     float distanceToHunter = Vector3.Distance(agent.transform.position, hunter.transform.position);
                     if (distanceToHunter < distanceView)
                     {
-                        target = null;  
+                        target = null;
+                        anim.SetBool("hasTarget", false);
                         theHunter = hunter;
                         anim.SetBool("isFleeing", true);  
                     }
                 }
             }
         }
-        if (!wander && !fleeing && !hasTarget && !eating && !tired)
+        if (!wander && !fleeing && !hasTarget && !eating && !sleeps)
         {
             anim.SetBool("isWander", true);
         }
@@ -85,7 +90,8 @@ public class PreyAnim : MonoBehaviour
 
     private void TimeCheck()
     {
-        if(TimeManager.Hour == 11)
+        if(TimeManager.Hour == sleepStart && fleeing == false)
+
         {
             anim.SetBool("isWander", false);
             anim.SetBool("isTired", true);

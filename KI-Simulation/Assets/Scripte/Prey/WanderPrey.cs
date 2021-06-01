@@ -11,12 +11,14 @@ public class WanderPrey : StateMachineBehaviour
     PreyAnim prey;
     public List<GameObject> plants;
 
-    float wanderRadius = 10;
+    float wanderRadius = 7;
     float wanderDistance = 10;
-    float wanderJitter = 10;
+    float wanderJitter = 7;
     Vector3 wanderTarget;
 
     bool isHungry;
+    public bool cooldownBool;
+    public float cooldown;
     private GameObject target;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -28,6 +30,8 @@ public class WanderPrey : StateMachineBehaviour
 
        distanceView = prey.distanceView;
        plants = prey.getPlants();
+       cooldown = 0;
+       cooldownBool = false;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -46,14 +50,26 @@ public class WanderPrey : StateMachineBehaviour
                 }
             }
         }
-        wanderTarget += new Vector3(Random.Range(-1.0f, 1.0f) * wanderJitter, 0, Random.Range(-1.0f, 1.0f) * wanderJitter);
-        wanderTarget.Normalize();
-        wanderTarget *= wanderRadius;
+        if(cooldownBool)
+        {
+            cooldown -= 0.1f * Time.deltaTime;
+            if(cooldown <= 0)
+            {
+                cooldownBool = false;
+                cooldown = 0;
+            }
+        } else {
+            wanderTarget += new Vector3(Random.Range(-2.0f, 2.0f) * wanderJitter, 0, Random.Range(-2.0f, 2.0f) * wanderJitter);
+            wanderTarget.Normalize();
+            wanderTarget *= wanderRadius;
 
-        Vector3 targetLocal = wanderTarget + new Vector3(0, 0, wanderDistance);
-        Vector3 targetWorld = agent.gameObject.transform.InverseTransformVector(targetLocal);
+            Vector3 targetLocal = wanderTarget + new Vector3(0, 0, wanderDistance);
+            Vector3 targetWorld = agent.gameObject.transform.InverseTransformVector(targetLocal);
 
-        agent.SetDestination(targetWorld);
+            agent.SetDestination(targetWorld);
+            cooldown = 10;
+            cooldownBool = true;
+        }  
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
