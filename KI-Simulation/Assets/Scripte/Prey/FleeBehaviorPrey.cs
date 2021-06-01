@@ -32,7 +32,7 @@ public class FleeBehaviorPrey : StateMachineBehaviour
         if (theHunter != null)
         {
             float distance = Vector3.Distance(agent.transform.position, theHunter.transform.position);
-            if (distance < distanceView*1.5)
+            if (distance > distanceView*2)
             {
                 animator.SetBool("isFleeing", false);
             } else {
