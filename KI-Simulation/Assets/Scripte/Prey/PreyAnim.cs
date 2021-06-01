@@ -15,8 +15,21 @@ public class PreyAnim : MonoBehaviour
     List<GameObject> plants;
     List<GameObject> hunters;
     public GameObject theHunter;
+    public GameObject nest;
 
     public static Action OnTargetChanged;
+
+    private void OnEnable()
+    {
+        //TimeManager.OnMinuteChanged += TimeCheck;
+        TimeManager.OnHourChanged += TimeCheck;
+    }
+
+    private void OnDisable()
+    {
+        //TimeManager.OnMinuteChanged -= TimeCheck;
+        TimeManager.OnHourChanged -= TimeCheck;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +58,7 @@ public class PreyAnim : MonoBehaviour
         bool wander = anim.GetBool("isWander");
         bool hasTarget = anim.GetBool("hasTarget");
         bool eating = anim.GetBool("isEating");
+        bool tired =anim.GetBool("isTired");
 
         //checking if prey has to flee
         if(!fleeing) 
@@ -63,9 +77,20 @@ public class PreyAnim : MonoBehaviour
                 }
             }
         }
-        if (!wander && !fleeing && !hasTarget && !eating)
+        if (!wander && !fleeing && !hasTarget && !eating && !tired)
         {
             anim.SetBool("isWander", true);
+        }
+    }
+
+    private void TimeCheck()
+    {
+        if(TimeManager.Hour == 11)
+        {
+            anim.SetBool("isWander", false);
+            anim.SetBool("isTired", true);
+            target = nest.transform;
+            anim.SetBool("hasTarget", true);
         }
     }
 

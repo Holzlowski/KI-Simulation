@@ -33,7 +33,8 @@ public class WalkingBehavior : StateMachineBehaviour
         {
             if(tired)
             {
-                //animator.SetBool("isSleeping", true);
+                animator.SetBool("isSleeping", true);
+                animator.SetBool("hasTarget", false);
             } else if (hungry) 
             {
                 animator.SetBool("isEating", true);
