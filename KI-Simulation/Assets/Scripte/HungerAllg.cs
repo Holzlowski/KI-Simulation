@@ -89,7 +89,6 @@ public class HungerAllg : MonoBehaviour
         {
             value = healWithBite;
         }
-        Debug.Log(""+value);
         if(hunger < maxHunger) {
             this.hunger += value;
             if (hunger > maxHunger) {
@@ -103,8 +102,10 @@ public class HungerAllg : MonoBehaviour
         life -= value;
         if(life <= 0) {
             Destroy(gameObject);
+        } 
+        if(life > maxLife)
+        {
+            life = maxLife;
         }
     }
-
-
 }

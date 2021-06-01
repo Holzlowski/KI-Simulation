@@ -7,7 +7,6 @@ public class EatingPrey : StateMachineBehaviour
 {
     bool hungry;
     NavMeshAgent agent;
-    //private float normalSpeed;
     PreyAnim prey;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -15,8 +14,6 @@ public class EatingPrey : StateMachineBehaviour
     {
         agent = animator.GetComponent<NavMeshAgent>();
         prey = animator.GetComponent<PreyAnim>();
-        //normalSpeed = agent.speed;
-        //agent.speed = 0;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -25,10 +22,8 @@ public class EatingPrey : StateMachineBehaviour
         hungry = animator.GetBool("isHungry");
         if(hungry)
         {
-            Debug.Log("NOM");
             animator.SetTrigger("Eat");
         } else {
-            Debug.Log("fertig mit NOM");
             animator.GetComponent<PreyAnim>().target = null;
             animator.SetBool("isEating", false);
         }
@@ -37,7 +32,6 @@ public class EatingPrey : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //agent.speed = normalSpeed;
         animator.ResetTrigger("Eat");
     }
 }
