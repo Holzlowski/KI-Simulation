@@ -5,8 +5,6 @@ using UnityEngine.AI;
 
 public class FleeBehaviorPrey : StateMachineBehaviour
 {
-
-    private List<GameObject> hunters;
     private NavMeshAgent agent;
     public float distanceView;
     public float fleeSpeed;
@@ -18,12 +16,11 @@ public class FleeBehaviorPrey : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agent = animator.GetComponent<NavMeshAgent>();
-
         distanceView = animator.GetComponent<PreyAnim>().distanceView;
-        hunters = animator.GetComponent<PreyAnim>().getHunters();
+        theHunter = animator.GetComponent<PreyAnim>().theHunter; 
+
         normalSpeed = agent.speed;
         agent.speed = fleeSpeed;
-        theHunter = animator.GetComponent<PreyAnim>().theHunter; 
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
