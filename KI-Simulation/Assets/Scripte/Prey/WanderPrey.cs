@@ -9,11 +9,11 @@ public class WanderPrey : StateMachineBehaviour
     NavMeshAgent agent;
     public float distanceView;
     PreyAnim prey;
-    public List<GameObject> plants;
+    GameObject[] plants;
 
-    float wanderRadius = 7;
-    float wanderDistance = 10;
-    float wanderJitter = 7;
+    float wanderRadius = 5;
+    float wanderDistance = 5;
+    float wanderJitter = 10;
     Vector3 wanderTarget;
 
     bool isHungry;
@@ -29,7 +29,8 @@ public class WanderPrey : StateMachineBehaviour
        wanderTarget = Vector3.zero;
 
        distanceView = prey.distanceView;
-       plants = prey.getPlants();
+       plants = WorldManager.plants;
+
        cooldown = 0;
        cooldownBool = false;
     }
@@ -50,31 +51,37 @@ public class WanderPrey : StateMachineBehaviour
                 }
             }
         }
+
         if(cooldownBool)
         {
-            cooldown -= 0.1f * Time.deltaTime;
+            cooldown -= 1f * Time.deltaTime;
             if(cooldown <= 0)
             {
                 cooldownBool = false;
                 cooldown = 0;
             }
         } else {
-            wanderTarget += new Vector3(Random.Range(-2.0f, 2.0f) * wanderJitter, 0, Random.Range(-2.0f, 2.0f) * wanderJitter);
-            wanderTarget.Normalize();
-            wanderTarget *= wanderRadius;
-
-            Vector3 targetLocal = wanderTarget + new Vector3(0, 0, wanderDistance);
-            Vector3 targetWorld = agent.gameObject.transform.InverseTransformVector(targetLocal);
-
-            agent.SetDestination(targetWorld);
-            cooldown = 10;
-            cooldownBool = true;
-        }  
+            wander();
+        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
        
+    }
+
+    private void wander()
+    {
+        wanderTarget += new Vector3(Random.Range(-1.0f, 1.0f) * wanderJitter, 0, Random.Range(-1.0f, 1.0f) * wanderJitter);
+        wanderTarget.Normalize();
+        wanderTarget *= wanderRadius;
+
+        Vector3 targetLocal = wanderTarget + new Vector3(0, 0, wanderDistance);
+        Vector3 targetWorld = agent.gameObject.transform.InverseTransformVector(targetLocal);
+
+        agent.SetDestination(targetWorld);
+        cooldown = 10;
+        cooldownBool = true;
     }
 }

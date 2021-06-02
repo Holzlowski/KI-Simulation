@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using System;
 
 public class HungerAllg : MonoBehaviour
 {
     Animator anim;
+    public static Action OnDestroyHunter;
+    public static Action OnDestroyPrey;
 
     public Slider hungerSlider;
     public float hunger;
@@ -101,11 +104,29 @@ public class HungerAllg : MonoBehaviour
     public void getdamage(float value) {
         life -= value;
         if(life <= 0) {
-            Destroy(gameObject);
+            destroyObject();
         } 
         if(life > maxLife)
         {
             life = maxLife;
         }
+    }
+
+    private void destroyObject()
+    {
+        string tag = gameObject.tag;
+        switch (tag)
+        {
+            case "Hunter":
+                OnDestroyHunter?.Invoke();
+                break;
+            case "Prey":
+                OnDestroyPrey?.Invoke();
+                break;
+            default:
+                print("wrong tag");
+                break;
+        }
+        Destroy(gameObject);
     }
 }

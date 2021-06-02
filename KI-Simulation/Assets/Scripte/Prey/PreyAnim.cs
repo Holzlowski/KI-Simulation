@@ -15,10 +15,10 @@ public class PreyAnim : MonoBehaviour
 
     public float distanceView;
     Animator anim;
-    List<GameObject> plants;
-    List<GameObject> hunters;
+    GameObject[] plants;
+    GameObject[] hunters;
     public GameObject theHunter;
-    public GameObject nest;
+    private GameObject nest;
     private bool fleeing;
 
     public static Action OnTargetChanged;
@@ -39,19 +39,11 @@ public class PreyAnim : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>(); 
 
-        hunters = new List<GameObject>();
-        foreach(GameObject hunter in GameObject.FindGameObjectsWithTag("Hunter"))
-        {
-            hunters.Add(hunter);
-        }
-
-        plants = new List<GameObject>();
-        foreach(GameObject plant in GameObject.FindGameObjectsWithTag("Plant"))
-        {
-            plants.Add(plant);
-        }
+        plants = WorldManager.plants;
+        hunters = WorldManager.hunters;
+        nest = GameObject.Find("PreyNest");
     }
 
     // Update is called once per frame
@@ -98,15 +90,5 @@ public class PreyAnim : MonoBehaviour
             target = nest.transform;
             anim.SetBool("hasTarget", true);
         }
-    }
-
-    public List<GameObject> getPlants()
-    {
-        return plants;
-    }
-
-    public List<GameObject> getHunters()
-    {
-        return hunters;
     }
 }

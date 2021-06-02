@@ -819,7 +819,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7bb2e74a181e214da06b8d68e456592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sleepStart: 15
+  sleepEnd: 17
+  distanceView: 8
   theHunter: {fileID: 0}
+  nest: {fileID: 0}
 --- !u!114 &8157717994008527117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1078,4 +1082,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7c399f3b5a3e0b438135ae67c6aeceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
