@@ -22,7 +22,8 @@ public class HungerAllg : MonoBehaviour
     public float damage;
 
     private float maxLife = 100f;
-    private float maxHunger = 100f;
+    [HideInInspector]
+    public float maxHunger = 100f;
     private bool isLow = false;
     private bool isHungry = false;
 
