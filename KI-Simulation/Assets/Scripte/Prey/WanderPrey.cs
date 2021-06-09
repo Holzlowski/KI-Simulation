@@ -9,7 +9,7 @@ public class WanderPrey : StateMachineBehaviour
     NavMeshAgent agent;
     public float distanceView;
     PreyAnim prey;
-    GameObject[] plants;
+    List<GameObject> plants;
 
     float wanderRadius = 5;
     float wanderDistance = 5;
@@ -54,11 +54,11 @@ public class WanderPrey : StateMachineBehaviour
 
         if(cooldownBool)
         {
-            cooldown -= 1f * Time.deltaTime;
+            cooldown -= 0.1f * Time.deltaTime;
             if(cooldown <= 0)
             {
                 cooldownBool = false;
-                cooldown = 0;
+                cooldown = 10;
             }
         } else {
             wander();

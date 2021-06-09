@@ -823,7 +823,6 @@ MonoBehaviour:
   sleepEnd: 17
   distanceView: 8
   theHunter: {fileID: 0}
-  nest: {fileID: 0}
 --- !u!114 &8157717994008527117
 MonoBehaviour:
   m_ObjectHideFlags: 0
