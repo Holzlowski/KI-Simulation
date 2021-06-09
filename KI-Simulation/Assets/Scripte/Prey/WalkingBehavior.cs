@@ -8,6 +8,7 @@ public class WalkingBehavior : StateMachineBehaviour
     private bool hungry;
     private bool tired;
     private Transform target;
+    private GameObject nest;
 
     NavMeshAgent agent;
     PreyAnim prey;
@@ -18,9 +19,10 @@ public class WalkingBehavior : StateMachineBehaviour
         agent = animator.GetComponent<NavMeshAgent>();
         prey = animator.GetComponent<PreyAnim>();
 
-        hungry = animator.GetBool("isHungry");
-        tired = animator.GetBool("isTired");
+        hungry = animator.GetComponent<PreyAnim>().hungry;
+        tired = animator.GetComponent<PreyAnim>().tired;
         target = animator.GetComponent<PreyAnim>().target;
+        nest = animator.GetComponent<PreyAnim>().nest;
         agent.SetDestination(target.position);
     }
 
@@ -31,7 +33,7 @@ public class WalkingBehavior : StateMachineBehaviour
 
         if(distanceToTarget <= agent.stoppingDistance)
         {
-            if(tired)
+            if(target == nest.transform)
             {
                 animator.SetBool("isSleeping", true);
                 animator.SetBool("hasTarget", false);

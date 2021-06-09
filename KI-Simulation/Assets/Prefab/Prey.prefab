@@ -821,8 +821,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sleepStart: 15
   sleepEnd: 17
+  hungryValue: 50
+  hungry: 0
+  tired: 0
   distanceView: 8
   theHunter: {fileID: 0}
+  nest: {fileID: 0}
 --- !u!114 &8157717994008527117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -841,6 +845,10 @@ MonoBehaviour:
   life: 100
   minusHunger: 1
   damage: 1
+  maxHunger: 100
+  whenIAmHungry: 50
+  whenIGetHealed: 60
+  isHungry: 0
 --- !u!1 &8157717994342332517
 GameObject:
   m_ObjectHideFlags: 0
