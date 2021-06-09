@@ -12,11 +12,13 @@ public class Hunter : MonoBehaviour
 
     Vector3 direction;
     float distance;
+
     float hungerVal;
+    float maxHunger;
     public float damage;
     public float healWithBite;
-
-    //GameObject[] preys;
+    [Range(10f,90f)]
+    public float whenIAmHungry = 50f;
     List<GameObject> preys;
 
     // Start is called before the first frame update
@@ -24,13 +26,7 @@ public class Hunter : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-
-        /*
-        for(int i = 0; i < preys.Length; i++)
-        {
-            preys[i] = GameObject.FindGameObjectsWithTag("Prey")[i];
-        }
-        */
+        float maxHunger = GetComponent<HungerAllg>().maxHunger;
    
         preys = new List<GameObject>();
         foreach (GameObject p in GameObject.FindGameObjectsWithTag("Prey")) 
@@ -44,7 +40,18 @@ public class Hunter : MonoBehaviour
     void Update()
     {
         hungerVal = GetComponent<HungerAllg>().hunger;
-        anim.SetFloat("hunger", hungerVal);
+        //anim.SetFloat("hunger", hungerVal);
+
+        if(hungerVal < (maxHunger * (whenIAmHungry / 100)))
+        {
+            anim.SetBool("isHungry", true);
+            
+        }
+        else
+        {
+            anim.SetBool("isHungry", false);
+            Debug.Log("Nicht Hungrig");
+        }
 
          if(preys.Count==0)
         {
