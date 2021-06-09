@@ -64,6 +64,7 @@ public class HungerAllg : MonoBehaviour
         if(hunger == 0f) //hunger empty does deamage
         {
          life -= damage * Time.deltaTime;
+
         } else if (hunger <= maxHunger*(whenIAmHungry/100))  //if half live object is hungry (start searching)
         {
             anim.SetBool("isHungry", true);
@@ -72,24 +73,10 @@ public class HungerAllg : MonoBehaviour
         {
             life += 1f * Time.deltaTime;
         }
-
-        if(isHungry && hunger > maxHunger*0.95) 
-        {
-            isHungry = false;
-            anim.SetBool("isHungry", false);
-        }
-
         
         if (life <= 0) {
             destroyObject();
-        } else if (life <= life/4)
-        {
-            anim.SetBool("isLow", true);
-            isLow = true;
-        } else if (isLow && life > life/4)
-        {
-            anim.SetBool("isLow", false);
-        }
+        } 
     }
 
     public void eating(float value) {
@@ -101,7 +88,6 @@ public class HungerAllg : MonoBehaviour
             this.hunger += value;
             if (hunger > maxHunger) {
                 hunger = maxHunger;
-                anim.SetBool("isHungry", false);
             }
         }
     }
