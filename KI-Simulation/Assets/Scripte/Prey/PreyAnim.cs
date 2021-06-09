@@ -10,6 +10,8 @@ public class PreyAnim : MonoBehaviour
     public Transform target { get; set; }
     public float sleepStart;
     public float sleepEnd; 
+    public float hungryValue;
+    public bool hungry;
 
     private NavMeshAgent agent;
 
@@ -56,6 +58,15 @@ public class PreyAnim : MonoBehaviour
         bool hasTarget = anim.GetBool("hasTarget");
         bool eating = anim.GetBool("isEating");
         bool sleeps =anim.GetBool("isSleeping");
+
+        float hunger = GetComponent<HungerAllg>().hunger;
+        if(hunger <= hungryValue)
+        {
+            hungry = true;
+        } else
+        {
+            hungry = false;
+        }
 
 
         //checking if prey has to flee
