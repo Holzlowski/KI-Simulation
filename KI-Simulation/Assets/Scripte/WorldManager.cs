@@ -71,13 +71,11 @@ public class WorldManager : MonoBehaviour
 
     private void spawnHunter()
     {
-        Debug.Log("hunter dead, start courotine for new one");
         StartCoroutine(WaitHunter());
     }
 
     private void spawnPrey()
     {
-        Debug.Log("prey dead, start courotine for new one");
         StartCoroutine(WaitPrey());
     }
 
@@ -86,7 +84,6 @@ public class WorldManager : MonoBehaviour
         yield return new WaitForSeconds(spawnTimePrey);
         GameObject newPrey = Instantiate(prey, preyNest.transform.position, Quaternion.identity);
         preys.Add(newPrey); 
-        Debug.Log("new Prey created and added to list");
     }
 
     IEnumerator WaitHunter()
@@ -94,6 +91,5 @@ public class WorldManager : MonoBehaviour
         yield return new WaitForSeconds(spawnTimeHunter);
         GameObject newHunter = Instantiate(hunter, hunterNest.transform.position, Quaternion.identity);
         hunters.Add(newHunter);
-        Debug.Log("new Hunter created and added to list");
     }
 }

@@ -16,7 +16,7 @@ public class WanderPrey : StateMachineBehaviour
     float wanderJitter = 10;
     Vector3 wanderTarget;
 
-    bool isHungry;
+    bool hungry;
     public bool cooldownBool;
     public float cooldown;
     private GameObject target;
@@ -38,8 +38,8 @@ public class WanderPrey : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     { 
-        isHungry = animator.GetBool("isHungry");
-        if (isHungry) 
+        hungry = prey.hungry; 
+        if (hungry) 
         {
             foreach(GameObject plant in plants)
             {
