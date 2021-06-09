@@ -10,7 +10,10 @@ public class PreyAnim : MonoBehaviour
     public float sleepStart;
     public float sleepEnd; 
     public float hungryValue;
+    public float maxHunger;
+
     public bool hungry;
+    public bool tired;
 
     private NavMeshAgent agent;
 
@@ -19,7 +22,7 @@ public class PreyAnim : MonoBehaviour
     List<GameObject> plants;
     List<GameObject> hunters;
     public GameObject theHunter;
-    private GameObject nest;
+    public GameObject nest;
     private bool fleeing;
 
     public static Action OnTargetChanged;
@@ -45,6 +48,10 @@ public class PreyAnim : MonoBehaviour
         plants = WorldManager.plants;
         hunters = WorldManager.hunters;
         nest = GameObject.Find("PreyNest");
+
+        tired = false;
+        hungry = false;
+        maxHunger = GetComponent<HungerAllg>().maxHunger;
     }
 
     // Update is called once per frame
@@ -52,23 +59,21 @@ public class PreyAnim : MonoBehaviour
     {
         plants = WorldManager.plants;
         hunters = WorldManager.hunters;
-        fleeing = anim.GetBool("isFleeing");
-        bool wander = anim.GetBool("isWander");
-        bool hasTarget = anim.GetBool("hasTarget");
-        bool eating = anim.GetBool("isEating");
-        bool sleeps =anim.GetBool("isSleeping");
-
+        
+        //checking if Prey is hungry
         float hunger = GetComponent<HungerAllg>().hunger;
         if(hunger <= hungryValue)
         {
             hungry = true;
-        } else
+        }
+        if (hungry && hunger >= maxHunger*0.95)
         {
             hungry = false;
         }
 
 
         //checking if prey has to flee
+        fleeing = anim.GetBool("isFleeing");
         if(!fleeing) 
         {
             foreach(GameObject hunter in hunters)
@@ -81,26 +86,26 @@ public class PreyAnim : MonoBehaviour
                         target = null;
                         anim.SetBool("hasTarget", false);
                         theHunter = hunter;
-                        anim.SetBool("isFleeing", true);  
+                        anim.SetBool("isFleeing", true);
                     }
                 }
             }
-        }
-        if (!wander && !fleeing && !hasTarget && !eating && !sleeps)
-        {
-            anim.SetBool("isWander", true);
+            bool sleeping = anim.GetBool("isSleeping");
+            if(tired && !hungry && !sleeping)
+            {
+                target = nest.transform;
+                anim.SetBool("hasTarget", true);
+            }
         }
     }
 
     private void TimeCheck()
     {
-        if(TimeManager.Hour == sleepStart && fleeing == false)
-
+        if(TimeManager.Hour >= sleepStart && TimeManager.Hour <= sleepEnd)
         {
-            anim.SetBool("isWander", false);
-            anim.SetBool("isTired", true);
-            target = nest.transform;
-            anim.SetBool("hasTarget", true);
+            tired = true;
+        } else {
+            tired = false;
         }
     }
 }
