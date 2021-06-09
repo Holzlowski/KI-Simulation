@@ -24,8 +24,12 @@ public class HungerAllg : MonoBehaviour
     private float maxLife = 100f;
     [HideInInspector]
     public float maxHunger = 100f;
+    [Range(10f, 90f)]
+    public float whenIAmHungry = 50f;
+    [Range(10f, 90f)]
+    public float whenIGetHealed = 60f;
     private bool isLow = false;
-    private bool isHungry = false;
+    public bool isHungry = false;
 
     // Start is called before the first frame update
     void Start()
@@ -60,11 +64,11 @@ public class HungerAllg : MonoBehaviour
         if(hunger == 0f) //hunger empty does deamage
         {
          life -= damage * Time.deltaTime;
-        } else if (hunger <= maxHunger/2)  //if half live object is hungry (start searching)
+        } else if (hunger <= maxHunger*(whenIAmHungry/100))  //if half live object is hungry (start searching)
         {
             anim.SetBool("isHungry", true);
             isHungry = true;
-        } else if(hunger > maxHunger*0.6 && life < maxLife) // full Hunger heals missing life
+        } else if(hunger > maxHunger*(whenIGetHealed/100) && life < maxLife) // full Hunger heals missing life
         {
             life += 1f * Time.deltaTime;
         }
