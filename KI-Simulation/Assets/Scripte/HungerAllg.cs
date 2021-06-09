@@ -76,7 +76,7 @@ public class HungerAllg : MonoBehaviour
 
         
         if (life <= 0) {
-            Destroy(gameObject);
+            destroyObject();
         } else if (life <= life/4)
         {
             anim.SetBool("isLow", true);
@@ -124,7 +124,7 @@ public class HungerAllg : MonoBehaviour
                 OnDestroyPrey?.Invoke();
                 break;
             default:
-                print("wrong tag");
+                Debug.Log("wrong tag:" + tag);
                 break;
         }
         Destroy(gameObject);

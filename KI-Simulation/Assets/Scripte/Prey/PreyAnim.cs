@@ -15,8 +15,8 @@ public class PreyAnim : MonoBehaviour
 
     public float distanceView;
     Animator anim;
-    GameObject[] plants;
-    GameObject[] hunters;
+    List<GameObject> plants;
+    List<GameObject> hunters;
     public GameObject theHunter;
     private GameObject nest;
     private bool fleeing;
@@ -49,6 +49,8 @@ public class PreyAnim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        plants = WorldManager.plants;
+        hunters = WorldManager.hunters;
         fleeing = anim.GetBool("isFleeing");
         bool wander = anim.GetBool("isWander");
         bool hasTarget = anim.GetBool("hasTarget");
