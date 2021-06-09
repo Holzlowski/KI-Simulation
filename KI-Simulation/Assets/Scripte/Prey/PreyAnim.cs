@@ -6,7 +6,6 @@ using System;
 
 public class PreyAnim : MonoBehaviour
 {
-
     public Transform target { get; set; }
     public float sleepStart;
     public float sleepEnd; 

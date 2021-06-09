@@ -25,8 +25,6 @@ public class HungerAllg : MonoBehaviour
     [HideInInspector]
     public float maxHunger = 100f;
     [Range(10f, 90f)]
-    public float whenIAmHungry = 50f;
-    [Range(10f, 90f)]
     public float whenIGetHealed = 60f;
 
     // Start is called before the first frame update
