@@ -14,7 +14,7 @@ public class Hunter : MonoBehaviour
     float distance;
 
     float hungerVal;
-    float maxHunger;
+    public float maxHunger;
     public float damage;
     public float healWithBite;
     [Range(10f,90f)]
@@ -26,34 +26,26 @@ public class Hunter : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        float maxHunger = GetComponent<HungerAllg>().maxHunger;
+        maxHunger = GetComponent<HungerAllg>().maxHunger;
+
+        //preys = WorldManager.preys;
    
         preys = new List<GameObject>();
         foreach (GameObject p in GameObject.FindGameObjectsWithTag("Prey")) 
         {
             preys.Add(p);
         }
- 
     }
+   
 
     // Update is called once per frame
     void Update()
     {
         hungerVal = GetComponent<HungerAllg>().hunger;
         //anim.SetFloat("hunger", hungerVal);
+        hungerCheck();
 
-        if(hungerVal < (maxHunger * (whenIAmHungry / 100)))
-        {
-            anim.SetBool("isHungry", true);
-            
-        }
-        else
-        {
-            anim.SetBool("isHungry", false);
-            Debug.Log("Nicht Hungrig");
-        }
-
-         if(preys.Count==0)
+         if (preys.Count==0)
         {
             Debug.Log("Gibt keine Preys mehr");
             anim.SetFloat("distance", 100);
@@ -96,6 +88,20 @@ public class Hunter : MonoBehaviour
     {
        damage = this.damage;
        prey.GetComponent<HungerAllg>().getdamage(damage);
+    }
+
+    void hungerCheck()
+    {
+        if (hungerVal < maxHunger * (whenIAmHungry / 100))
+        {
+            anim.SetBool("isHungry", true);
+            Debug.Log("Hungrig");
+        }
+        else
+        {
+            anim.SetBool("isHungry", false);
+            Debug.Log("Nicht Hungrig");
+        }
     }
 
 }

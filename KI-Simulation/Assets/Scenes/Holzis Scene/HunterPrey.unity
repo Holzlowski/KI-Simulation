@@ -338,9 +338,7 @@ MonoBehaviour:
   minusHunger: 5
   damage: 0
   maxHunger: 100
-  whenIAmHungry: 50
   whenIGetHealed: 60
-  isHungry: 0
 --- !u!1001 &210062035
 PrefabInstance:
   m_ObjectHideFlags: 0
