@@ -10,7 +10,7 @@ public class HunterBT : MonoBehaviour
 {
     NavMeshAgent agentBT;
     GameObject target;
-    GameObject[] preys;
+    List<GameObject> preys;
 
     public float maxWanderDistance;
     public float accurracy;
@@ -67,7 +67,7 @@ public class HunterBT : MonoBehaviour
         float distance = Mathf.Infinity;
         bool isInRange = false;
 
-        for (int i = 0; i < preys.Length; i++)
+        for (int i = 0; i < preys.Count; i++)
         {
             GameObject p = preys[i];
 
