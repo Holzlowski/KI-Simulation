@@ -20,6 +20,8 @@ public class WorldManager : MonoBehaviour
 
     private bool start;
 
+    public List<string> tags;
+
     private void OnEnable()
     {
         HungerAllg.OnDestroyHunter += spawnHunter;
@@ -41,6 +43,29 @@ public class WorldManager : MonoBehaviour
         findAllPlants();
         spawnPreysAtStart();
         spawnHuntersAtStart();
+    }
+    /*
+    public List<GameObject> createListWithTag(string tagName)
+    {
+        GameObject[] arrayWithTag = GameObject.FindGameObjectsWithTag("" + tagName);
+        List<GameObject> listWithtag = new List<GameObject>();
+
+        if (tag.Length == 0)
+        {
+            Debug.Log("Es gibt keine Objekte mit diesem Tag.");
+        }
+        else
+        {
+            
+            listWithtag.AddRange(arrayWithTag);
+        }
+        return listWithtag;
+    }
+    */
+
+     string listNameCreator(string listName)
+    {
+        return listName;
     }
 
     private void findAllPlants()
