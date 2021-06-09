@@ -65,10 +65,6 @@ public class HungerAllg : MonoBehaviour
         {
          life -= damage * Time.deltaTime;
 
-        } else if (hunger <= maxHunger*(whenIAmHungry/100))  //if half live object is hungry (start searching)
-        {
-            anim.SetBool("isHungry", true);
-            isHungry = true;
         } else if(hunger > maxHunger*(whenIGetHealed/100) && life < maxLife) // full Hunger heals missing life
         {
             life += 1f * Time.deltaTime;
