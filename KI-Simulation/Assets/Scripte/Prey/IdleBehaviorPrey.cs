@@ -7,14 +7,16 @@ public class IdleBehaviorPrey : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-       
+       animator.SetBool("isEating", false);
+       animator.SetBool("isSleeping", false);
+
+        animator.SetBool("isWander", true);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-       bool isEating = animator.GetBool("isEating");
-       bool isSleeping = animator.GetBool("isSleeping");
+       
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

@@ -28,8 +28,6 @@ public class HungerAllg : MonoBehaviour
     public float whenIAmHungry = 50f;
     [Range(10f, 90f)]
     public float whenIGetHealed = 60f;
-    private bool isLow = false;
-    public bool isHungry = false;
 
     // Start is called before the first frame update
     void Start()
