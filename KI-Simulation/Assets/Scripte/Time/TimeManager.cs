@@ -16,8 +16,8 @@ public class TimeManager : MonoBehaviour
 
     void Start()
     {
-        Minute = 0;
-        Hour = 10;
+        Minute = 50;
+        Hour = 23;
         timer = minuteToRealTime;
     }
 
@@ -30,12 +30,18 @@ public class TimeManager : MonoBehaviour
         {
             Minute++;
             OnMinuteChanged?.Invoke();
-            if(Minute >= 60)
-            {
+
+            if (Minute >= 60)
+            {        
                 Hour++;
+                if (Hour >= 24)
+                {
+                    Hour = 0;
+                }
                 Minute = 0;
                 OnHourChanged?.Invoke();
             }
+            
             timer = minuteToRealTime;
         }
     }
