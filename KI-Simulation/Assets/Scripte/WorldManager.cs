@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class WorldManager : MonoBehaviour
 {
-    public GameObject prey;
-    public GameObject preyNest;
-    public int preyNumber;
-    public float spawnTimePrey;
+    public GameObject sheep;
+    public GameObject sheepNest;
+    public int sheepNumber;
+    public float sheepSpawnTime;
+
+    public GameObject duck;
+    public GameObject duckNest;
+    public int duckNumber;
+    public float duckSpawnTime;
 
     public GameObject hunter;
     public GameObject hunterNest;
@@ -25,13 +30,15 @@ public class WorldManager : MonoBehaviour
     private void OnEnable()
     {
         HungerAllg.OnDestroyHunter += spawnHunter;
-        HungerAllg.OnDestroyPrey += spawnPrey;
+        HungerAllg.OnDestroyDuck += spawnDuck;
+        HungerAllg.OnDestroySheep += spawnSheep;
     }
 
     private void OnDisable()
     {
         HungerAllg.OnDestroyHunter -= spawnHunter;
-        HungerAllg.OnDestroyPrey -= spawnPrey;
+        HungerAllg.OnDestroyDuck -= spawnDuck;
+        HungerAllg.OnDestroySheep -= spawnSheep;
     }
 
     // Start is called before the first frame update
@@ -41,8 +48,11 @@ public class WorldManager : MonoBehaviour
         preys = new List<GameObject>();
         plants = new List<GameObject>();
         findAllPlants();
-        spawnPreysAtStart();
+
+        //spawnPreysAtStart();
         spawnHuntersAtStart();
+        spawnAnimalsAtStart(sheep, sheepNest, sheepNumber, preys);
+        spawnAnimalsAtStart(duck, duckNest, duckNumber, preys);
     }
     
 
@@ -51,6 +61,15 @@ public class WorldManager : MonoBehaviour
         foreach(GameObject plant in GameObject.FindGameObjectsWithTag("Plant"))
         {
             plants.Add(plant);
+        }
+    }
+
+    private void spawnAnimalsAtStart(GameObject animal, GameObject nest, int number, List<GameObject> list)
+    {
+        for (int i = 0; i < number; i++)
+        {
+            GameObject newAnimal = Instantiate(animal, nest.transform.position, Quaternion.identity);
+            list.Add(newAnimal);
         }
     }
 
@@ -63,30 +82,41 @@ public class WorldManager : MonoBehaviour
         }
     }
 
-    private void spawnPreysAtStart()
+    /*private void spawnPreysAtStart()
     {
         for (int i = 0; i < preyNumber; i++)
         {
             GameObject newPrey = Instantiate(prey, preyNest.transform.position, Quaternion.identity);
             preys.Add(newPrey);
         }
-    }
+    }*/
 
     private void spawnHunter()
     {
         StartCoroutine(WaitHunter());
     }
 
-    private void spawnPrey()
+    private void spawnSheep()
     {
-        StartCoroutine(WaitPrey());
+        StartCoroutine(WaitSheep());
+    }
+    private void spawnDuck()
+    {
+        StartCoroutine(WaitDuck());
     }
 
-    IEnumerator WaitPrey()
+    IEnumerator WaitSheep()
     {   
-        yield return new WaitForSeconds(spawnTimePrey);
-        GameObject newPrey = Instantiate(prey, preyNest.transform.position, Quaternion.identity);
-        preys.Add(newPrey); 
+        yield return new WaitForSeconds(sheepSpawnTime);
+        GameObject newSheep = Instantiate(sheep, sheepNest.transform.position, Quaternion.identity);
+        preys.Add(newSheep); 
+    }
+
+    IEnumerator WaitDuck()
+    {   
+        yield return new WaitForSeconds(duckSpawnTime);
+        GameObject newDuck = Instantiate(duck, duckNest.transform.position, Quaternion.identity);
+        preys.Add(newDuck); 
     }
 
     IEnumerator WaitHunter()

@@ -9,7 +9,8 @@ public class HungerAllg : MonoBehaviour
 {
     Animator anim;
     public static Action OnDestroyHunter;
-    public static Action OnDestroyPrey;
+    public static Action OnDestroySheep;
+    public static Action OnDestroyDuck;
 
     public Slider hungerSlider;
     public float hunger;
@@ -97,17 +98,20 @@ public class HungerAllg : MonoBehaviour
 
     private void destroyObject()
     {
-        string tag = gameObject.tag;
-        switch (tag)
+        string name = gameObject.name;
+        switch (name)
         {
-            case "Hunter":
+            case "Hunter(Clone)":
                 OnDestroyHunter?.Invoke();
                 break;
-            case "Prey":
-                OnDestroyPrey?.Invoke();
+            case "Sheep(Clone)":
+                OnDestroySheep?.Invoke();
+                break;
+            case "Duck(Clone)":
+                OnDestroyDuck?.Invoke();
                 break;
             default:
-                Debug.Log("wrong tag:" + tag);
+                Debug.Log("wrong name:" + name);
                 break;
         }
         Destroy(gameObject);
