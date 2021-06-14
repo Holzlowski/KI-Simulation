@@ -407,6 +407,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prey: {fileID: 0}
+  sleepStart: 1
+  sleepEnd: 2
   maxHunger: 0
   attackDistance: 4
   damage: 20
@@ -428,7 +430,7 @@ MonoBehaviour:
   hunger: 0
   lifeSlider: {fileID: 7029348030709855320}
   life: 0
-  minusHunger: 5
+  minusHunger: 1
   damage: 2
   maxHunger: 100
   whenIGetHealed: 60

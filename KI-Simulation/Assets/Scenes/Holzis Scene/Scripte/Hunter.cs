@@ -12,6 +12,8 @@ public class Hunter : MonoBehaviour
     Vector3 direction;
 
     float hungerVal;
+    public float sleepStart;
+    public float sleepEnd;
     public float maxHunger;
     public float attackDistance;
     public float damage;
@@ -20,6 +22,17 @@ public class Hunter : MonoBehaviour
     public float whenIAmHungry = 50f;
     List<GameObject> preys;
 
+    private void OnEnable()
+    {
+        //TimeManager.OnMinuteChanged += TimeCheck;
+        TimeManager.OnHourChanged += TimeCheck;
+    }
+
+    private void OnDisable()
+    {
+        //TimeManager.OnMinuteChanged -= TimeCheck;
+        TimeManager.OnHourChanged -= TimeCheck;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -106,12 +119,26 @@ public class Hunter : MonoBehaviour
         if (hungerVal < maxHunger * (whenIAmHungry / 100))
         {
             anim.SetBool("isHungry", true);
-            Debug.Log("Hungrig");
+            //Debug.Log("Hungrig");
         }
         else
         {
             anim.SetBool("isHungry", false);
-            Debug.Log("Nicht Hungrig");
+            //Debug.Log("Nicht Hungrig");
         }
     }
-}       
+    private void TimeCheck()
+    {
+        if (TimeManager.Hour >= sleepStart && TimeManager.Hour <= sleepEnd)
+        {
+            anim.SetBool("isTired", true);
+            Debug.Log("Ich lege mich schlafen");
+        }
+        else
+        {
+            anim.SetBool("isTired", false);
+            Debug.Log("Ich bin wach");
+        }
+    }
+}
+       
