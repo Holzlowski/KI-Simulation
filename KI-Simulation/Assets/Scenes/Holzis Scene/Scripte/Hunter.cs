@@ -129,7 +129,7 @@ public class Hunter : MonoBehaviour
     }
     private void TimeCheck()
     {
-        if (TimeManager.Hour >= sleepStart && TimeManager.Hour <= sleepEnd)
+        if (TimeManager.Hour >= sleepStart && TimeManager.Hour < sleepEnd)
         {
             anim.SetBool("isTired", true);
             Debug.Log("Ich lege mich schlafen");
