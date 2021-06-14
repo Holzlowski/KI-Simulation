@@ -1955,12 +1955,44 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
+      propertyPath: duck
+      value: 
+      objectReference: {fileID: 3017061162332820170, guid: f2d87ded2100d9649adf26570a46008f, type: 3}
+    - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
+      propertyPath: sheep
+      value: 
+      objectReference: {fileID: 9211072736646543285, guid: d4bce1d3575f9fc4bbd3714bdda56dfa, type: 3}
+    - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
+      propertyPath: duckNest
+      value: 
+      objectReference: {fileID: 828870458}
+    - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
       propertyPath: preyNest
       value: 
       objectReference: {fileID: 828870458}
     - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
+      propertyPath: sheepNest
+      value: 
+      objectReference: {fileID: 828870458}
+    - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
+      propertyPath: duckNumber
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
       propertyPath: hunterNest
       value: 
       objectReference: {fileID: 868567807}
+    - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
+      propertyPath: sheepNumber
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
+      propertyPath: duckSpawnTime
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
+      propertyPath: sheepSpawnTime
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dea390127671812468251e3c2797c29a, type: 3}

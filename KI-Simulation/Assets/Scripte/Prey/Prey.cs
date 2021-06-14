@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System;
 
-public class PreyAnim : MonoBehaviour
+public class Prey : MonoBehaviour
 {
     public Transform target { get; set; }
     public float sleepStart;

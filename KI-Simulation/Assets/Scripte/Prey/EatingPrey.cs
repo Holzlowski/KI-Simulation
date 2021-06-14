@@ -7,24 +7,24 @@ public class EatingPrey : StateMachineBehaviour
 {
     bool hungry;
     NavMeshAgent agent;
-    PreyAnim prey;
+    Prey prey;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agent = animator.GetComponent<NavMeshAgent>();
-        prey = animator.GetComponent<PreyAnim>();
+        prey = animator.GetComponent<Prey>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        hungry = animator.GetComponent<PreyAnim>().hungry;
+        hungry = animator.GetComponent<Prey>().hungry;
         if(hungry)
         {
             animator.SetTrigger("Eat");
         } else {
-            animator.GetComponent<PreyAnim>().target = null;
+            animator.GetComponent<Prey>().target = null;
             animator.SetBool("isEating", false);
         }
     }

@@ -11,18 +11,18 @@ public class WalkingBehavior : StateMachineBehaviour
     private GameObject nest;
 
     NavMeshAgent agent;
-    PreyAnim prey;
+    Prey prey;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agent = animator.GetComponent<NavMeshAgent>();
-        prey = animator.GetComponent<PreyAnim>();
+        prey = animator.GetComponent<Prey>();
 
-        hungry = animator.GetComponent<PreyAnim>().hungry;
-        tired = animator.GetComponent<PreyAnim>().tired;
-        target = animator.GetComponent<PreyAnim>().target;
-        nest = animator.GetComponent<PreyAnim>().nest;
+        hungry = animator.GetComponent<Prey>().hungry;
+        tired = animator.GetComponent<Prey>().tired;
+        target = animator.GetComponent<Prey>().target;
+        nest = animator.GetComponent<Prey>().nest;
         agent.SetDestination(target.position);
     }
 
