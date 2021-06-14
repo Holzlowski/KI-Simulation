@@ -103,12 +103,15 @@ public class HungerAllg : MonoBehaviour
         {
             case "Hunter(Clone)":
                 OnDestroyHunter?.Invoke();
+                WorldManager.hunters.Remove(gameObject);
                 break;
             case "Sheep(Clone)":
                 OnDestroySheep?.Invoke();
+                WorldManager.preys.Remove(gameObject);
                 break;
             case "Duck(Clone)":
                 OnDestroyDuck?.Invoke();
+                WorldManager.preys.Remove(gameObject);
                 break;
             default:
                 Debug.Log("wrong name:" + name);

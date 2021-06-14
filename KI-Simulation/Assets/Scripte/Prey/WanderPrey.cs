@@ -11,9 +11,9 @@ public class WanderPrey : StateMachineBehaviour
     Prey prey;
     List<GameObject> plants;
 
-    float wanderRadius = 5;
-    float wanderDistance = 5;
-    float wanderJitter = 10;
+    float wanderRadius = 150;
+    float wanderDistance = 110;
+    float wanderJitter = 90;
     Vector3 wanderTarget;
 
     bool hungry;
@@ -30,9 +30,6 @@ public class WanderPrey : StateMachineBehaviour
 
        distanceView = prey.distanceView;
        plants = WorldManager.plants;
-
-       cooldown = 0;
-       cooldownBool = false;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -45,24 +42,13 @@ public class WanderPrey : StateMachineBehaviour
             {
                 if(Vector3.Distance(agent.transform.position, plant.transform.position) <= distanceView)
                 {
-                    animator.GetComponent<Prey>().target = plant.transform;
+                    animator.GetComponent<Prey>().target = plant;
                     animator.SetBool("hasTarget", true);
                     animator.SetBool("isWander", false);
                 }
             }
         }
-
-        if(cooldownBool)
-        {
-            cooldown -= 0.1f * Time.deltaTime;
-            if(cooldown <= 0)
-            {
-                cooldownBool = false;
-                cooldown = 10;
-            }
-        } else {
-            wander();
-        }
+        wander();
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
@@ -81,7 +67,5 @@ public class WanderPrey : StateMachineBehaviour
         Vector3 targetWorld = agent.gameObject.transform.InverseTransformVector(targetLocal);
 
         agent.SetDestination(targetWorld);
-        cooldown = 10;
-        cooldownBool = true;
     }
 }
