@@ -19,6 +19,10 @@ public class WorldManager : MonoBehaviour
     public int hunterNumber;
     public float spawnTimeHunter;
 
+    public GameObject plant;
+    public int plantNumber;
+    public float spawnTimePlant;
+
     public static List<GameObject> preys {get; private set;}
     public static List<GameObject> hunters {get; private set;}
     public static List<GameObject> plants {get; private set;}
@@ -32,6 +36,7 @@ public class WorldManager : MonoBehaviour
         HungerAllg.OnDestroyHunter += spawnHunter;
         HungerAllg.OnDestroyDuck += spawnDuck;
         HungerAllg.OnDestroySheep += spawnSheep;
+        Plant.OnDestroyPlant += spawnPlant;
     }
 
     private void OnDisable()
@@ -39,6 +44,7 @@ public class WorldManager : MonoBehaviour
         HungerAllg.OnDestroyHunter -= spawnHunter;
         HungerAllg.OnDestroyDuck -= spawnDuck;
         HungerAllg.OnDestroySheep -= spawnSheep;
+        Plant.OnDestroyPlant -= spawnPlant;
     }
 
     // Start is called before the first frame update
@@ -47,22 +53,36 @@ public class WorldManager : MonoBehaviour
         hunters = new List<GameObject>();
         preys = new List<GameObject>();
         plants = new List<GameObject>();
-        findAllPlants();
 
         //spawnPreysAtStart();
         spawnHuntersAtStart();
+        spawnPlantsAtStart();
         spawnAnimalsAtStart(sheep, sheepNest, sheepNumber, preys);
         spawnAnimalsAtStart(duck, duckNest, duckNumber, preys);
     }
-    
 
-    private void findAllPlants()
+    /*public static void deleteObjectFromList(GameObject animal)
     {
-        foreach(GameObject plant in GameObject.FindGameObjectsWithTag("Plant"))
+        string name = animal.name;
+        switch (name)
         {
-            plants.Add(plant);
+            case "Hunter(Clone)":
+                hunters.Remove(animal);
+                break;
+            case "Sheep(Clone)":
+                preys.Remove(animal);
+                break;
+            case "Duck(Clone)":
+                preys.Remove(animal);
+                break;
+            case "Plant(Clone)":
+                plants.Remove(animal);
+                break;
+            default:
+                Debug.Log("wrong name:" + name);
+                break;
         }
-    }
+    }*/
 
     private void spawnAnimalsAtStart(GameObject animal, GameObject nest, int number, List<GameObject> list)
     {
@@ -82,6 +102,17 @@ public class WorldManager : MonoBehaviour
         }
     }
 
+    private void spawnPlantsAtStart()
+    {
+        for (int i = 0; i < plantNumber; i++)
+        {
+            // spawn-area of the plants
+            Vector3 position = new Vector3(Random.Range(-46f, 46f), 0.5f, Random.Range(-30f, 30f));
+            GameObject newPlant = Instantiate(plant, position, Quaternion.identity);
+            plants.Add(newPlant);
+        }
+    }
+
     /*private void spawnPreysAtStart()
     {
         for (int i = 0; i < preyNumber; i++)
@@ -90,6 +121,10 @@ public class WorldManager : MonoBehaviour
             preys.Add(newPrey);
         }
     }*/
+    private void spawnPlant()
+    {
+        StartCoroutine(WaitPlant());
+    }
 
     private void spawnHunter()
     {
@@ -124,6 +159,14 @@ public class WorldManager : MonoBehaviour
         yield return new WaitForSeconds(spawnTimeHunter);
         GameObject newHunter = Instantiate(hunter, hunterNest.transform.position, Quaternion.identity);
         hunters.Add(newHunter);
+    }
+
+    IEnumerator WaitPlant()
+    {
+        yield return new WaitForSeconds(spawnTimePlant);
+        Vector3 position = new Vector3(Random.Range(-72f, 20f), 0.5f, Random.Range(-41f, 20f));
+        GameObject newPlant = Instantiate(plant, position, Quaternion.identity);
+        plants.Add(newPlant);
     }
 }
 
