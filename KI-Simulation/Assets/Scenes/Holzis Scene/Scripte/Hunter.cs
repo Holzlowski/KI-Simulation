@@ -28,13 +28,14 @@ public class Hunter : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         maxHunger = GetComponent<HungerAllg>().maxHunger;
 
-        //preys = WorldManager.preys;
-   
+        preys = WorldManager.preys;
+        /*
         preys = new List<GameObject>();
         foreach (GameObject p in GameObject.FindGameObjectsWithTag("Prey")) 
         {
             preys.Add(p);
         }
+        */
     }
    
 
