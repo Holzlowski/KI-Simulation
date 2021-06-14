@@ -198,11 +198,11 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 4
-    m_ConditionEvent: distance
-    m_EventTreshold: 4
   - m_ConditionMode: 1
     m_ConditionEvent: isHungry
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: attackDistance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 4171997886590060106}
@@ -365,11 +365,11 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 3
-    m_ConditionEvent: distance
-    m_EventTreshold: 4
   - m_ConditionMode: 1
     m_ConditionEvent: isHungry
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: attackDistance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1868883429727206893}
@@ -1113,11 +1113,11 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 3
-    m_ConditionEvent: distance
-    m_EventTreshold: 4
   - m_ConditionMode: 2
     m_ConditionEvent: isHungry
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: attackDistance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7816062084739929659}
@@ -1270,11 +1270,11 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 4
-    m_ConditionEvent: distance
-    m_EventTreshold: 4
   - m_ConditionMode: 2
     m_ConditionEvent: isHungry
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: attackDistance
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 4171997886590060106}

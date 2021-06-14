@@ -7,14 +7,13 @@ public class Hunter : MonoBehaviour
 {
     Animator anim;
     NavMeshAgent agent;
-    Collider col;
     public GameObject prey;
 
     Vector3 direction;
-    float distance;
 
     float hungerVal;
     public float maxHunger;
+    public float attackDistance;
     public float damage;
     public float healWithBite;
     [Range(10f,90f)]
@@ -27,6 +26,7 @@ public class Hunter : MonoBehaviour
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         maxHunger = GetComponent<HungerAllg>().maxHunger;
+        agent.stoppingDistance = attackDistance;
 
         preys = WorldManager.preys;
         /*
@@ -83,6 +83,16 @@ public class Hunter : MonoBehaviour
                 }
             }
             anim.SetFloat("distance", distance);
+
+        if(distance <= attackDistance)
+        {
+            anim.SetBool("attackDistance", true);
+            Debug.Log("Ich greif an");
+        }
+        else
+        {
+            anim.SetBool("attackDistance", false);
+        }
     }
 
     void makeDamage(float damage)
@@ -104,46 +114,4 @@ public class Hunter : MonoBehaviour
             Debug.Log("Nicht Hungrig");
         }
     }
-
-}
-
-/*
-       foreach (GameObject p in preys)
-            {
-                if (p == null)
-                {
-                    preys.Remove(p);
-                }
-                else if (Vector3.Distance(transform.position, p.transform.position) < distance)
-                {
-                    prey = p;
-                    distance = Vector3.Distance(transform.position, p.transform.position);
-                }
-            }
-            anim.SetFloat("distance", distance);
-*/
-
-
-/*
-        //Debug.Log(hit);
-
-        if(prey == null)
-        {
-            anim.SetBool("noTarget", true);
-        }
-        else
-        {
-            anim.SetBool("noTarget", false);
-        }
-    
-       
-        if(distance <= agent.stoppingDistance)
-        {
-            anim.SetBool("attackDistance", true);
-            Debug.Log("Ich greif an");
-        }
-        else
-        {
-            anim.SetBool("attackDistance", false);
-        }
-       */
+}       

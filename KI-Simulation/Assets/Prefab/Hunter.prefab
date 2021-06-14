@@ -407,8 +407,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prey: {fileID: 0}
+  maxHunger: 0
+  attackDistance: 4
   damage: 20
   healWithBite: 10
+  whenIAmHungry: 50
 --- !u!114 &7029348029610069077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,6 +430,8 @@ MonoBehaviour:
   life: 0
   minusHunger: 5
   damage: 2
+  maxHunger: 100
+  whenIGetHealed: 60
 --- !u!95 &7029348029610069076
 Animator:
   serializedVersion: 3
