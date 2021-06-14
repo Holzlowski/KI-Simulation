@@ -9,15 +9,15 @@ public class FleeBehaviorPrey : StateMachineBehaviour
     public float distanceView;
     public float fleeSpeed;
     private float normalSpeed;
-    PreyAnim prey;
+    Prey prey;
     public GameObject theHunter;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agent = animator.GetComponent<NavMeshAgent>();
-        distanceView = animator.GetComponent<PreyAnim>().distanceView;
-        theHunter = animator.GetComponent<PreyAnim>().theHunter; 
+        distanceView = animator.GetComponent<Prey>().distanceView;
+        theHunter = animator.GetComponent<Prey>().theHunter; 
 
         normalSpeed = agent.speed;
         agent.speed = fleeSpeed;

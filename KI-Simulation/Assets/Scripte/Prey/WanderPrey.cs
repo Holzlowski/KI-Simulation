@@ -8,7 +8,7 @@ public class WanderPrey : StateMachineBehaviour
 
     NavMeshAgent agent;
     public float distanceView;
-    PreyAnim prey;
+    Prey prey;
     List<GameObject> plants;
 
     float wanderRadius = 5;
@@ -25,7 +25,7 @@ public class WanderPrey : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
        agent = animator.GetComponent<NavMeshAgent>();
-       prey = animator.GetComponent<PreyAnim>();
+       prey = animator.GetComponent<Prey>();
        wanderTarget = Vector3.zero;
 
        distanceView = prey.distanceView;
@@ -45,7 +45,7 @@ public class WanderPrey : StateMachineBehaviour
             {
                 if(Vector3.Distance(agent.transform.position, plant.transform.position) <= distanceView)
                 {
-                    animator.GetComponent<PreyAnim>().target = plant.transform;
+                    animator.GetComponent<Prey>().target = plant.transform;
                     animator.SetBool("hasTarget", true);
                     animator.SetBool("isWander", false);
                 }
