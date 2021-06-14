@@ -80,6 +80,7 @@ public class PreyAnim : MonoBehaviour
             {
                 if(hunter)
                 {
+                    theHunter = hunter;
                     float distanceToHunter = Vector3.Distance(agent.transform.position, hunter.transform.position);
                     if (distanceToHunter < distanceView)
                     {
