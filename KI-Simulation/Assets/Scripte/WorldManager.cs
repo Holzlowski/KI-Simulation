@@ -54,30 +54,7 @@ public class WorldManager : MonoBehaviour
         spawnAnimalsAtStart(sheep, sheepNest, sheepNumber, preys);
         spawnAnimalsAtStart(duck, duckNest, duckNumber, preys);
     }
-    /*
-    public List<GameObject> createListWithTag(string tagName)
-    {
-        GameObject[] arrayWithTag = GameObject.FindGameObjectsWithTag("" + tagName);
-        List<GameObject> listWithtag = new List<GameObject>();
-
-        if (tag.Length == 0)
-        {
-            Debug.Log("Es gibt keine Objekte mit diesem Tag.");
-        }
-        else
-        {
-            
-            listWithtag.AddRange(arrayWithTag);
-        }
-        return listWithtag;
-    }
-   
-
-     string listNameCreator(string listName)
-    {
-        return listName;
-    }
-     */
+    
 
     private void findAllPlants()
     {
@@ -149,3 +126,28 @@ public class WorldManager : MonoBehaviour
         hunters.Add(newHunter);
     }
 }
+
+/*
+    public List<GameObject> createListWithTag(string tagName)
+    {
+        GameObject[] arrayWithTag = GameObject.FindGameObjectsWithTag("" + tagName);
+        List<GameObject> listWithtag = new List<GameObject>();
+
+        if (tag.Length == 0)
+        {
+            Debug.Log("Es gibt keine Objekte mit diesem Tag.");
+        }
+        else
+        {
+            
+            listWithtag.AddRange(arrayWithTag);
+        }
+        return listWithtag;
+    }
+   
+
+     string listNameCreator(string listName)
+    {
+        return listName;
+    }
+     */
