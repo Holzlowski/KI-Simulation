@@ -42,12 +42,10 @@ public class Prey : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        getListsOfWorldManager();
+
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>(); 
-
-        plants = WorldManager.plants;
-        hunters = WorldManager.hunters;
-        nest = GameObject.Find("PreyNest");
 
         tired = false;
         hungry = false;
@@ -57,8 +55,7 @@ public class Prey : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        plants = WorldManager.plants;
-        hunters = WorldManager.hunters;
+        getListsOfWorldManager();
         
         //checking if Prey is hungry
         float hunger = GetComponent<HungerAllg>().hunger;
@@ -107,6 +104,27 @@ public class Prey : MonoBehaviour
             tired = true;
         } else {
             tired = false;
+        }
+    }
+
+    private void getListsOfWorldManager()
+    {
+        string name = gameObject.name;
+        switch (name)
+        {
+            case "Sheep(Clone)":
+                plants = WorldManager.plants;
+                hunters = WorldManager.wolfs;
+                nest = GameObject.Find("SheepNest");
+                break;
+            case "Duck(Clone)":
+                plants = WorldManager.plants;
+                hunters = WorldManager.foxes;
+                nest = GameObject.Find("DuckNest");
+                break;
+            default:
+                Debug.Log("wrong name:" + name);
+                break;
         }
     }
 }
