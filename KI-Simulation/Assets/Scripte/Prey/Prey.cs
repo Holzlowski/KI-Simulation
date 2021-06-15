@@ -6,7 +6,7 @@ using System;
 
 public class Prey : MonoBehaviour
 {
-    public Transform target { get; set; }
+    public GameObject target {  get;  set; }
     public float sleepStart;
     public float sleepEnd; 
     public float hungryValue;
@@ -94,7 +94,7 @@ public class Prey : MonoBehaviour
             bool sleeping = anim.GetBool("isSleeping");
             if(tired && !hungry && !sleeping)
             {
-                target = nest.transform;
+                target = nest;
                 anim.SetBool("hasTarget", true);
             }
         }

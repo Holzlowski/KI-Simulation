@@ -20,7 +20,7 @@ public class EatingPrey : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         hungry = animator.GetComponent<Prey>().hungry;
-        if(hungry)
+        if(hungry && animator.GetComponent<Prey>().target != null)
         {
             animator.SetTrigger("Eat");
         } else {
