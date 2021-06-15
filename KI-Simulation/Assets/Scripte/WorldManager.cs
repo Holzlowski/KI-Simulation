@@ -4,85 +4,82 @@ using UnityEngine;
 
 public class WorldManager : MonoBehaviour
 {
+    // SHEEPS - PREY (wolf)
     public GameObject sheep;
     public GameObject sheepNest;
     public int sheepNumber;
     public float sheepSpawnTime;
+    public static List<GameObject> sheeps {get; private set;}
 
+    // WOLFS - HUNTER (sheep)
+    public GameObject wolf;
+    public GameObject wolfNest;
+    public int wolfNumber;
+    public float wolfSpawnTime;
+    public static List<GameObject> wolfs {get; private set;}
+
+    //DUCKS - PREY (fox)
     public GameObject duck;
     public GameObject duckNest;
     public int duckNumber;
     public float duckSpawnTime;
+    public static List<GameObject> ducks {get; private set;}
 
-    public GameObject hunter;
-    public GameObject hunterNest;
-    public int hunterNumber;
-    public float spawnTimeHunter;
+    // FOXES - HUNTER (duck)
+    public GameObject fox;
+    public GameObject foxNest;
+    public int foxNumber;
+    public float foxSpawnTime;
+    public static List<GameObject> foxes {get; private set;}
 
+    // PLANTS - for Prey
     public GameObject plant;
     public int plantNumber;
     public float spawnTimePlant;
-
-    public static List<GameObject> preys {get; private set;}
-    public static List<GameObject> hunters {get; private set;}
     public static List<GameObject> plants {get; private set;}
-
-    private bool start;
 
     public List<string> tags;
 
     private void OnEnable()
     {
-        HungerAllg.OnDestroyHunter += spawnHunter;
+        HungerAllg.OnDestroyWolf += spawnWolf;
+        HungerAllg.OnDestroyFox += spawnFox;
+
         HungerAllg.OnDestroyDuck += spawnDuck;
         HungerAllg.OnDestroySheep += spawnSheep;
+
         Plant.OnDestroyPlant += spawnPlant;
     }
 
     private void OnDisable()
     {
-        HungerAllg.OnDestroyHunter -= spawnHunter;
+        HungerAllg.OnDestroyWolf -= spawnWolf;
+        HungerAllg.OnDestroyFox -= spawnFox;
+
         HungerAllg.OnDestroyDuck -= spawnDuck;
         HungerAllg.OnDestroySheep -= spawnSheep;
+
         Plant.OnDestroyPlant -= spawnPlant;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        hunters = new List<GameObject>();
-        preys = new List<GameObject>();
-        plants = new List<GameObject>();
+        //HUNTERS
+        wolfs = new List<GameObject>();
+        spawnAnimalsAtStart(wolf, wolfNest, wolfNumber, wolfs);
+        foxes = new List<GameObject>();
+        spawnAnimalsAtStart(fox, foxNest, foxNumber, foxes);
+        
+        //PREYS
+        sheeps = new List<GameObject>();
+        spawnAnimalsAtStart(sheep, sheepNest, sheepNumber, sheeps);
+        ducks = new List<GameObject>();
+        spawnAnimalsAtStart(duck, duckNest, duckNumber, ducks);
 
-        //spawnPreysAtStart();
-        spawnHuntersAtStart();
+        //PLANTS
         spawnPlantsAtStart();
-        spawnAnimalsAtStart(sheep, sheepNest, sheepNumber, preys);
-        spawnAnimalsAtStart(duck, duckNest, duckNumber, preys);
     }
-
-    /*public static void deleteObjectFromList(GameObject animal)
-    {
-        string name = animal.name;
-        switch (name)
-        {
-            case "Hunter(Clone)":
-                hunters.Remove(animal);
-                break;
-            case "Sheep(Clone)":
-                preys.Remove(animal);
-                break;
-            case "Duck(Clone)":
-                preys.Remove(animal);
-                break;
-            case "Plant(Clone)":
-                plants.Remove(animal);
-                break;
-            default:
-                Debug.Log("wrong name:" + name);
-                break;
-        }
-    }*/
 
     private void spawnAnimalsAtStart(GameObject animal, GameObject nest, int number, List<GameObject> list)
     {
@@ -93,17 +90,9 @@ public class WorldManager : MonoBehaviour
         }
     }
 
-    private void spawnHuntersAtStart()
-    {
-        for (int i = 0; i < hunterNumber; i++)
-        {
-            GameObject newHunter = Instantiate(hunter, hunterNest.transform.position, Quaternion.identity);
-            hunters.Add(newHunter);
-        }
-    }
-
     private void spawnPlantsAtStart()
     {
+        plants = new List<GameObject>();
         for (int i = 0; i < plantNumber; i++)
         {
             // spawn-area of the plants
@@ -113,52 +102,10 @@ public class WorldManager : MonoBehaviour
         }
     }
 
-    /*private void spawnPreysAtStart()
-    {
-        for (int i = 0; i < preyNumber; i++)
-        {
-            GameObject newPrey = Instantiate(prey, preyNest.transform.position, Quaternion.identity);
-            preys.Add(newPrey);
-        }
-    }*/
+    // PLANT
     private void spawnPlant()
     {
         StartCoroutine(WaitPlant());
-    }
-
-    private void spawnHunter()
-    {
-        StartCoroutine(WaitHunter());
-    }
-
-    private void spawnSheep()
-    {
-        StartCoroutine(WaitSheep());
-    }
-    private void spawnDuck()
-    {
-        StartCoroutine(WaitDuck());
-    }
-
-    IEnumerator WaitSheep()
-    {   
-        yield return new WaitForSeconds(sheepSpawnTime);
-        GameObject newSheep = Instantiate(sheep, sheepNest.transform.position, Quaternion.identity);
-        preys.Add(newSheep); 
-    }
-
-    IEnumerator WaitDuck()
-    {   
-        yield return new WaitForSeconds(duckSpawnTime);
-        GameObject newDuck = Instantiate(duck, duckNest.transform.position, Quaternion.identity);
-        preys.Add(newDuck); 
-    }
-
-    IEnumerator WaitHunter()
-    {
-        yield return new WaitForSeconds(spawnTimeHunter);
-        GameObject newHunter = Instantiate(hunter, hunterNest.transform.position, Quaternion.identity);
-        hunters.Add(newHunter);
     }
 
     IEnumerator WaitPlant()
@@ -168,6 +115,58 @@ public class WorldManager : MonoBehaviour
         GameObject newPlant = Instantiate(plant, position, Quaternion.identity);
         plants.Add(newPlant);
     }
+
+    // SHEEP
+    private void spawnSheep()
+    {
+        StartCoroutine(WaitSheep());
+    }
+
+    IEnumerator WaitSheep()
+    {   
+        yield return new WaitForSeconds(sheepSpawnTime);
+        GameObject newSheep = Instantiate(sheep, sheepNest.transform.position, Quaternion.identity);
+        sheeps.Add(newSheep); 
+    }
+
+    // DUCK
+    private void spawnDuck()
+    {
+        StartCoroutine(WaitDuck());
+    }
+
+    IEnumerator WaitDuck()
+    {   
+        yield return new WaitForSeconds(duckSpawnTime);
+        GameObject newDuck = Instantiate(duck, duckNest.transform.position, Quaternion.identity);
+        ducks.Add(newDuck); 
+    }
+
+    // WOLF
+    private void spawnWolf()
+    {
+        StartCoroutine(WaitWolf());
+    }
+
+    IEnumerator WaitWolf()
+    {
+        yield return new WaitForSeconds(wolfSpawnTime);
+        GameObject newWolf = Instantiate(wolf, wolfNest.transform.position, Quaternion.identity);
+        wolfs.Add(newWolf);
+    }
+
+    //FOX
+    private void spawnFox()
+    {
+        StartCoroutine(WaitFox());
+    }
+
+    IEnumerator WaitFox()
+    {
+        yield return new WaitForSeconds(foxSpawnTime);
+        GameObject newFox = Instantiate(fox, foxNest.transform.position, Quaternion.identity);
+        foxes.Add(newFox);
+    }  
 }
 
 /*
