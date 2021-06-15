@@ -11,9 +11,9 @@ public class WanderPrey : StateMachineBehaviour
     Prey prey;
     List<GameObject> plants;
 
-    float wanderRadius = 150;
-    float wanderDistance = 110;
-    float wanderJitter = 90;
+    float wanderRadius;
+    float wanderDistance;
+    float wanderJitter;
     Vector3 wanderTarget;
 
     bool hungry;
@@ -24,12 +24,15 @@ public class WanderPrey : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-       agent = animator.GetComponent<NavMeshAgent>();
-       prey = animator.GetComponent<Prey>();
-       wanderTarget = Vector3.zero;
+        agent = animator.GetComponent<NavMeshAgent>();
+        prey = animator.GetComponent<Prey>();
+        wanderRadius = animator.GetComponent<Prey>().wanderRadius;
+        wanderDistance = animator.GetComponent<Prey>().wanderDistance;
+        wanderJitter = animator.GetComponent<Prey>().wanderJitter;
+        //wanderTarget = Vector3.zero;
 
-       distanceView = prey.distanceView;
-       plants = WorldManager.plants;
+        distanceView = prey.distanceView;
+        plants = animator.GetComponent<Prey>().plants;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

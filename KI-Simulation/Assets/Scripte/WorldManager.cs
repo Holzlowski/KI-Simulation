@@ -78,6 +78,7 @@ public class WorldManager : MonoBehaviour
         spawnAnimalsAtStart(duck, duckNest, duckNumber, ducks);
 
         //PLANTS
+        plants = new List<GameObject>();
         spawnPlantsAtStart();
     }
 
@@ -92,7 +93,6 @@ public class WorldManager : MonoBehaviour
 
     private void spawnPlantsAtStart()
     {
-        plants = new List<GameObject>();
         for (int i = 0; i < plantNumber; i++)
         {
             // spawn-area of the plants
@@ -111,7 +111,7 @@ public class WorldManager : MonoBehaviour
     IEnumerator WaitPlant()
     {
         yield return new WaitForSeconds(spawnTimePlant);
-        Vector3 position = new Vector3(Random.Range(-72f, 20f), 0.5f, Random.Range(-41f, 20f));
+        Vector3 position = new Vector3(Random.Range(-46f, 46f), 0.5f, Random.Range(-30f, 30f));
         GameObject newPlant = Instantiate(plant, position, Quaternion.identity);
         plants.Add(newPlant);
     }

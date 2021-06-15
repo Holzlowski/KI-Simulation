@@ -421,7 +421,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 4.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -445,13 +445,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7bb2e74a181e214da06b8d68e456592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sleepStart: 13
-  sleepEnd: 15
+  sleepStart: 23
+  sleepEnd: 2
   hungryValue: 60
   maxHunger: 100
+  wanderRadius: 150
+  wanderDistance: 110
+  wanderJitter: 90
+  plants: []
+  distanceView: 10
   hungry: 0
   tired: 0
-  distanceView: 10
   theHunter: {fileID: 0}
   nest: {fileID: 0}
 --- !u!95 &845942242872938643

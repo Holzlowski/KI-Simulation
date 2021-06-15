@@ -34,11 +34,15 @@ public class FleeBehaviorPrey : StateMachineBehaviour
                 animator.SetBool("isFleeing", false);
             } else {
             
-            Vector3 moveAway = agent.transform.position - theHunter.transform.position;
-            Vector3 newPos = agent.transform.position + moveAway;
+                Vector3 moveAway = agent.transform.position - theHunter.transform.position;
+                Vector3 newPos = agent.transform.position + moveAway;
 
-            agent.SetDestination(newPos);
-            }
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(newPos, out hit, 1f, NavMesh.AllAreas))
+                {
+                    agent.SetDestination(hit.position);
+                }  
+            }   
         } else {
             animator.SetBool("isFleeing", false);
         }  

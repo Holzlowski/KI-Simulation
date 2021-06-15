@@ -7,7 +7,7 @@ public class WalkingBehavior : StateMachineBehaviour
 {
     private bool hungry;
     private bool tired;
-    private GameObject target;
+    public GameObject target;
     private GameObject nest;
 
     NavMeshAgent agent;
@@ -23,9 +23,8 @@ public class WalkingBehavior : StateMachineBehaviour
         tired = animator.GetComponent<Prey>().tired;
         target = animator.GetComponent<Prey>().target;
         nest = animator.GetComponent<Prey>().nest;
-        agent.SetDestination(target.transform.position);
-
         Debug.Log(target.transform.position);
+        agent.SetDestination(target.transform.position);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -37,19 +36,22 @@ public class WalkingBehavior : StateMachineBehaviour
 
             if(distanceToTarget <= agent.stoppingDistance)
             {
-                if(target == nest.transform)
+                if(target == nest && tired)
                 {
                     animator.SetBool("isSleeping", true);
+                    animator.GetComponent<Prey>().target = null;
                     animator.SetBool("hasTarget", false);
-                } else if (hungry) 
+                } else if (target != nest.transform && hungry) 
                 {
                     animator.SetBool("isEating", true);
+                    animator.GetComponent<Prey>().target = null;
                     animator.SetBool("hasTarget", false);
                 }
             }
-        }
-        animator.GetComponent<Prey>().target = null;
-        animator.SetBool("hasTarget", false);
+        } else {
+            animator.GetComponent<Prey>().target = null;
+            animator.SetBool("hasTarget", false);
+        } 
     }
 
     //OnStateExit is called when a transition ends and the state machine finishes evaluating this state
