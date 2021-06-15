@@ -22,13 +22,9 @@ public class FSMBase : StateMachineBehaviour
         agent = hunter.GetComponent<NavMeshAgent>();
         prey = hunter.GetComponent<Hunter>().prey;
 
-
-
         agent.speed = hunter.GetComponent<Hunter>().speed;
         agent.angularSpeed = hunter.GetComponent<Hunter>().rotSpeed;
         agent.acceleration = acceleration;
-
-
 
         /*
         this.wanderRadius = hunter.GetComponent<Hunter>().wanderRadius;

@@ -8,6 +8,7 @@ public class Hunter : MonoBehaviour
     Animator anim;
     NavMeshAgent agent;
     public GameObject prey;
+    public GameObject nest;
 
     Vector3 direction;
 
@@ -40,13 +41,16 @@ public class Hunter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        getListsOfWorldManager();
+
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         maxHunger = GetComponent<HungerAllg>().maxHunger;
         agent.stoppingDistance = attackDistance;
 
-        preys = WorldManager.preys;
         /*
+        preys = WorldManager.preys;
+        
         preys = new List<GameObject>();
         foreach (GameObject p in GameObject.FindGameObjectsWithTag("Prey")) 
         {
@@ -54,11 +58,13 @@ public class Hunter : MonoBehaviour
         }
         */
     }
-   
+
 
     // Update is called once per frame
     void Update()
     {
+        getListsOfWorldManager();
+
         hungerVal = GetComponent<HungerAllg>().hunger;
         //anim.SetFloat("hunger", hungerVal);
         hungerCheck();
@@ -142,6 +148,25 @@ public class Hunter : MonoBehaviour
         {
             anim.SetBool("isTired", false);
             Debug.Log("Ich bin wach");
+        }
+    }
+
+    private void getListsOfWorldManager()
+    {
+        string name = gameObject.name;
+        switch (name)
+        {
+            case "Wolf(Clone)":
+                preys = WorldManager.sheeps;
+                nest = GameObject.Find("WolfNest");
+                break;
+            case "Fox(Clone)":
+                preys = WorldManager.ducks;
+                nest = GameObject.Find("FoxNest");
+                break;
+            default:
+                Debug.Log("wrong name:" + name);
+                break;
         }
     }
 }

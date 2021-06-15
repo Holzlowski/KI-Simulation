@@ -27,7 +27,7 @@ public class HunterBT : MonoBehaviour
     private void Update()
     {
         hunger = GetComponent<HungerAllg>().hunger;
-        preys = WorldManager.preys;
+        //preys = WorldManager.preys;
     }
 
     [Task]
