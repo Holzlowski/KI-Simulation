@@ -17,7 +17,7 @@ public class TimeManager : MonoBehaviour
     void Start()
     {
         Minute = 50;
-        Hour = 23;
+        Hour = 22;
         timer = minuteToRealTime;
     }
 

@@ -71,7 +71,6 @@ public class Hunter : MonoBehaviour
 
          if (preys.Count==0)
         {
-            Debug.Log("Gibt keine Preys mehr");
             anim.SetFloat("distance", 100);
         }
 
@@ -110,7 +109,6 @@ public class Hunter : MonoBehaviour
         if(distance <= attackDistance)
         {
             anim.SetBool("attackDistance", true);
-            Debug.Log("Ich greif an");
         }
         else
         {
@@ -139,15 +137,13 @@ public class Hunter : MonoBehaviour
     }
     private void TimeCheck()
     {
-        if (TimeManager.Hour >= sleepStart && TimeManager.Hour < sleepEnd)
+        if (TimeManager.Hour == sleepStart)
         {
             anim.SetBool("isTired", true);
-            Debug.Log("Ich lege mich schlafen");
         }
-        else
+        if(TimeManager.Hour == sleepEnd)
         {
             anim.SetBool("isTired", false);
-            Debug.Log("Ich bin wach");
         }
     }
 

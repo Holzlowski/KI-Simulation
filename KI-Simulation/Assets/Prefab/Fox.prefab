@@ -1056,10 +1056,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prey: {fileID: 0}
   nest: {fileID: 0}
-  speed: 20
+  speed: 10
   rotSpeed: 150
-  sleepStart: 1
-  sleepEnd: 4
+  sleepStart: 3
+  sleepEnd: 5
   maxHunger: 0
   attackDistance: 3
   damage: 10

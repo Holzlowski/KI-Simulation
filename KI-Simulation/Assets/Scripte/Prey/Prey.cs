@@ -6,23 +6,27 @@ using System;
 
 public class Prey : MonoBehaviour
 {
-    public GameObject target {  get;  set; }
+    public GameObject target{set; get;}
     public float sleepStart;
     public float sleepEnd; 
     public float hungryValue;
     public float maxHunger;
+    public float wanderRadius;
+    public float wanderDistance;
+    public float wanderJitter;
+    public List<GameObject> plants;
+    public float distanceView;
 
     public bool hungry;
     public bool tired;
+    public GameObject theHunter;
+    public GameObject nest;
 
     private NavMeshAgent agent;
 
-    public float distanceView;
+    
     Animator anim;
-    List<GameObject> plants;
     List<GameObject> hunters;
-    public GameObject theHunter;
-    public GameObject nest;
     private bool fleeing;
 
     public static Action OnTargetChanged;
@@ -81,28 +85,31 @@ public class Prey : MonoBehaviour
                     float distanceToHunter = Vector3.Distance(agent.transform.position, hunter.transform.position);
                     if (distanceToHunter < distanceView)
                     {
-                        target = null;
                         anim.SetBool("hasTarget", false);
+                        target = null;
                         theHunter = hunter;
                         anim.SetBool("isFleeing", true);
                     }
                 }
             }
             bool sleeping = anim.GetBool("isSleeping");
-            if(tired && !hungry && !sleeping)
+            if(tired && !sleeping)
             {
                 target = nest;
                 anim.SetBool("hasTarget", true);
+                anim.SetBool("isWander", false);
             }
         }
     }
 
     private void TimeCheck()
     {
-        if(TimeManager.Hour >= sleepStart && TimeManager.Hour <= sleepEnd)
+        if(TimeManager.Hour == sleepStart)
         {
             tired = true;
-        } else {
+        } 
+        if(TimeManager.Hour == sleepEnd)
+        {
             tired = false;
         }
     }

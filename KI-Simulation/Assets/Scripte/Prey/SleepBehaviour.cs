@@ -4,21 +4,17 @@ using UnityEngine;
 
 public class SleepBehaviour : StateMachineBehaviour
 {
-    private float sleepEnd;
-
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        sleepEnd = animator.GetComponent<Prey>().sleepEnd;
+
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-       if(TimeManager.Hour == sleepEnd)
-
+       if(!animator.GetComponent<Prey>().tired)
        {
-           animator.SetBool("isTired", false);
            animator.SetBool("isSleeping", false);
        }
     }
