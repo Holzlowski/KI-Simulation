@@ -8,7 +8,8 @@ using System;
 public class HungerAllg : MonoBehaviour
 {
     Animator anim;
-    public static Action OnDestroyHunter;
+    public static Action OnDestroyWolf;
+    public static Action OnDestroyFox;
     public static Action OnDestroySheep;
     public static Action OnDestroyDuck;
 
@@ -101,17 +102,21 @@ public class HungerAllg : MonoBehaviour
         string name = gameObject.name;
         switch (name)
         {
-            case "Hunter(Clone)":
-                OnDestroyHunter?.Invoke();
-                WorldManager.hunters.Remove(gameObject);
+            case "Wolf(Clone)":
+                OnDestroyWolf?.Invoke();
+                WorldManager.wolfs.Remove(gameObject);
+                break;
+            case "Fox(Clone)":
+                OnDestroyFox?.Invoke();
+                WorldManager.foxes.Remove(gameObject);
                 break;
             case "Sheep(Clone)":
                 OnDestroySheep?.Invoke();
-                WorldManager.preys.Remove(gameObject);
+                WorldManager.sheeps.Remove(gameObject);
                 break;
             case "Duck(Clone)":
                 OnDestroyDuck?.Invoke();
-                WorldManager.preys.Remove(gameObject);
+                WorldManager.ducks.Remove(gameObject);
                 break;
             default:
                 Debug.Log("wrong name:" + name);
