@@ -13,7 +13,7 @@ public class SleepingFSM : FSMBase
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agent.SetDestination(GameObject.Find("HunterNest").transform.position);
+        agent.SetDestination(hunter.GetComponent<Hunter>().nest.transform.position);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
