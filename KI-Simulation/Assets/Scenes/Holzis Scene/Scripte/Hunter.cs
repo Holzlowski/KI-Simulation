@@ -12,6 +12,7 @@ public class Hunter : MonoBehaviour
     Vector3 direction;
 
     float hungerVal;
+    public float speed, rotSpeed;
     public float sleepStart;
     public float sleepEnd;
     public float maxHunger;
@@ -21,6 +22,9 @@ public class Hunter : MonoBehaviour
     [Range(10f,90f)]
     public float whenIAmHungry = 50f;
     List<GameObject> preys;
+
+    //public float wanderRadius, wanderDistance, wanderJitter;
+    
 
     private void OnEnable()
     {

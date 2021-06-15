@@ -10,10 +10,11 @@ public class FSMBase : StateMachineBehaviour
     public GameObject prey;
     public Vector3 wanderTarget = Vector3.zero;
 
-    public float speed;
-    public float rotSpeed;
+    //public float speed, rotSpeed; 
     public float acceleration;
     public float damage;
+
+    //public float wanderRadius, wanderDistance, wanderJitter;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -21,9 +22,19 @@ public class FSMBase : StateMachineBehaviour
         agent = hunter.GetComponent<NavMeshAgent>();
         prey = hunter.GetComponent<Hunter>().prey;
 
-        agent.speed = speed;
-        agent.angularSpeed = rotSpeed;
+
+
+        agent.speed = hunter.GetComponent<Hunter>().speed;
+        agent.angularSpeed = hunter.GetComponent<Hunter>().rotSpeed;
         agent.acceleration = acceleration;
+
+
+
+        /*
+        this.wanderRadius = hunter.GetComponent<Hunter>().wanderRadius;
+        this.wanderDistance = hunter.GetComponent<Hunter>().wanderDistance;
+        this.wanderJitter = hunter.GetComponent<Hunter>().wanderJitter;
+        */
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
