@@ -1,5 +1,21 @@
 tree("Root")
+	fallback
+		tree("Chase")
+		sequence						
+			tree("Wander")	
+
+tree("Wander")
 	sequence
-		while hungerCheck(0.6)
-			wanderBT
+		wanderBT
+		random(3,2,1,1)
+			Wait(0.5)
+			Wait(1.0)
+			Wait(2.0)
+			Wait(5.0)
 				
+tree("Chase")
+	while hungerCheck
+		while checkDistanceToTarget
+			sequence
+				moveToTarget
+				Attack	
