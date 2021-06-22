@@ -116,9 +116,9 @@ public class Hunter : MonoBehaviour
         }
     }
 
-    void makeDamage(float damage)
+    void makeDamage()
     {
-       damage = this.damage;
+       //damage = this.damage;
        prey.GetComponent<HungerAllg>().getdamage(damage);
     }
 
