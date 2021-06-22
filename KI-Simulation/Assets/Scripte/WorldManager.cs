@@ -32,6 +32,13 @@ public class WorldManager : MonoBehaviour
     public float foxSpawnTime;
     public static List<GameObject> foxes {get; private set;}
 
+    // PIGS - PREY
+    public GameObject pig;
+    public GameObject pigNest;
+    public int pigNumber;
+    public float pigSpawnTime;
+    public static List<GameObject> pigs {get; private set;}
+
     // PLANTS - for Prey
     public GameObject plant;
     public int plantNumber;
@@ -47,6 +54,7 @@ public class WorldManager : MonoBehaviour
 
         HungerAllg.OnDestroyDuck += spawnDuck;
         HungerAllg.OnDestroySheep += spawnSheep;
+        HungerAllg.OnDestroyPig += spawnPig;
 
         Plant.OnDestroyPlant += spawnPlant;
     }
@@ -58,6 +66,7 @@ public class WorldManager : MonoBehaviour
 
         HungerAllg.OnDestroyDuck -= spawnDuck;
         HungerAllg.OnDestroySheep -= spawnSheep;
+        HungerAllg.OnDestroyPig += spawnPig;
 
         Plant.OnDestroyPlant -= spawnPlant;
     }
@@ -76,6 +85,8 @@ public class WorldManager : MonoBehaviour
         spawnAnimalsAtStart(sheep, sheepNest, sheepNumber, sheeps);
         ducks = new List<GameObject>();
         spawnAnimalsAtStart(duck, duckNest, duckNumber, ducks);
+        pigs = new List<GameObject>();
+        spawnAnimalsAtStart(pig, pigNest, pigNumber, pigs);
 
         //PLANTS
         plants = new List<GameObject>();
@@ -140,6 +151,19 @@ public class WorldManager : MonoBehaviour
         yield return new WaitForSeconds(duckSpawnTime);
         GameObject newDuck = Instantiate(duck, duckNest.transform.position, Quaternion.identity);
         ducks.Add(newDuck); 
+    }
+
+    // PIG
+    private void spawnPig()
+    {
+        StartCoroutine(WaitPig());
+    }
+
+    IEnumerator WaitPig()
+    {   
+        yield return new WaitForSeconds(pigSpawnTime);
+        GameObject newPig = Instantiate(pig, pigNest.transform.position, Quaternion.identity);
+        pigs.Add(newPig); 
     }
 
     // WOLF

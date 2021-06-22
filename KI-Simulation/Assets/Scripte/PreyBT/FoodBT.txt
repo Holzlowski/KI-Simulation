@@ -1,5 +1,23 @@
 tree("Root")
-	sequence	
+	repeat
+		mute
+			fallback
+				tree "eating"
+				tree "wander"
+				
+
+tree("wander")
+	sequence		
 		wander
-		searchFood
 		moveToDestination
+	
+tree("eating")
+	while isHungry
+		sequence
+			wander
+			searchFood
+			moveToDestination
+			while hungerCheck()
+				sequence
+					eat(10)
+					Wait 2.0
