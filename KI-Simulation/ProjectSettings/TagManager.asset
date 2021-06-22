@@ -12,6 +12,7 @@ TagManager:
   - Plant
   - Duck
   - Sheep
+  - Pig
   layers:
   - Default
   - TransparentFX

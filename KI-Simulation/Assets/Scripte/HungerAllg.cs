@@ -12,6 +12,7 @@ public class HungerAllg : MonoBehaviour
     public static Action OnDestroyFox;
     public static Action OnDestroySheep;
     public static Action OnDestroyDuck;
+    public static Action OnDestroyPig;
 
     public Slider hungerSlider;
     public float hunger;
@@ -117,6 +118,10 @@ public class HungerAllg : MonoBehaviour
             case "Duck(Clone)":
                 OnDestroyDuck?.Invoke();
                 WorldManager.ducks.Remove(gameObject);
+                break;
+            case "Pig(Clone)":
+                OnDestroyPig?.Invoke();
+                WorldManager.pigs.Remove(gameObject);
                 break;
             default:
                 Debug.Log("wrong name:" + name);
