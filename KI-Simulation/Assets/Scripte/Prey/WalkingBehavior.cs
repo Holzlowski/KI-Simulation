@@ -23,7 +23,6 @@ public class WalkingBehavior : StateMachineBehaviour
         tired = animator.GetComponent<Prey>().tired;
         target = animator.GetComponent<Prey>().target;
         nest = animator.GetComponent<Prey>().nest;
-        Debug.Log(target.transform.position);
         agent.SetDestination(target.transform.position);
     }
 
@@ -44,12 +43,11 @@ public class WalkingBehavior : StateMachineBehaviour
                 } else if (target != nest.transform && hungry) 
                 {
                     animator.SetBool("isEating", true);
-                    animator.GetComponent<Prey>().target = null;
                     animator.SetBool("hasTarget", false);
                 }
             }
         } else {
-            animator.GetComponent<Prey>().target = null;
+            //animator.GetComponent<Prey>().target = null;
             animator.SetBool("hasTarget", false);
         } 
     }
