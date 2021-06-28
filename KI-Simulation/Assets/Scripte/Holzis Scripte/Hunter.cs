@@ -7,25 +7,39 @@ public class Hunter : MonoBehaviour
 {
     Animator anim;
     NavMeshAgent agent;
+
+    [HideInInspector]
     public GameObject prey;
+    [HideInInspector]
     public GameObject nest;
+    List<GameObject> preys; 
 
     Vector3 direction;
 
+    [Header("Hunger Settings")]
+    public float maxHunger;
+    [Range(10f, 90f)]
+    public float whenIAmHungry = 50f;
     float hungerVal;
-    public float speed, rotSpeed;
+
+    [Header("Movement Settings")]
+    public float speed;
+    public float rotSpeed;
+    public float acceleration;
+    public float wanderDistance, wanderRadius, wanderJitter;
+
+    [Header("Vision Settings")]
+    public float visibleDistance = 20f;
+    public float visibleAngle = 60f;
+
+    [Header("Sleep Settings")]
     public float sleepStart;
     public float sleepEnd;
-    public float maxHunger;
+
+    [Header("Attack and Healing Settings")]
     public float attackDistance;
     public float damage;
     public float healWithBite;
-    [Range(10f,90f)]
-    public float whenIAmHungry = 50f;
-    List<GameObject> preys;
-
-    //public float wanderRadius, wanderDistance, wanderJitter;
-    
 
     private void OnEnable()
     {
@@ -48,15 +62,6 @@ public class Hunter : MonoBehaviour
         maxHunger = GetComponent<HungerAllg>().maxHunger;
         agent.stoppingDistance = attackDistance;
 
-        /*
-        preys = WorldManager.preys;
-        
-        preys = new List<GameObject>();
-        foreach (GameObject p in GameObject.FindGameObjectsWithTag("Prey")) 
-        {
-            preys.Add(p);
-        }
-        */
     }
 
 
@@ -65,8 +70,6 @@ public class Hunter : MonoBehaviour
     {
         getListsOfWorldManager();
 
-        hungerVal = GetComponent<HungerAllg>().hunger;
-        //anim.SetFloat("hunger", hungerVal);
         hungerCheck();
 
          if (preys.Count==0)
@@ -82,6 +85,7 @@ public class Hunter : MonoBehaviour
             {
                 direction = prey.transform.position - this.transform.position;
                 Debug.DrawRay(this.transform.position, direction, Color.green);
+                canSeePreyCheck();
             }
         }
     }
@@ -118,21 +122,20 @@ public class Hunter : MonoBehaviour
 
     void makeDamage()
     {
-       //damage = this.damage;
        prey.GetComponent<HungerAllg>().getdamage(damage);
     }
 
     void hungerCheck()
     {
+        hungerVal = GetComponent<HungerAllg>().hunger;
+
         if (hungerVal < maxHunger * (whenIAmHungry / 100))
         {
             anim.SetBool("isHungry", true);
-            //Debug.Log("Hungrig");
         }
         else
         {
             anim.SetBool("isHungry", false);
-            //Debug.Log("Nicht Hungrig");
         }
     }
     private void TimeCheck()
@@ -165,5 +168,33 @@ public class Hunter : MonoBehaviour
                 break;
         }
     }
+
+    void canSeePreyCheck()
+    {
+        if(prey != null)
+        {
+           float angle = Vector3.Angle(direction, transform.position);
+            if(direction.magnitude < visibleDistance && angle < visibleAngle)
+            {
+                anim.SetBool("canSeePrey", true);
+            }
+            else
+            {
+                anim.SetBool("canSeePrey", false);
+            }
+        }
+
+    }
+
 }
-       
+
+
+/*
+        preys = WorldManager.preys;
+        
+        preys = new List<GameObject>();
+        foreach (GameObject p in GameObject.FindGameObjectsWithTag("Prey")) 
+        {
+            preys.Add(p);
+        }
+        */
