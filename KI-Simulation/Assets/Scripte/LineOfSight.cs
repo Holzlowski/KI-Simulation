@@ -11,7 +11,7 @@ public class LineOfSight : MonoBehaviour
     float visibleDistance = 20f;
     float visibleAngle = 90f;
 
-    string state = "IDLE";
+    //string state = "IDLE";
 
     // Start is called before the first frame update
     void Start()

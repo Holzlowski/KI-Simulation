@@ -833,7 +833,7 @@ MonoBehaviour:
   wanderRadius: 20
   wanderJitter: 2
   visibleDistance: 20
-  visibleAngle: 60
+  visibleAngle: 30
   sleepStart: 1
   sleepEnd: 2
   attackDistance: 4

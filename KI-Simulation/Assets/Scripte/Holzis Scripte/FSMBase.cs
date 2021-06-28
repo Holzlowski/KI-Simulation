@@ -10,10 +10,6 @@ public class FSMBase : StateMachineBehaviour
     public GameObject prey;
     public Vector3 wanderTarget = Vector3.zero;
 
-    //public float speed, rotSpeed; 
-    float acceleration;
-    float damage;
-
     [HideInInspector]
     public float wanderRadius, wanderDistance, wanderJitter;
 

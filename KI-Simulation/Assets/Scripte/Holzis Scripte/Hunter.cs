@@ -13,8 +13,9 @@ public class Hunter : MonoBehaviour
     [HideInInspector]
     public GameObject nest;
     List<GameObject> preys; 
-
-    Vector3 direction;
+    
+    [HideInInspector]
+    public Vector3 direction;
 
     [Header("Hunger Settings")]
     public float maxHunger;
@@ -24,6 +25,7 @@ public class Hunter : MonoBehaviour
 
     [Header("Movement Settings")]
     public float speed;
+    public float huntingSpeed;
     public float rotSpeed;
     public float acceleration;
     public float wanderDistance, wanderRadius, wanderJitter;
@@ -84,8 +86,9 @@ public class Hunter : MonoBehaviour
             if(prey != null)
             {
                 direction = prey.transform.position - this.transform.position;
-                Debug.DrawRay(this.transform.position, direction, Color.green);
                 canSeePreyCheck();
+                Debug.DrawRay(this.transform.position, direction, Color.green);
+                
             }
         }
     }
@@ -171,19 +174,17 @@ public class Hunter : MonoBehaviour
 
     void canSeePreyCheck()
     {
-        if(prey != null)
-        {
            float angle = Vector3.Angle(direction, transform.position);
             if(direction.magnitude < visibleDistance && angle < visibleAngle)
             {
-                anim.SetBool("canSeePrey", true);
+                GetComponent<Animator>().SetBool("canSeePrey", true);
+                Debug.Log("Ich seh dich");
             }
             else
             {
-                anim.SetBool("canSeePrey", false);
+                GetComponent<Animator>().SetBool("canSeePrey", false);
+                Debug.Log("Ich seh dich nicht");
             }
-        }
-
     }
 
 }
