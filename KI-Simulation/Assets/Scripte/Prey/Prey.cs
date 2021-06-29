@@ -24,6 +24,8 @@ public class Prey : MonoBehaviour
 
     private NavMeshAgent agent;
 
+    [HideInInspector]
+    public Vector3 chosenSpot = Vector3.zero;
     
     Animator anim;
     List<GameObject> hunters;
@@ -60,6 +62,7 @@ public class Prey : MonoBehaviour
     void Update()
     {
         getListsOfWorldManager();
+       
         
         //checking if Prey is hungry
         float hunger = GetComponent<HungerAllg>().hunger;
@@ -100,6 +103,10 @@ public class Prey : MonoBehaviour
                 anim.SetBool("isWander", false);
             }
         }
+        if (theHunter != null)
+        {
+            closestHidingSpot();
+        }
     }
 
     private void TimeCheck()
@@ -134,4 +141,23 @@ public class Prey : MonoBehaviour
                 break;
         }
     }
+
+    public Vector3 closestHidingSpot()
+    {
+        float distance = Mathf.Infinity;
+
+        for(int i = 0; i < WorldManager.hidingSpots.Length; i++)
+        {
+            Vector3 hideDirection = WorldManager.hidingSpots[i].transform.position - theHunter.transform.position;
+            Vector3 hidePosition = WorldManager.hidingSpots[i].transform.position + hideDirection.normalized * 5;
+
+            if(Vector3.Distance(this.transform.position, hidePosition) < distance)
+            {
+                chosenSpot = hidePosition;
+                distance = Vector3.Distance(this.transform.position, hidePosition);
+            }
+        }
+       return chosenSpot;
+    }
+
 }

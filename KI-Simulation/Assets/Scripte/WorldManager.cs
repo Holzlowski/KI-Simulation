@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WorldManager : MonoBehaviour
 {
+    public static GameObject[] hidingSpots;
+
     // SHEEPS - PREY (wolf)
     public GameObject sheep;
     public GameObject sheepNest;
@@ -45,8 +47,6 @@ public class WorldManager : MonoBehaviour
     public float spawnTimePlant;
     public static List<GameObject> plants {get; private set;}
 
-    public List<string> tags;
-
     private void OnEnable()
     {
         HungerAllg.OnDestroyWolf += spawnWolf;
@@ -74,6 +74,9 @@ public class WorldManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //HIDINGSPOTS
+        hidingSpots = GameObject.FindGameObjectsWithTag("hide");
+
         //HUNTERS
         wolfs = new List<GameObject>();
         spawnAnimalsAtStart(wolf, wolfNest, wolfNumber, wolfs);

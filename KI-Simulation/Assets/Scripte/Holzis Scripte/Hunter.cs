@@ -89,11 +89,7 @@ public class Hunter : MonoBehaviour
             {
                 Debug.DrawRay(this.transform.position, direction, Color.green);
             }
-        }
-        if(gameObject.name == "Wolf(Clone)")
-        {
-            Debug.Log(agent.speed, gameObject);
-        }     
+        }  
     }
 
     void closestPrey()

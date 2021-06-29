@@ -837,7 +837,7 @@ MonoBehaviour:
   wanderJitter: 2
   visibleDistance: 20
   visibleAngle: 90
-  smellDistance: 10
+  smellDistance: 20
   sleepStart: 1
   sleepEnd: 2
   attackDistance: 2
