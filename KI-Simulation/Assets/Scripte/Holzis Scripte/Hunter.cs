@@ -71,38 +71,38 @@ public class Hunter : MonoBehaviour
     void Update()
     {
         getListsOfWorldManager();
-
         hungerCheck();
+        closestPrey();
 
-         if (preys.Count==0)
+        direction = prey.transform.position - this.transform.position;
+        canSeePreyCheck();
+        Debug.DrawRay(this.transform.position, direction, Color.green);
+
+        if (prey != null)
+        {
+           
+        }
+        
+        else if (preys.Count==0)
         {
             anim.SetFloat("distance", 100);
         }
 
-        if (preys.Count > 0)
-        {
-            closestPrey();
-            
-            if(prey != null)
-            {
-                direction = prey.transform.position - this.transform.position;
-                canSeePreyCheck();
-                Debug.DrawRay(this.transform.position, direction, Color.green);
-                
-            }
-        }
+        
     }
 
     void closestPrey()
     {
-        float distance = Mathf.Infinity;
+        if(preys.Count > 0)
+        {
+            float distance = Mathf.Infinity;
 
             for (int i = 0; i < preys.Count; i++)
             {
-            GameObject p = preys[i];
+                GameObject p = preys[i];
 
                 if (p == null)
-                {            
+                {
                     preys.Remove(p);
                 }
                 else if (Vector3.Distance(transform.position, p.transform.position) < distance)
@@ -113,14 +113,15 @@ public class Hunter : MonoBehaviour
             }
             anim.SetFloat("distance", distance);
 
-        if(distance <= attackDistance)
-        {
-            anim.SetBool("attackDistance", true);
-        }
-        else
-        {
-            anim.SetBool("attackDistance", false);
-        }
+            if (distance <= attackDistance)
+            {
+                anim.SetBool("attackDistance", true);
+            }
+            else
+            {
+                anim.SetBool("attackDistance", false);
+            }
+        }       
     }
 
     void makeDamage()
@@ -178,7 +179,7 @@ public class Hunter : MonoBehaviour
             if(direction.magnitude < visibleDistance && angle < visibleAngle)
             {
                 GetComponent<Animator>().SetBool("canSeePrey", true);
-                Debug.Log("Ich seh dich");
+                Debug.Log("Ich seh dich", gameObject);
             }
             else
             {

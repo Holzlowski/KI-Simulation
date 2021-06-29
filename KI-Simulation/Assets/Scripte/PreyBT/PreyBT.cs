@@ -42,12 +42,12 @@ public class PreyBT : MonoBehaviour
         hunger = GetComponent<HungerAllg>().hunger;
         if(!isHungryBool && hunger < maxHunger * isHungryFloat){
             isHungryBool = true;
-            Debug.Log("hungrig");
+            //Debug.Log("hungrig");
         }
         if(isHungryBool && hunger > maxHunger * notHungryAnymore)
         {
             isHungryBool = false;
-            Debug.Log("nicht mehr hungrig");
+            //Debug.Log("nicht mehr hungrig");
         }
     }
 

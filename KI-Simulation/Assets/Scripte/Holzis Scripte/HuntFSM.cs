@@ -5,18 +5,16 @@ using UnityEngine.AI;
 
 public class HuntFSM : FSMBase
 {
-    float originalSpeed;
+    float preySpeed;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
-        originalSpeed = agent.speed;
-
         if(animator.GetComponent<Hunter>().huntingSpeed <= 0)
         {
-            agent.speed += 5;
+            agent.speed = originalSpeed + 3;
         }
         else
         {
@@ -28,11 +26,15 @@ public class HuntFSM : FSMBase
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Vector3 preyDirection = animator.GetComponent<Hunter>().direction;
-        float preySpeed = prey.GetComponent<NavMeshAgent>().speed;
+        if(prey != null)
+        {
+            preySpeed = prey.GetComponent<NavMeshAgent>().speed;
+            float lookAhaead = preyDirection.magnitude / (agent.speed + preySpeed);
+            Vector3 location = prey.transform.position + prey.transform.forward * lookAhaead;
+            agent.SetDestination(location);
+        }  
 
-        float lookAhaead = preyDirection.magnitude / (agent.speed + preySpeed);
-        Vector3 location = prey.transform.position + prey.transform.forward * lookAhaead;
-        agent.SetDestination(location);
+       
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

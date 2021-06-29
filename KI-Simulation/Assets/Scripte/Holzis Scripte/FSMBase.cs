@@ -10,6 +10,8 @@ public class FSMBase : StateMachineBehaviour
     public GameObject prey;
     public Vector3 wanderTarget = Vector3.zero;
 
+    public float originalSpeed;
+
     [HideInInspector]
     public float wanderRadius, wanderDistance, wanderJitter;
 
@@ -20,6 +22,7 @@ public class FSMBase : StateMachineBehaviour
         prey = hunter.GetComponent<Hunter>().prey;
 
         agent.speed = hunter.GetComponent<Hunter>().speed;
+        originalSpeed = agent.speed;
         agent.angularSpeed = hunter.GetComponent<Hunter>().rotSpeed;
         agent.acceleration = hunter.GetComponent<Hunter>().acceleration;
      
