@@ -26,6 +26,8 @@ public class FleeBehaviorPrey : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        Vector3 hideSpot = animator.GetComponent<Prey>().chosenSpot;
+
         if (theHunter != null)
         {
             float distance = Vector3.Distance(agent.transform.position, theHunter.transform.position);
@@ -36,9 +38,15 @@ public class FleeBehaviorPrey : StateMachineBehaviour
             
                 Vector3 moveAway = agent.transform.position - theHunter.transform.position;
                 Vector3 newPos = agent.transform.position + moveAway;
-
                 NavMeshHit hit;
-                if (NavMesh.SamplePosition(newPos, out hit, 1f, NavMesh.AllAreas))
+                if (Vector3.Distance(hideSpot, animator.transform.position) < 20)
+                {
+                    agent.SetDestination(hideSpot);
+                    Debug.Log("Ich verstecke mich");
+                }
+
+              
+                else if (NavMesh.SamplePosition(newPos, out hit, 1f, NavMesh.AllAreas))
                 {
                     agent.SetDestination(hit.position);
                 }  
