@@ -26,6 +26,12 @@ public class Prey : MonoBehaviour
 
     [HideInInspector]
     public Vector3 chosenSpot = Vector3.zero;
+    [HideInInspector]
+    public Vector3 chosendirection = Vector3.zero;
+    [HideInInspector]
+    public GameObject chosenObject;
+    [HideInInspector]
+    public RaycastHit info;
     
     Animator anim;
     List<GameObject> hunters;
@@ -49,6 +55,8 @@ public class Prey : MonoBehaviour
     void Start()
     {
         getListsOfWorldManager();
+
+        chosenObject = WorldManager.hidingSpots[0];
 
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>(); 
@@ -103,7 +111,7 @@ public class Prey : MonoBehaviour
                 anim.SetBool("isWander", false);
             }
         }
-        if (theHunter != null)
+        else if (theHunter != null)
         {
             closestHidingSpot();
         }
@@ -142,7 +150,7 @@ public class Prey : MonoBehaviour
         }
     }
 
-    public Vector3 closestHidingSpot()
+    public void closestHidingSpot()
     {
         float distance = Mathf.Infinity;
 
@@ -154,10 +162,22 @@ public class Prey : MonoBehaviour
             if(Vector3.Distance(this.transform.position, hidePosition) < distance)
             {
                 chosenSpot = hidePosition;
+                chosendirection = hideDirection;
+                chosenObject = WorldManager.hidingSpots[i];
                 distance = Vector3.Distance(this.transform.position, hidePosition);
             }
         }
-       return chosenSpot;
+    }
+
+    public void hide()
+    {
+        Collider hideCol = chosenObject.GetComponent<Collider>();
+        Ray backRay = new Ray(chosenSpot, -chosenSpot.normalized);
+        RaycastHit info;
+        float aDistance = 100f;
+        hideCol.Raycast(backRay, out info, aDistance);
+
+        agent.SetDestination(info.point + chosendirection * 5);
     }
 
 }
