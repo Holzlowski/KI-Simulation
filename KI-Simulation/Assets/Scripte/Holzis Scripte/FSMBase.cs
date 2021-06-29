@@ -22,7 +22,7 @@ public class FSMBase : StateMachineBehaviour
         prey = hunter.GetComponent<Hunter>().prey;
 
         agent.speed = hunter.GetComponent<Hunter>().speed;
-        originalSpeed = agent.speed;
+        originalSpeed = hunter.GetComponent<Hunter>().orginalSpeed;
         agent.angularSpeed = hunter.GetComponent<Hunter>().rotSpeed;
         agent.acceleration = hunter.GetComponent<Hunter>().acceleration;
      

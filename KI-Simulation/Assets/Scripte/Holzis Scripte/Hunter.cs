@@ -17,6 +17,11 @@ public class Hunter : MonoBehaviour
     [HideInInspector]
     public Vector3 direction;
 
+    [HideInInspector]
+    public float orginalSpeed;
+
+    bool canSee, canSmell;
+
     [Header("Hunger Settings")]
     public float maxHunger;
     [Range(10f, 90f)]
@@ -30,9 +35,10 @@ public class Hunter : MonoBehaviour
     public float acceleration;
     public float wanderDistance, wanderRadius, wanderJitter;
 
-    [Header("Vision Settings")]
+    [Header("Perception Settings")]
     public float visibleDistance = 20f;
     public float visibleAngle = 60f;
+    public float smellDistance = 20f;
 
     [Header("Sleep Settings")]
     public float sleepStart;
@@ -63,7 +69,8 @@ public class Hunter : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         maxHunger = GetComponent<HungerAllg>().maxHunger;
         agent.stoppingDistance = attackDistance;
-
+        agent.speed = this.speed;
+        orginalSpeed = agent.speed;
     }
 
 
@@ -73,22 +80,20 @@ public class Hunter : MonoBehaviour
         getListsOfWorldManager();
         hungerCheck();
         closestPrey();
-
-        direction = prey.transform.position - this.transform.position;
-        canSeePreyCheck();
-        Debug.DrawRay(this.transform.position, direction, Color.green);
-
-        if (prey != null)
+        if(prey != null)
         {
-           
-        }
-        
-        else if (preys.Count==0)
-        {
-            anim.SetFloat("distance", 100);
-        }
+            direction = prey.transform.position - this.transform.position;
+            canSeePreyCheck();
 
-        
+            if(canSee == true)
+            {
+                Debug.DrawRay(this.transform.position, direction, Color.green);
+            }
+        }
+        if(gameObject.name == "Wolf(Clone)")
+        {
+            Debug.Log(agent.speed, gameObject);
+        }     
     }
 
     void closestPrey()
@@ -112,6 +117,7 @@ public class Hunter : MonoBehaviour
                 }
             }
             anim.SetFloat("distance", distance);
+            canSmellPreyCheck(distance);
 
             if (distance <= attackDistance)
             {
@@ -175,17 +181,32 @@ public class Hunter : MonoBehaviour
 
     void canSeePreyCheck()
     {
-           float angle = Vector3.Angle(direction, transform.position);
-            if(direction.magnitude < visibleDistance && angle < visibleAngle)
+           float angle = Vector3.Angle(direction, transform.forward);
+            if(direction.magnitude < visibleDistance && angle < visibleAngle * 0.5f)
             {
                 GetComponent<Animator>().SetBool("canSeePrey", true);
-                Debug.Log("Ich seh dich", gameObject);
+                canSee = true;
+                Debug.Log(canSee);
             }
             else
             {
                 GetComponent<Animator>().SetBool("canSeePrey", false);
-                Debug.Log("Ich seh dich nicht");
+                canSee = false;
+                Debug.Log(canSee);
             }
+    }
+    void canSmellPreyCheck(float distance)
+    {
+        if(distance < smellDistance)
+        {
+            GetComponent<Animator>().SetBool("canSmellPrey", true);
+            canSmell = true;
+        }
+        else
+        {
+            GetComponent<Animator>().SetBool("canSmellPrey", false);
+            canSmell = false;
+        }
     }
 
 }
@@ -198,5 +219,11 @@ public class Hunter : MonoBehaviour
         foreach (GameObject p in GameObject.FindGameObjectsWithTag("Prey")) 
         {
             preys.Add(p);
+        }
+
+
+  else if (preys.Count==0)
+        {
+            anim.SetFloat("distance", 100);
         }
         */
