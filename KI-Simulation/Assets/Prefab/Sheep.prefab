@@ -1950,13 +1950,16 @@ MonoBehaviour:
   maxHunger: 100
   wanderRadius: 150
   wanderDistance: 110
-  wanderJitter: 90
+  wanderJitter: 10
   plants: []
   distanceView: 8
   hungry: 0
   tired: 0
   theHunter: {fileID: 0}
   nest: {fileID: 0}
+  chosenSpot: {x: 0, y: 0, z: 0}
+  chosendirection: {x: 0, y: 0, z: 0}
+  chosenObject: {fileID: 0}
 --- !u!95 &6753128961298134508
 Animator:
   serializedVersion: 3

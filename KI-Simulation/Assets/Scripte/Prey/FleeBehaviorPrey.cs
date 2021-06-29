@@ -41,7 +41,7 @@ public class FleeBehaviorPrey : StateMachineBehaviour
                 NavMeshHit hit;
                 if (Vector3.Distance(hideSpot, animator.transform.position) < 20)
                 {
-                    agent.SetDestination(hideSpot);
+                    animator.GetComponent<Prey>().hide();
                     Debug.Log("Ich verstecke mich");
                 }
 
