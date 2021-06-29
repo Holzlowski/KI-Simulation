@@ -824,15 +824,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prey: {fileID: 0}
   nest: {fileID: 0}
+  direction: {x: 0, y: 0, z: 0}
+  orginalSpeed: 0
+  maxHunger: 0
+  whenIAmHungry: 85.4
   speed: 5
-  rotSpeed: 100
+  huntingSpeed: 12
+  rotSpeed: 50
+  acceleration: 60
+  wanderDistance: 50
+  wanderRadius: 20
+  wanderJitter: 2
+  visibleDistance: 20
+  visibleAngle: 90
+  smellDistance: 10
   sleepStart: 1
   sleepEnd: 2
-  maxHunger: 0
-  attackDistance: 4
+  attackDistance: 2
   damage: 20
   healWithBite: 10
-  whenIAmHungry: 50
 --- !u!114 &6282561766165987778
 MonoBehaviour:
   m_ObjectHideFlags: 0

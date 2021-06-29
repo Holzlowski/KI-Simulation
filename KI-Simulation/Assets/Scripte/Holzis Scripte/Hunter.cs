@@ -7,25 +7,47 @@ public class Hunter : MonoBehaviour
 {
     Animator anim;
     NavMeshAgent agent;
+
+    [HideInInspector]
     public GameObject prey;
+    [HideInInspector]
     public GameObject nest;
+    List<GameObject> preys; 
+    
+    [HideInInspector]
+    public Vector3 direction;
 
-    Vector3 direction;
+    [HideInInspector]
+    public float orginalSpeed;
 
+    bool canSee, canSmell;
+
+    [Header("Hunger Settings")]
+    public float maxHunger;
+    [Range(10f, 90f)]
+    public float whenIAmHungry = 50f;
     float hungerVal;
-    public float speed, rotSpeed;
+
+    [Header("Movement Settings")]
+    public float speed;
+    public float huntingSpeed;
+    public float rotSpeed;
+    public float acceleration;
+    public float wanderDistance, wanderRadius, wanderJitter;
+
+    [Header("Perception Settings")]
+    public float visibleDistance = 20f;
+    public float visibleAngle = 60f;
+    public float smellDistance = 20f;
+
+    [Header("Sleep Settings")]
     public float sleepStart;
     public float sleepEnd;
-    public float maxHunger;
+
+    [Header("Attack and Healing Settings")]
     public float attackDistance;
     public float damage;
     public float healWithBite;
-    [Range(10f,90f)]
-    public float whenIAmHungry = 50f;
-    List<GameObject> preys;
-
-    //public float wanderRadius, wanderDistance, wanderJitter;
-    
 
     private void OnEnable()
     {
@@ -47,16 +69,8 @@ public class Hunter : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         maxHunger = GetComponent<HungerAllg>().maxHunger;
         agent.stoppingDistance = attackDistance;
-
-        /*
-        preys = WorldManager.preys;
-        
-        preys = new List<GameObject>();
-        foreach (GameObject p in GameObject.FindGameObjectsWithTag("Prey")) 
-        {
-            preys.Add(p);
-        }
-        */
+        agent.speed = this.speed;
+        orginalSpeed = agent.speed;
     }
 
 
@@ -64,38 +78,36 @@ public class Hunter : MonoBehaviour
     void Update()
     {
         getListsOfWorldManager();
-
-        hungerVal = GetComponent<HungerAllg>().hunger;
-        //anim.SetFloat("hunger", hungerVal);
         hungerCheck();
-
-         if (preys.Count==0)
+        closestPrey();
+        if(prey != null)
         {
-            anim.SetFloat("distance", 100);
-        }
+            direction = prey.transform.position - this.transform.position;
+            canSeePreyCheck();
 
-        if (preys.Count > 0)
-        {
-            closestPrey();
-            
-            if(prey != null)
+            if(canSee == true)
             {
-                direction = prey.transform.position - this.transform.position;
                 Debug.DrawRay(this.transform.position, direction, Color.green);
             }
         }
+        if(gameObject.name == "Wolf(Clone)")
+        {
+            Debug.Log(agent.speed, gameObject);
+        }     
     }
 
     void closestPrey()
     {
-        float distance = Mathf.Infinity;
+        if(preys.Count > 0)
+        {
+            float distance = Mathf.Infinity;
 
             for (int i = 0; i < preys.Count; i++)
             {
-            GameObject p = preys[i];
+                GameObject p = preys[i];
 
                 if (p == null)
-                {            
+                {
                     preys.Remove(p);
                 }
                 else if (Vector3.Distance(transform.position, p.transform.position) < distance)
@@ -105,34 +117,35 @@ public class Hunter : MonoBehaviour
                 }
             }
             anim.SetFloat("distance", distance);
+            canSmellPreyCheck(distance);
 
-        if(distance <= attackDistance)
-        {
-            anim.SetBool("attackDistance", true);
-        }
-        else
-        {
-            anim.SetBool("attackDistance", false);
-        }
+            if (distance <= attackDistance)
+            {
+                anim.SetBool("attackDistance", true);
+            }
+            else
+            {
+                anim.SetBool("attackDistance", false);
+            }
+        }       
     }
 
     void makeDamage()
     {
-       //damage = this.damage;
        prey.GetComponent<HungerAllg>().getdamage(damage);
     }
 
     void hungerCheck()
     {
+        hungerVal = GetComponent<HungerAllg>().hunger;
+
         if (hungerVal < maxHunger * (whenIAmHungry / 100))
         {
             anim.SetBool("isHungry", true);
-            //Debug.Log("Hungrig");
         }
         else
         {
             anim.SetBool("isHungry", false);
-            //Debug.Log("Nicht Hungrig");
         }
     }
     private void TimeCheck()
@@ -165,5 +178,52 @@ public class Hunter : MonoBehaviour
                 break;
         }
     }
+
+    void canSeePreyCheck()
+    {
+           float angle = Vector3.Angle(direction, transform.forward);
+            if(direction.magnitude < visibleDistance && angle < visibleAngle * 0.5f)
+            {
+                GetComponent<Animator>().SetBool("canSeePrey", true);
+                canSee = true;
+                Debug.Log(canSee);
+            }
+            else
+            {
+                GetComponent<Animator>().SetBool("canSeePrey", false);
+                canSee = false;
+                Debug.Log(canSee);
+            }
+    }
+    void canSmellPreyCheck(float distance)
+    {
+        if(distance < smellDistance)
+        {
+            GetComponent<Animator>().SetBool("canSmellPrey", true);
+            canSmell = true;
+        }
+        else
+        {
+            GetComponent<Animator>().SetBool("canSmellPrey", false);
+            canSmell = false;
+        }
+    }
+
 }
-       
+
+
+/*
+        preys = WorldManager.preys;
+        
+        preys = new List<GameObject>();
+        foreach (GameObject p in GameObject.FindGameObjectsWithTag("Prey")) 
+        {
+            preys.Add(p);
+        }
+
+
+  else if (preys.Count==0)
+        {
+            anim.SetFloat("distance", 100);
+        }
+        */

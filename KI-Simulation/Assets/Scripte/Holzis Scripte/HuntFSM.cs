@@ -1,37 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class ChaseFSM : FSMBase
+public class HuntFSM : FSMBase
 {
+    float preySpeed;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-        agent.speed = originalSpeed + 5;
+        if(animator.GetComponent<Hunter>().huntingSpeed <= 0)
+        {
+            agent.speed = originalSpeed + 7;
+        }
+        else
+        {
+            agent.speed = animator.GetComponent<Hunter>().huntingSpeed;
+        }  
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agent.SetDestination(prey.transform.position);
+        Vector3 preyDirection = animator.GetComponent<Hunter>().direction;
+        if(prey != null)
+        {
+            preySpeed = prey.GetComponent<NavMeshAgent>().speed;
+            float lookAhaead = preyDirection.magnitude / (agent.speed + preySpeed);
+            Vector3 location = prey.transform.position + prey.transform.forward * lookAhaead;
+            agent.SetDestination(location);
+        }  
+
+       
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-       
+        
     }
-
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
 }

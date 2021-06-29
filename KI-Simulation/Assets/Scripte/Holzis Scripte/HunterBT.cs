@@ -25,7 +25,7 @@ public class HunterBT : MonoBehaviour
     float distance;
 
     float hunger;
-    bool isHungry = false;
+    //bool isHungry = false;
 
 
     private void Start()

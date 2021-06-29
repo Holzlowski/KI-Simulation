@@ -4,22 +4,17 @@ using UnityEngine;
 
 public class WanderFSM : FSMBase
 {
-    public float wanderRadius = 5f, wanderDistance = 30f, wanderJitter = 1f;
+    //public float wanderRadius = 5f, wanderDistance = 30f, wanderJitter = 1f;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
+        agent.speed = originalSpeed;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        /*
-        wanderRadius = 5;
-        wanderDistance = 30;
-        wanderJitter = 1f;
-        */
-
         wanderTarget += new Vector3(Random.Range(-1.0f, 1.0f) * wanderJitter, 0, Random.Range(-1.0f, 1.0f) * wanderJitter);
         wanderTarget.Normalize();
         wanderTarget *= wanderRadius;

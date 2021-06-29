@@ -8,6 +8,7 @@ public class AttackFSM : FSMBase
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
+        agent.speed = 0;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -18,10 +19,6 @@ public class AttackFSM : FSMBase
         if (prey != null)
         {
             agent.SetDestination(prey.transform.position);
-        }
-        else
-        {
-            animator.SetBool("noTarget", true);
         }
     }
 
