@@ -16,6 +16,8 @@ public class Prey : MonoBehaviour
     public float wanderJitter;
     public List<GameObject> plants;
     public float distanceView;
+    public float distanceToHunter;
+    public float hidingDistance;
 
     public bool hungry;
     public bool tired;
@@ -70,7 +72,8 @@ public class Prey : MonoBehaviour
     void Update()
     {
         getListsOfWorldManager();
-       
+        anim.SetFloat("distanceToHunter", distanceToHunter);
+        hideCheck();
         
         //checking if Prey is hungry
         float hunger = GetComponent<HungerAllg>().hunger;
@@ -93,7 +96,7 @@ public class Prey : MonoBehaviour
                 if(hunter)
                 {
                     theHunter = hunter;
-                    float distanceToHunter = Vector3.Distance(agent.transform.position, hunter.transform.position);
+                    distanceToHunter = Vector3.Distance(agent.transform.position, hunter.transform.position);
                     if (distanceToHunter < distanceView)
                     {
                         anim.SetBool("hasTarget", false);
@@ -111,10 +114,6 @@ public class Prey : MonoBehaviour
                 anim.SetBool("isWander", false);
             }
         }
-        else if (theHunter != null)
-        {
-            closestHidingSpot();
-        }
     }
 
     private void TimeCheck()
@@ -126,6 +125,19 @@ public class Prey : MonoBehaviour
         if(TimeManager.Hour == sleepEnd)
         {
             tired = false;
+        }
+    }
+
+    void hideCheck()
+    {
+        if(distanceToHunter < hidingDistance && fleeing)
+        {
+            closestHidingSpot();
+            anim.SetBool("haveToHide", true);
+        }
+        else
+        {
+            anim.SetBool("haveToHide", true);
         }
     }
 
@@ -171,12 +183,15 @@ public class Prey : MonoBehaviour
 
     public void hide()
     {
+        //Kollider vom Baum, hinter der sich die Prey verstecken will
         Collider hideCol = chosenObject.GetComponent<Collider>();
         Ray backRay = new Ray(chosenSpot, -chosenSpot.normalized);
         RaycastHit info;
         float aDistance = 100f;
+        //Ein Ray vom Baumcollider der vom Hunter ausgesehen hinter dem Baum langführt
         hideCol.Raycast(backRay, out info, aDistance);
 
+        //Ort zum Verstecken befindet sich mit Abstand(*5) vom Collider 
         agent.SetDestination(info.point + chosendirection * 5);
     }
 

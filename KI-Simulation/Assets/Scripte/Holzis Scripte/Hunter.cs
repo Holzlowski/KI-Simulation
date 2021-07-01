@@ -12,7 +12,8 @@ public class Hunter : MonoBehaviour
     public GameObject prey;
     [HideInInspector]
     public GameObject nest;
-    List<GameObject> preys; 
+    List<GameObject> preys;
+    public LayerMask layer;
     
     [HideInInspector]
     public Vector3 direction;
@@ -180,9 +181,17 @@ public class Hunter : MonoBehaviour
            float angle = Vector3.Angle(direction, transform.forward);
             if(direction.magnitude < visibleDistance && angle < visibleAngle * 0.5f)
             {
-                GetComponent<Animator>().SetBool("canSeePrey", true);
-                canSee = true;
-                Debug.Log(canSee);
+                 RaycastHit hit;
+
+                     if(Physics.Raycast(transform.position, direction.normalized, out hit, visibleDistance, layer))
+                     {
+                         if(hit.collider.gameObject.name == prey.name)
+                         {
+                            GetComponent<Animator>().SetBool("canSeePrey", true);
+                            canSee = true;
+                            Debug.Log(canSee);
+                         }  
+                     }
             }
             else
             {

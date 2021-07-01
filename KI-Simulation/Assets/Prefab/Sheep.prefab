@@ -1886,6 +1886,7 @@ GameObject:
   - component: {fileID: 9177537931882285771}
   - component: {fileID: 6753128961298134508}
   - component: {fileID: 2598030513139547334}
+  - component: {fileID: 5389230294264917490}
   m_Layer: 0
   m_Name: Sheep
   m_TagString: Sheep
@@ -1953,6 +1954,8 @@ MonoBehaviour:
   wanderJitter: 10
   plants: []
   distanceView: 8
+  distanceToHunter: 0
+  hidingDistance: 20
   hungry: 0
   tired: 0
   theHunter: {fileID: 0}
@@ -1999,6 +2002,19 @@ MonoBehaviour:
   damage: 1
   maxHunger: 100
   whenIGetHealed: 60
+--- !u!65 &5389230294264917490
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9211072736646543285}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4726098390674759836
 PrefabInstance:
   m_ObjectHideFlags: 0
