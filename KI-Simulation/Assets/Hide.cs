@@ -15,7 +15,7 @@ public class Hide : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agent = animator.GetComponent<NavMeshAgent>();
-        theHunter = animator.GetComponent<Prey>().theHunter;
+        
 
         normalSpeed = agent.speed;
         agent.speed = fleeSpeed;
@@ -24,6 +24,7 @@ public class Hide : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        theHunter = animator.GetComponent<Prey>().theHunter;
         Vector3 hideSpot = animator.GetComponent<Prey>().chosenSpot;
         animator.GetComponent<Prey>().hide();
 

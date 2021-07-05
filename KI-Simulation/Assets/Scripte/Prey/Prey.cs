@@ -72,9 +72,8 @@ public class Prey : MonoBehaviour
     void Update()
     {
         getListsOfWorldManager();
-        anim.SetFloat("distanceToHunter", distanceToHunter);
-        hideCheck();
-        
+       
+
         //checking if Prey is hungry
         float hunger = GetComponent<HungerAllg>().hunger;
         if(hunger <= hungryValue)
@@ -98,14 +97,16 @@ public class Prey : MonoBehaviour
                     theHunter = hunter;
                     distanceToHunter = Vector3.Distance(agent.transform.position, hunter.transform.position);
                     if (distanceToHunter < distanceView)
-                    {
+                    { 
                         anim.SetBool("hasTarget", false);
                         target = null;
                         theHunter = hunter;
+                            
                         anim.SetBool("isFleeing", true);
                     }
                 }
             }
+
             bool sleeping = anim.GetBool("isSleeping");
             if(tired && !sleeping)
             {
@@ -130,7 +131,7 @@ public class Prey : MonoBehaviour
 
     void hideCheck()
     {
-        if(distanceToHunter < hidingDistance && fleeing)
+        if(distanceToHunter < hidingDistance)
         {
             closestHidingSpot();
             anim.SetBool("haveToHide", true);
