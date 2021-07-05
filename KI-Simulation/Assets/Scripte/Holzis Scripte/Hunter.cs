@@ -40,6 +40,9 @@ public class Hunter : MonoBehaviour
     public float visibleDistance = 20f;
     public float visibleAngle = 60f;
     public float smellDistance = 20f;
+    public float hearDistance = 40f;
+    [HideInInspector]
+    public Vector3 noisePosition;
 
     [Header("Sleep Settings")]
     public float sleepStart;
@@ -115,6 +118,7 @@ public class Hunter : MonoBehaviour
             }
             anim.SetFloat("distance", distance);
             canSmellPreyCheck(distance);
+            canHearCheck(distance);
 
             if (distance <= attackDistance)
             {
@@ -211,6 +215,21 @@ public class Hunter : MonoBehaviour
         {
             GetComponent<Animator>().SetBool("canSmellPrey", false);
             canSmell = false;
+        }
+    }
+
+    void canHearCheck( float distance)
+    {
+        if(distance < hearDistance)
+        {
+            if (prey.GetComponent<Prey>().sound.isPlaying)
+            {
+                anim.SetBool("canHearPrey", true);
+            }
+            else
+            {
+                anim.SetBool("canHearPrey", false);
+            }
         }
     }
 

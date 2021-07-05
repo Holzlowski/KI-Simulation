@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System;
+using Random = UnityEngine.Random;
 
 public class Prey : MonoBehaviour
 {
@@ -34,8 +35,11 @@ public class Prey : MonoBehaviour
     public GameObject chosenObject;
     [HideInInspector]
     public RaycastHit info;
-    
+    [HideInInspector]
+    public AudioSource sound;
+
     Animator anim;
+    
     List<GameObject> hunters;
     private bool fleeing;
 
@@ -61,7 +65,8 @@ public class Prey : MonoBehaviour
         chosenObject = WorldManager.hidingSpots[0];
 
         agent = GetComponent<NavMeshAgent>();
-        anim = GetComponent<Animator>(); 
+        anim = GetComponent<Animator>();
+        sound = GetComponent<AudioSource>();
 
         tired = false;
         hungry = false;
@@ -72,7 +77,12 @@ public class Prey : MonoBehaviour
     void Update()
     {
         getListsOfWorldManager();
+
        
+       if(!sound.isPlaying && sound != null)
+        {
+            playSoundAfterRandomDelay();
+        }
 
         //checking if Prey is hungry
         float hunger = GetComponent<HungerAllg>().hunger;
@@ -126,19 +136,6 @@ public class Prey : MonoBehaviour
         if(TimeManager.Hour == sleepEnd)
         {
             tired = false;
-        }
-    }
-
-    void hideCheck()
-    {
-        if(distanceToHunter < hidingDistance)
-        {
-            closestHidingSpot();
-            anim.SetBool("haveToHide", true);
-        }
-        else
-        {
-            anim.SetBool("haveToHide", true);
         }
     }
 
@@ -196,4 +193,21 @@ public class Prey : MonoBehaviour
         agent.SetDestination(info.point + chosendirection * 5);
     }
 
+    void hideCheck()
+    {
+        if (distanceToHunter < hidingDistance)
+        {
+            closestHidingSpot();
+            anim.SetBool("haveToHide", true);
+        }
+        else
+        {
+            anim.SetBool("haveToHide", true);
+        }
+    }
+
+    void playSoundAfterRandomDelay()
+    {
+        sound.PlayDelayed(Random.Range(5f, 20));
+    }
 }

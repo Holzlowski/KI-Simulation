@@ -838,9 +838,11 @@ MonoBehaviour:
   wanderDistance: 50
   wanderRadius: 20
   wanderJitter: 2
-  visibleDistance: 20
+  visibleDistance: 5
   visibleAngle: 90
-  smellDistance: 20
+  smellDistance: 0
+  hearDistance: 80
+  noisePosition: {x: 0, y: 0, z: 0}
   sleepStart: 1
   sleepEnd: 2
   attackDistance: 2
