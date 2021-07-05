@@ -824,20 +824,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prey: {fileID: 0}
   nest: {fileID: 0}
+  layer:
+    serializedVersion: 2
+    m_Bits: 2147483647
   direction: {x: 0, y: 0, z: 0}
   orginalSpeed: 0
   maxHunger: 0
   whenIAmHungry: 85.4
   speed: 5
-  huntingSpeed: 12
-  rotSpeed: 50
+  huntingSpeed: 7
+  rotSpeed: 200
   acceleration: 60
   wanderDistance: 50
   wanderRadius: 20
   wanderJitter: 2
-  visibleDistance: 20
+  visibleDistance: 5
   visibleAngle: 90
-  smellDistance: 20
+  smellDistance: 0
+  hearDistance: 80
+  noisePosition: {x: 0, y: 0, z: 0}
   sleepStart: 1
   sleepEnd: 2
   attackDistance: 2
