@@ -20,6 +20,11 @@ public class Prey : MonoBehaviour
     public float distanceToHunter;
     public float hidingDistance;
 
+    [HideInInspector]
+    public bool isMakingSound;
+    [HideInInspector]
+    public float timer;
+
     public bool hungry;
     public bool tired;
     public GameObject theHunter;
@@ -42,6 +47,7 @@ public class Prey : MonoBehaviour
     
     List<GameObject> hunters;
     private bool fleeing;
+    bool isCool;
 
     public static Action OnTargetChanged;
 
@@ -62,7 +68,9 @@ public class Prey : MonoBehaviour
     {
         getListsOfWorldManager();
 
+        StartCoroutine(waitSomeSeconds());
         chosenObject = WorldManager.hidingSpots[0];
+
 
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
@@ -78,11 +86,7 @@ public class Prey : MonoBehaviour
     {
         getListsOfWorldManager();
 
-       
-       if(!sound.isPlaying && sound != null)
-        {
-            playSoundAfterRandomDelay();
-        }
+        Debug.Log(isMakingSound);
 
         //checking if Prey is hungry
         float hunger = GetComponent<HungerAllg>().hunger;
@@ -94,7 +98,6 @@ public class Prey : MonoBehaviour
         {
             hungry = false;
         }
-
 
         //checking if prey has to flee
         fleeing = anim.GetBool("isFleeing");
@@ -125,6 +128,21 @@ public class Prey : MonoBehaviour
                 anim.SetBool("isWander", false);
             }
         }
+
+
+    }
+
+    IEnumerator waitSomeSeconds()
+    {
+        while (true)
+        {
+            isMakingSound = false;
+            yield return new WaitForSeconds(Random.Range(5, 20));
+            sound.Play();
+            isMakingSound = true;
+            yield return new WaitForSeconds(1.5f);
+            isMakingSound = false;
+        }         
     }
 
     private void TimeCheck()
