@@ -1957,6 +1957,7 @@ MonoBehaviour:
   distanceView: 8
   distanceToHunter: 0
   hidingDistance: 20
+  isMakingSound: 0
   hungry: 0
   tired: 0
   theHunter: {fileID: 0}
@@ -1964,6 +1965,7 @@ MonoBehaviour:
   chosenSpot: {x: 0, y: 0, z: 0}
   chosendirection: {x: 0, y: 0, z: 0}
   chosenObject: {fileID: 0}
+  sound: {fileID: 0}
 --- !u!95 &6753128961298134508
 Animator:
   serializedVersion: 3
@@ -2027,7 +2029,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 28c009997578d12469329bb665590602, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.092
   m_Pitch: 1
   Loop: 0
