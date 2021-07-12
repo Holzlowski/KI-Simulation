@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hear : FSMBase
+public class GoToNoise : FSMBase
 {
     Vector3 noisePosition;
 
@@ -11,8 +11,7 @@ public class Hear : FSMBase
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
         agent.speed = originalSpeed;
-        noisePosition = prey.transform.position;
-        animator.GetComponent<Hunter>().noisePosition = noisePosition;
+        noisePosition = animator.GetComponent<Hunter>().noisePosition;
         agent.stoppingDistance = 0.1f;
     }
 
@@ -20,6 +19,10 @@ public class Hear : FSMBase
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agent.SetDestination(noisePosition);
+        if (Vector3.Distance(animator.transform.position, noisePosition) < 1f) 
+        {
+
+        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
