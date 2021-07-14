@@ -17,10 +17,9 @@ public class WanderPrey : StateMachineBehaviour
     Vector3 wanderTarget;
 
     bool hungry;
+    public bool cooldownBool;
+    public float cooldown;
     private GameObject target;
-
-    bool isDirSafe = false;
-    float vRotation = 0;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -68,37 +67,8 @@ public class WanderPrey : StateMachineBehaviour
         wanderTarget *= wanderRadius;
 
         Vector3 targetLocal = wanderTarget + new Vector3(0, 0, wanderDistance);
-        Vector3 newPos = agent.gameObject.transform.InverseTransformVector(targetLocal);
-        agent.SetDestination(newPos);
+        Vector3 targetWorld = agent.gameObject.transform.InverseTransformVector(targetLocal);
 
-        /*while (!isDirSafe)
-        {
-            //Rotate the direction of the Enemy to move
-            newPos = Quaternion.Euler(0, vRotation, 0) * newPos;
-
-            LayerMask mask = LayerMask.GetMask("Obstacle");
-            //Shoot a Raycast out to the new direction with 5f length (as example raycast length) and see if it hits an obstacle
-            bool isHit = Physics.Raycast(agent.transform.position, newPos, out RaycastHit hit, 3f, mask);
-
-            if (hit.transform == null)
-            {
-                //If the Raycast to the flee direction doesn't hit a wall then the Enemy is good to go to this direction
-                agent.SetDestination(newPos);
-                isDirSafe = true;
-            }
-
-            //Change the direction of fleeing is it hits a wall by 20 degrees
-            if (isHit && hit.transform.CompareTag("Obstacle"))
-            {
-                vRotation += 20;
-                isDirSafe = false;
-            }
-            else
-            {
-                //If the Raycast to the flee direction doesn't hit a wall then the Enemy is good to go to this direction
-                agent.SetDestination(newPos);
-                isDirSafe = true;
-            }
-        }*/
-    }  
+        agent.SetDestination(targetWorld);
+    }
 }

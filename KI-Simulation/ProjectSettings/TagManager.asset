@@ -13,7 +13,6 @@ TagManager:
   - Duck
   - Sheep
   - Pig
-  - Obstacle
   layers:
   - Default
   - TransparentFX

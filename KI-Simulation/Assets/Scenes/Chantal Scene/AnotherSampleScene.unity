@@ -2370,7 +2370,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
       propertyPath: pigNumber
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
       propertyPath: sheepNest
