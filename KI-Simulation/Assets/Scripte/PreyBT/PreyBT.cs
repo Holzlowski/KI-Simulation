@@ -16,8 +16,10 @@ public class PreyBT : MonoBehaviour
     Vector3 wanderTarget;
     
     List<GameObject> plants;
+    List<GameObject> hunters;
     NavMeshAgent agent;
     GameObject target;
+    GameObject theHunter;
 
     float hunger;
     bool isHungryBool;
@@ -27,11 +29,8 @@ public class PreyBT : MonoBehaviour
     void Start()
     {
         plants = new List<GameObject>();
+        hunters = new List<GameObject>();
         agent = gameObject.GetComponent<NavMeshAgent>();
-        foreach(GameObject plant in GameObject.FindGameObjectsWithTag("Plant"))
-        {
-            plants.Add(plant);
-        }
         maxHunger = GetComponent<HungerAllg>().maxHunger;
         //isHungryBool = false;
     }
@@ -39,6 +38,8 @@ public class PreyBT : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        plants = WorldManager.plants;
+        hunters = WorldManager.wolfs;
         hunger = GetComponent<HungerAllg>().hunger;
         if(!isHungryBool && hunger < maxHunger * isHungryFloat){
             isHungryBool = true;
@@ -126,6 +127,50 @@ public class PreyBT : MonoBehaviour
     public bool isHungry()
     {
         return isHungryBool;
+    }
+
+    [Task]
+    public bool inDanger()
+    {
+        foreach(GameObject hunter in hunters)
+        {
+            if(hunter != null)
+            {
+                if(Vector3.Distance(agent.transform.position, hunter.transform.position) <= distanceView)
+                {
+                    theHunter = hunter;
+                    return true;
+                }   
+            }
+            
+        }
+        return false;
+    }
+
+    [Task]
+    public void flee()
+    {
+        if (theHunter != null)
+        {
+            float distance = Vector3.Distance(agent.transform.position, theHunter.transform.position);
+            if (distance > distanceView*2)
+            {
+                Task.current.Succeed();
+            } else {
+            
+                Vector3 moveAway = agent.transform.position - theHunter.transform.position;
+                Vector3 newPos = agent.transform.position + moveAway;
+
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(newPos, out hit, 1f, NavMesh.AllAreas))
+                {
+                    agent.SetDestination(hit.position);
+                    Task.current.Succeed();
+                }  
+            }   
+        } else {
+            Task.current.Succeed();
+        }
     }
 
 }

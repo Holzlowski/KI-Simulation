@@ -436,7 +436,7 @@ MonoBehaviour:
   scripts:
   - {fileID: 4900000, guid: 2c83aafa100894a40ae217daae237268, type: 3}
   autoReset: 1
-  tickOn: 0
+  tickOn: 2
   sourceInfos:
   - isFoldout: 1
     breakPoints: 

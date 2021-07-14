@@ -45,11 +45,12 @@ public class FleeBehaviorPrey : StateMachineBehaviour
                     Debug.Log("Ich verstecke mich");
                 }
 
-              
                 else if (NavMesh.SamplePosition(newPos, out hit, 1f, NavMesh.AllAreas))
                 {
                     agent.SetDestination(hit.position);
-                }  
+                }  else {
+                    animator.GetComponent<Prey>().hide();
+                }
             }   
         } else {
             animator.SetBool("isFleeing", false);
@@ -61,5 +62,4 @@ public class FleeBehaviorPrey : StateMachineBehaviour
     {
        agent.speed = normalSpeed;
     }
-
 }

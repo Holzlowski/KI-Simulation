@@ -2,10 +2,10 @@ tree("Root")
 	repeat
 		mute
 			fallback
+				tree "flee"
 				tree "eating"
 				tree "wander"
 				
-
 tree("wander")
 	sequence		
 		wander
@@ -21,3 +21,9 @@ tree("eating")
 				sequence
 					eat(10)
 					Wait 2.0
+
+tree("flee")
+	while inDanger	
+		sequence
+			flee
+			moveToDestination
