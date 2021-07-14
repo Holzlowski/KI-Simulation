@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System;
+using Random = UnityEngine.Random;
 
 public class Prey : MonoBehaviour
 {
@@ -16,6 +17,13 @@ public class Prey : MonoBehaviour
     public float wanderJitter;
     public List<GameObject> plants;
     public float distanceView;
+    public float distanceToHunter;
+    public float hidingDistance;
+
+    [HideInInspector]
+    public bool isMakingSound;
+    [HideInInspector]
+    public float timer;
 
     public bool hungry;
     public bool tired;
@@ -32,10 +40,14 @@ public class Prey : MonoBehaviour
     public GameObject chosenObject;
     [HideInInspector]
     public RaycastHit info;
-    
+    [HideInInspector]
+    public AudioSource sound;
+
     Animator anim;
+    
     List<GameObject> hunters;
     private bool fleeing;
+    bool isCool;
 
     public static Action OnTargetChanged;
 
@@ -56,10 +68,13 @@ public class Prey : MonoBehaviour
     {
         getListsOfWorldManager();
 
+        StartCoroutine(waitSomeSeconds());
         chosenObject = WorldManager.hidingSpots[0];
 
+
         agent = GetComponent<NavMeshAgent>();
-        anim = GetComponent<Animator>(); 
+        anim = GetComponent<Animator>();
+        sound = GetComponent<AudioSource>();
 
         tired = false;
         hungry = false;
@@ -70,8 +85,9 @@ public class Prey : MonoBehaviour
     void Update()
     {
         getListsOfWorldManager();
-       
-        
+
+        Debug.Log(isMakingSound);
+
         //checking if Prey is hungry
         float hunger = GetComponent<HungerAllg>().hunger;
         if(hunger <= hungryValue)
@@ -83,7 +99,6 @@ public class Prey : MonoBehaviour
             hungry = false;
         }
 
-
         //checking if prey has to flee
         fleeing = anim.GetBool("isFleeing");
         if(!fleeing) 
@@ -93,16 +108,18 @@ public class Prey : MonoBehaviour
                 if(hunter)
                 {
                     theHunter = hunter;
-                    float distanceToHunter = Vector3.Distance(agent.transform.position, hunter.transform.position);
+                    distanceToHunter = Vector3.Distance(agent.transform.position, hunter.transform.position);
                     if (distanceToHunter < distanceView)
-                    {
+                    { 
                         anim.SetBool("hasTarget", false);
                         target = null;
                         theHunter = hunter;
+                            
                         anim.SetBool("isFleeing", true);
                     }
                 }
             }
+
             bool sleeping = anim.GetBool("isSleeping");
             if(tired && !sleeping)
             {
@@ -111,10 +128,21 @@ public class Prey : MonoBehaviour
                 anim.SetBool("isWander", false);
             }
         }
-        else if (theHunter != null)
+
+
+    }
+
+    IEnumerator waitSomeSeconds()
+    {
+        while (true)
         {
-            closestHidingSpot();
-        }
+            isMakingSound = false;
+            yield return new WaitForSeconds(Random.Range(5, 20));
+            sound.Play();
+            isMakingSound = true;
+            yield return new WaitForSeconds(1.5f);
+            isMakingSound = false;
+        }         
     }
 
     private void TimeCheck()
@@ -171,13 +199,33 @@ public class Prey : MonoBehaviour
 
     public void hide()
     {
+        //Kollider vom Baum, hinter der sich die Prey verstecken will
         Collider hideCol = chosenObject.GetComponent<Collider>();
         Ray backRay = new Ray(chosenSpot, -chosenSpot.normalized);
         RaycastHit info;
         float aDistance = 100f;
+        //Ein Ray vom Baumcollider der vom Hunter ausgesehen hinter dem Baum langführt
         hideCol.Raycast(backRay, out info, aDistance);
 
+        //Ort zum Verstecken befindet sich mit Abstand(*5) vom Collider 
         agent.SetDestination(info.point + chosendirection * 5);
     }
 
+    void hideCheck()
+    {
+        if (distanceToHunter < hidingDistance)
+        {
+            closestHidingSpot();
+            anim.SetBool("haveToHide", true);
+        }
+        else
+        {
+            anim.SetBool("haveToHide", true);
+        }
+    }
+
+    void playSoundAfterRandomDelay()
+    {
+        sound.PlayDelayed(Random.Range(5f, 20));
+    }
 }

@@ -12,15 +12,18 @@ public class Hunter : MonoBehaviour
     public GameObject prey;
     [HideInInspector]
     public GameObject nest;
-    List<GameObject> preys; 
+    List<GameObject> preys;
+    public LayerMask layer;
     
     [HideInInspector]
     public Vector3 direction;
+    [HideInInspector]
+    public float distanceToPrey;
 
     [HideInInspector]
     public float orginalSpeed;
 
-    bool canSee, canSmell;
+    bool canSee, canSmell, canHear, canSense;
 
     [Header("Hunger Settings")]
     public float maxHunger;
@@ -39,6 +42,9 @@ public class Hunter : MonoBehaviour
     public float visibleDistance = 20f;
     public float visibleAngle = 60f;
     public float smellDistance = 20f;
+    public float hearDistance = 40f;
+    [HideInInspector]
+    public Vector3 noisePosition;
 
     [Header("Sleep Settings")]
     public float sleepStart;
@@ -84,8 +90,11 @@ public class Hunter : MonoBehaviour
         {
             direction = prey.transform.position - this.transform.position;
             canSeePreyCheck();
+            canSmellPreyCheck(distanceToPrey);
+            canHearCheck(distanceToPrey);
+            canSensePrey();
 
-            if(canSee == true)
+            if (canSee == true)
             {
                 Debug.DrawRay(this.transform.position, direction, Color.green);
             }
@@ -96,7 +105,7 @@ public class Hunter : MonoBehaviour
     {
         if(preys.Count > 0)
         {
-            float distance = Mathf.Infinity;
+            float distanceToPrey = Mathf.Infinity;
 
             for (int i = 0; i < preys.Count; i++)
             {
@@ -106,16 +115,14 @@ public class Hunter : MonoBehaviour
                 {
                     preys.Remove(p);
                 }
-                else if (Vector3.Distance(transform.position, p.transform.position) < distance)
+                else if (Vector3.Distance(transform.position, p.transform.position) < distanceToPrey)
                 {
                     prey = p;
-                    distance = Vector3.Distance(transform.position, p.transform.position);
+                    distanceToPrey = Vector3.Distance(transform.position, p.transform.position);
                 }
             }
-            anim.SetFloat("distance", distance);
-            canSmellPreyCheck(distance);
-
-            if (distance <= attackDistance)
+           
+            if (distanceToPrey <= attackDistance)
             {
                 anim.SetBool("attackDistance", true);
             }
@@ -180,15 +187,21 @@ public class Hunter : MonoBehaviour
            float angle = Vector3.Angle(direction, transform.forward);
             if(direction.magnitude < visibleDistance && angle < visibleAngle * 0.5f)
             {
-                GetComponent<Animator>().SetBool("canSeePrey", true);
-                canSee = true;
-                Debug.Log(canSee);
+                 RaycastHit hit;
+
+                     if(Physics.Raycast(transform.position, direction.normalized, out hit, visibleDistance, layer))
+                     {
+                         if(hit.collider.gameObject.name == prey.name)
+                         {
+                            GetComponent<Animator>().SetBool("canSeePrey", true);
+                            canSee = true;
+                         }  
+                     }
             }
             else
             {
                 GetComponent<Animator>().SetBool("canSeePrey", false);
                 canSee = false;
-                Debug.Log(canSee);
             }
     }
     void canSmellPreyCheck(float distance)
@@ -205,6 +218,31 @@ public class Hunter : MonoBehaviour
         }
     }
 
+    void canHearCheck( float distance)
+    {
+        if(distance < hearDistance && prey.GetComponent<Prey>().isMakingSound == true)
+        {  
+            anim.SetBool("canHearPrey", true); 
+        }
+        else
+        {
+            anim.SetBool("canHearPrey", false);
+        }
+    }
+
+    void canSensePrey()
+    {
+        if(canSee || canSmell)
+        {
+            anim.SetBool("canSensePrey", true);
+            canSense = true;
+        }
+        else
+        {
+            anim.SetBool("canSensePrey", false);
+            canSense = false;
+        }
+    }
 }
 
 
