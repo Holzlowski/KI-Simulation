@@ -10,6 +10,19 @@ public class WanderFSM : FSMBase
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
         agent.speed = originalSpeed;
+
+        if(animator.GetBool("lookingAround") == true)
+        {
+            wanderJitter = 4f;
+            wanderDistance = 0F;
+            wanderRadius = 4f;
+        }
+        else
+        {
+            wanderRadius = hunter.GetComponent<Hunter>().wanderRadius;
+            wanderDistance = hunter.GetComponent<Hunter>().wanderDistance;
+            wanderJitter = hunter.GetComponent<Hunter>().wanderJitter;
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
