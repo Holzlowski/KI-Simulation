@@ -68,7 +68,7 @@ public class Prey : MonoBehaviour
     {
         getListsOfWorldManager();
 
-        StartCoroutine(waitSomeSeconds());
+        StartCoroutine(animalCall());
         chosenObject = WorldManager.hidingSpots[0];
 
 
@@ -132,7 +132,7 @@ public class Prey : MonoBehaviour
 
     }
 
-    IEnumerator waitSomeSeconds()
+    IEnumerator animalCall()
     {
         while (true)
         {

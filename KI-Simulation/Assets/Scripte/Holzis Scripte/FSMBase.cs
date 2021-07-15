@@ -5,11 +5,15 @@ using UnityEngine.AI;
 
 public class FSMBase : StateMachineBehaviour
 {
+    [HideInInspector]
     public GameObject hunter;
+    [HideInInspector]
     public NavMeshAgent agent;
+    [HideInInspector]
     public GameObject prey;
+    [HideInInspector]
     public Vector3 wanderTarget = Vector3.zero;
-
+    [HideInInspector]
     public float originalSpeed;
 
     [HideInInspector]
@@ -26,9 +30,6 @@ public class FSMBase : StateMachineBehaviour
         agent.angularSpeed = hunter.GetComponent<Hunter>().rotSpeed;
         agent.acceleration = hunter.GetComponent<Hunter>().acceleration;
      
-        this.wanderRadius = hunter.GetComponent<Hunter>().wanderRadius;
-        this.wanderDistance = hunter.GetComponent<Hunter>().wanderDistance;
-        this.wanderJitter = hunter.GetComponent<Hunter>().wanderJitter;
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

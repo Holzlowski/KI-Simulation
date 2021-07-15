@@ -8,7 +8,7 @@ public class ChaseFSM : FSMBase
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-        agent.speed = originalSpeed/2;
+        agent.speed = originalSpeed*0.75f;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

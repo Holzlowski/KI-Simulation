@@ -829,21 +829,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2147483647
   direction: {x: 0, y: 0, z: 0}
-  distanceToPrey: 0
   orginalSpeed: 0
+  randomPoint: {x: 0, y: 0, z: 0}
+  searchingPosition: {x: 0, y: 0, z: 0}
+  searchingRadius: 6
   maxHunger: 0
   whenIAmHungry: 85.4
   speed: 5
   huntingSpeed: 7
   rotSpeed: 200
   acceleration: 60
-  wanderDistance: 50
+  wanderDistance: 40
   wanderRadius: 20
   wanderJitter: 2
-  visibleDistance: 5
+  visibleDistance: 10
   visibleAngle: 90
-  smellDistance: 0
-  hearDistance: 80
+  smellDistance: 20
+  hearDistance: 40
   noisePosition: {x: 0, y: 0, z: 0}
   sleepStart: 1
   sleepEnd: 2
@@ -1348,7 +1350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 504ff20cdc6678344805cdc957832931, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.40000004
+      value: -0.74
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 504ff20cdc6678344805cdc957832931, type: 3}
       propertyPath: m_LocalRotation.w

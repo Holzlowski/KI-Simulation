@@ -17,11 +17,18 @@ public class Hunter : MonoBehaviour
     
     [HideInInspector]
     public Vector3 direction;
-    [HideInInspector]
-    public float distanceToPrey;
+    //[HideInInspector]
+    //public float distanceToPrey;
 
     [HideInInspector]
     public float orginalSpeed;
+    [HideInInspector]
+    public Vector3 randomPoint;
+    [HideInInspector]
+    public Vector3 searchingPosition;
+
+    
+    public float searchingRadius;
 
     bool canSee, canSmell, canHear, canSense;
 
@@ -79,19 +86,21 @@ public class Hunter : MonoBehaviour
         orginalSpeed = agent.speed;
     }
 
-
+    
     // Update is called once per frame
     void Update()
     {
         getListsOfWorldManager();
         hungerCheck();
         closestPrey();
+
         if(prey != null)
         {
+            float distance = Vector3.Distance(prey.transform.position, transform.position);
             direction = prey.transform.position - this.transform.position;
             canSeePreyCheck();
-            canSmellPreyCheck(distanceToPrey);
-            canHearCheck(distanceToPrey);
+            canSmellPreyCheck(distance);
+            canHearCheck(distance);
             canSensePrey();
 
             if (canSee == true)
@@ -119,23 +128,45 @@ public class Hunter : MonoBehaviour
                 {
                     prey = p;
                     distanceToPrey = Vector3.Distance(transform.position, p.transform.position);
+                    anim.SetFloat("distance", distanceToPrey);
+
+                    if (distanceToPrey <= attackDistance)
+                    {
+                        anim.SetBool("attackDistance", true);
+                    }
+                    else
+                    {
+                        anim.SetBool("attackDistance", false);
+                    }
                 }
             }
            
-            if (distanceToPrey <= attackDistance)
-            {
-                anim.SetBool("attackDistance", true);
-            }
-            else
-            {
-                anim.SetBool("attackDistance", false);
-            }
+           
         }       
     }
 
     void makeDamage()
     {
-       prey.GetComponent<HungerAllg>().getdamage(damage);
+        if(prey != null)
+        {
+            prey.GetComponent<HungerAllg>().getdamage(damage);
+        }   
+    }
+
+    void searchRandomPoint(Vector3 searchingPosition)
+    {
+        Vector3 randomPoint = Random.insideUnitSphere * searchingRadius + searchingPosition;
+        randomPoint.y = 0;
+        this.randomPoint = randomPoint;
+    }
+
+    IEnumerator lookingAround()
+    {
+        while (true)
+        {
+            searchRandomPoint(noisePosition);
+            yield return new WaitForSeconds(Random.Range(0.3f, 2f));
+        }
     }
 
     void hungerCheck()
@@ -244,20 +275,3 @@ public class Hunter : MonoBehaviour
         }
     }
 }
-
-
-/*
-        preys = WorldManager.preys;
-        
-        preys = new List<GameObject>();
-        foreach (GameObject p in GameObject.FindGameObjectsWithTag("Prey")) 
-        {
-            preys.Add(p);
-        }
-
-
-  else if (preys.Count==0)
-        {
-            anim.SetFloat("distance", 100);
-        }
-        */
