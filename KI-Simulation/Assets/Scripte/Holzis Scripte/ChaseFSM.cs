@@ -14,7 +14,10 @@ public class ChaseFSM : FSMBase
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agent.SetDestination(prey.transform.position);
+        if(prey != null)
+        {
+            agent.SetDestination(prey.transform.position);
+        } 
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

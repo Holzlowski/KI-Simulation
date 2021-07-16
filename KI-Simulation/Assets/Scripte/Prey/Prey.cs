@@ -86,8 +86,6 @@ public class Prey : MonoBehaviour
     {
         getListsOfWorldManager();
 
-        Debug.Log(isMakingSound);
-
         //checking if Prey is hungry
         float hunger = GetComponent<HungerAllg>().hunger;
         if(hunger <= hungryValue)
@@ -140,7 +138,7 @@ public class Prey : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(5, 20));
             sound.Play();
             isMakingSound = true;
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(sound.clip.length);
             isMakingSound = false;
         }         
     }
@@ -222,10 +220,5 @@ public class Prey : MonoBehaviour
         {
             anim.SetBool("haveToHide", true);
         }
-    }
-
-    void playSoundAfterRandomDelay()
-    {
-        sound.PlayDelayed(Random.Range(5f, 20));
     }
 }
