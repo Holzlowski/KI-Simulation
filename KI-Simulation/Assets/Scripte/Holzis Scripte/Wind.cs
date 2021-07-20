@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Wind : MonoBehaviour
 {
-    public Vector3 windDirection;
+    public static Vector3 windDirection;
     AudioSource sound;
 
     // Start is called before the first frame update

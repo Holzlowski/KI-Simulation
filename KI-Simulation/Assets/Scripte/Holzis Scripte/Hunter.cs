@@ -100,7 +100,7 @@ public class Hunter : MonoBehaviour
             float distance = Vector3.Distance(prey.transform.position, transform.position);
             direction = prey.transform.position - this.transform.position;
             canSeePreyCheck();
-            canSmellPreyCheck();
+            canSmellPreyCheck(distance);
             canHearCheck(distance);
             canSensePrey();
 
@@ -169,6 +169,12 @@ public class Hunter : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(0.3f, 2f));
         }
     }
+    IEnumerator stopLookingAround()
+    {
+        yield return new WaitForSeconds(Random.Range(3f, 10f));
+        anim.SetBool("stopLookingAround", true);
+        Debug.Log("Fertsch mit Gucke");
+    }
 
     void hungerCheck()
     {
@@ -204,6 +210,10 @@ public class Hunter : MonoBehaviour
                 preys = WorldManager.sheeps;
                 nest = GameObject.Find("WolfNest");
                 break;
+            case "Wolf Smell(Clone)":
+                preys = WorldManager.sheeps;
+                nest = GameObject.Find("WolfNest");
+                break;
             case "Fox(Clone)":
                 preys = WorldManager.ducks;
                 nest = GameObject.Find("FoxNest");
@@ -236,12 +246,13 @@ public class Hunter : MonoBehaviour
                 canSee = false;
             }
     }
-    void canSmellPreyCheck()
+    void canSmellPreyCheck(float distance)
     {
-        float smellDistance = Vector3.Distance(prey.transform.position + wind.windDirection, transform.position);
-        Debug.DrawLine(transform.position, prey.transform.position + wind.windDirection - transform.position, Color.yellow);
-
-        if(smellDistance < smellRange)
+        
+        //float smellDistance = Vector3.Distance(prey.transform.position + Wind.windDirection, transform.position);
+        //Debug.DrawLine(transform.position, prey.transform.position + Wind.windDirection - transform.position, Color.yellow);
+        
+        if(distance < smellRange || prey.GetComponent<Prey>().checkIfHunterCanSmellMe(transform.position) == true)
         {
             GetComponent<Animator>().SetBool("canSmellPrey", true);
             canSmell = true;

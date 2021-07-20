@@ -10,13 +10,12 @@ public class lookingAround : FSMBase
         base.OnStateEnter(animator, stateInfo, layerIndex);
         animator.GetComponent<Hunter>().searchingPosition = animator.transform.position;
         animator.GetComponent<Hunter>().StartCoroutine("lookingAround");
-
+        animator.GetComponent<Hunter>().StartCoroutine("stopLookingAround");
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
         agent.SetDestination(animator.GetComponent<Hunter>().randomPoint);
     }
 
@@ -24,6 +23,7 @@ public class lookingAround : FSMBase
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.GetComponent<Hunter>().StopCoroutine("lookingAround");
+        animator.GetComponent<Hunter>().StopCoroutine("stopLookingAround");
+        animator.SetBool("stopLookingAround", false);
     }
-
 }
