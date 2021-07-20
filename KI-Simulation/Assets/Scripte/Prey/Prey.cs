@@ -84,9 +84,9 @@ public class Prey : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        getListsOfWorldManager();
 
-        Debug.Log(isMakingSound);
+        Debug.DrawLine(transform.position, transform.position + Wind.windDirection, Color.yellow);
+        getListsOfWorldManager();
 
         //checking if Prey is hungry
         float hunger = GetComponent<HungerAllg>().hunger;
@@ -128,8 +128,6 @@ public class Prey : MonoBehaviour
                 anim.SetBool("isWander", false);
             }
         }
-
-
     }
 
     IEnumerator animalCall()
@@ -140,7 +138,7 @@ public class Prey : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(5, 20));
             sound.Play();
             isMakingSound = true;
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(sound.clip.length);
             isMakingSound = false;
         }         
     }
@@ -175,6 +173,23 @@ public class Prey : MonoBehaviour
             default:
                 Debug.Log("wrong name:" + name);
                 break;
+        }
+    }
+
+    public bool checkIfHunterCanSmellMe(Vector3 hunterPosition)
+    {
+        Vector3 direction = hunterPosition - transform.position;
+        float angle = Vector3.Angle(Wind.windDirection, direction);
+
+        if(direction.magnitude < Wind.windDirection.magnitude && angle < 40 * 0.5f)
+        {
+            //Debug.Log("Kann gerochen werden");
+            return true;
+        }
+        else
+        {
+            //Debug.Log("Ich rieche nichts");
+            return false;
         }
     }
 
@@ -222,10 +237,5 @@ public class Prey : MonoBehaviour
         {
             anim.SetBool("haveToHide", true);
         }
-    }
-
-    void playSoundAfterRandomDelay()
-    {
-        sound.PlayDelayed(Random.Range(5f, 20));
     }
 }

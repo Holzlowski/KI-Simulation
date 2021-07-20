@@ -2475,7 +2475,7 @@ PrefabInstance:
     - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
       propertyPath: wolf
       value: 
-      objectReference: {fileID: 6282561766165987780, guid: ee2d84e824ac58c4b9df9a7c9ed08de5, type: 3}
+      objectReference: {fileID: 6282561766165987780, guid: fedf79e13a0497341bd499deb82bcc55, type: 3}
     - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
       propertyPath: plant
       value: 
@@ -2526,7 +2526,7 @@ PrefabInstance:
       objectReference: {fileID: 868567807}
     - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
       propertyPath: wolfNumber
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
       propertyPath: plantNumber
@@ -2534,7 +2534,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
       propertyPath: sheepNumber
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
       propertyPath: foxSpawnTime
