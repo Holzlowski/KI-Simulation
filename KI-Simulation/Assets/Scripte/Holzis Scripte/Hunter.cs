@@ -14,6 +14,7 @@ public class Hunter : MonoBehaviour
     [HideInInspector]
     public GameObject nest;
     List<GameObject> preys;
+    [HideInInspector]
     public LayerMask layer;
     
     [HideInInspector]
@@ -29,7 +30,7 @@ public class Hunter : MonoBehaviour
     public Vector3 searchingPosition;
 
     
-    public float searchingRadius;
+  
 
     bool canSee, canSmell, canHear, canSense;
 
@@ -45,6 +46,7 @@ public class Hunter : MonoBehaviour
     public float rotSpeed;
     public float acceleration;
     public float wanderDistance, wanderRadius, wanderJitter;
+    public float searchingRadius;
 
     [Header("Perception Settings")]
     public float visibleRange = 20f;
