@@ -183,7 +183,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: de7670fabbdc69d409d6ace0cb9f08df, type: 2}
+  m_Motion: {fileID: 7400000, guid: dbe1299ebb0cfca4b8efc792b67b1187, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1348,7 +1348,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hunter
+  m_Name: Fox
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: distance
@@ -1920,7 +1920,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: b85286dc73cffbd488637f207853c1b0, type: 2}
+  m_Motion: {fileID: 7400000, guid: ed5ea4fa94116544180072a217cad3e7, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -2058,7 +2058,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 691ec73aa44121d4cbdd96b08862be3d, type: 2}
+  m_Motion: {fileID: 7400000, guid: 052c84de8e4ff7b428294a1648ed3795, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

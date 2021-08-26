@@ -833,16 +833,16 @@ MonoBehaviour:
   orginalSpeed: 0
   randomPoint: {x: 0, y: 0, z: 0}
   searchingPosition: {x: 0, y: 0, z: 0}
-  searchingRadius: 6
   maxHunger: 0
   whenIAmHungry: 85.4
   speed: 5
   huntingSpeed: 7
   rotSpeed: 200
   acceleration: 60
-  wanderDistance: 40
-  wanderRadius: 20
+  wanderDistance: 30
+  wanderRadius: 10
   wanderJitter: 2
+  searchingRadius: 6
   visibleRange: 20
   visibleAngle: 90
   smellRange: 20
