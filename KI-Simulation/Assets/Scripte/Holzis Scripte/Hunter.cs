@@ -122,13 +122,9 @@ public class Hunter : MonoBehaviour
             for (int i = 0; i < preys.Count; i++)
             {
                 GameObject p = preys[i];
-
-                if (p == null)
-                {
-                    preys.Remove(p);
-                }
-                else if (Vector3.Distance(transform.position, p.transform.position) < distanceToPrey)
-                {
+ 
+                 if (Vector3.Distance(transform.position, p.transform.position) < distanceToPrey)
+                 {
                     prey = p;
                     distanceToPrey = Vector3.Distance(transform.position, p.transform.position);
                     anim.SetFloat("distance", distanceToPrey);
@@ -142,9 +138,7 @@ public class Hunter : MonoBehaviour
                         anim.SetBool("attackDistance", false);
                     }
                 }
-            }
-           
-           
+            }  
         }       
     }
 
@@ -158,6 +152,7 @@ public class Hunter : MonoBehaviour
 
     void searchRandomPoint(Vector3 searchingPosition)
     {
+        searchingPosition = this.searchingPosition;
         Vector3 randomPoint = Random.insideUnitSphere * searchingRadius + searchingPosition;
         randomPoint.y = 0;
         this.randomPoint = randomPoint;
@@ -167,7 +162,7 @@ public class Hunter : MonoBehaviour
     {
         while (true)
         {
-            searchRandomPoint(noisePosition);
+            searchRandomPoint(searchingPosition);
             yield return new WaitForSeconds(Random.Range(0.3f, 2f));
         }
     }
@@ -175,7 +170,6 @@ public class Hunter : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(3f, 10f));
         anim.SetBool("stopLookingAround", true);
-        Debug.Log("Fertsch mit Gucke");
     }
 
     void hungerCheck()
@@ -250,10 +244,6 @@ public class Hunter : MonoBehaviour
     }
     void canSmellPreyCheck(float distance)
     {
-        
-        //float smellDistance = Vector3.Distance(prey.transform.position + Wind.windDirection, transform.position);
-        //Debug.DrawLine(transform.position, prey.transform.position + Wind.windDirection - transform.position, Color.yellow);
-        
         if(distance < smellRange || prey.GetComponent<Prey>().checkIfHunterCanSmellMe(transform.position) == true)
         {
             GetComponent<Animator>().SetBool("canSmellPrey", true);

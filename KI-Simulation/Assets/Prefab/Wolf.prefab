@@ -843,7 +843,7 @@ MonoBehaviour:
   wanderRadius: 10
   wanderJitter: 2
   searchingRadius: 6
-  visibleRange: 20
+  visibleRange: 25
   visibleAngle: 90
   smellRange: 20
   hearRange: 40

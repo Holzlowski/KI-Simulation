@@ -4,17 +4,11 @@ using UnityEngine;
 
 public class WanderFSM : FSMBase
 {
-    bool runTimer = false;
-    float time = 0f;
-
-
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
         agent.speed = originalSpeed;
-
-        runTimer = true;
         
         //get input from inspector
         wanderRadius = hunter.GetComponent<Hunter>().wanderRadius;
