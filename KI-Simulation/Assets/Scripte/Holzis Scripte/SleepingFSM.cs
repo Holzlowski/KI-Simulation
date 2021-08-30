@@ -8,6 +8,8 @@ public class SleepingFSM : FSMBase
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
+        animator.SetBool("sleeping", true);
+        animator.SetBool("isTired", false);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -19,6 +21,6 @@ public class SleepingFSM : FSMBase
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
+        hunter.GetComponent<HungerAllg>().life += 40;
     }
 }

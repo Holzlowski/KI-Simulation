@@ -31,9 +31,7 @@ public class HuntFSM : FSMBase
             float lookAhaead = preyDirection.magnitude / (agent.speed + preySpeed);
             Vector3 location = prey.transform.position + prey.transform.forward * lookAhaead;
             agent.SetDestination(location);
-        }  
-
-       
+        }   
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

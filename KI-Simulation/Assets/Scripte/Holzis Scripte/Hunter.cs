@@ -7,9 +7,8 @@ public class Hunter : MonoBehaviour
 {
     Animator anim;
     NavMeshAgent agent;
-    Wind wind;
 
-    [HideInInspector]
+    //[HideInInspector]
     public GameObject prey;
     [HideInInspector]
     public GameObject nest;
@@ -19,8 +18,6 @@ public class Hunter : MonoBehaviour
     
     [HideInInspector]
     public Vector3 direction;
-    //[HideInInspector]
-    //public float distanceToPrey;
 
     [HideInInspector]
     public float orginalSpeed;
@@ -29,8 +26,6 @@ public class Hunter : MonoBehaviour
     [HideInInspector]
     public Vector3 searchingPosition;
 
-    
-  
 
     bool canSee, canSmell, canHear, canSense;
 
@@ -80,7 +75,6 @@ public class Hunter : MonoBehaviour
     void Start()
     {
         getListsOfWorldManager();
-        wind = FindObjectOfType<Wind>();
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         maxHunger = GetComponent<HungerAllg>().maxHunger;
@@ -108,7 +102,7 @@ public class Hunter : MonoBehaviour
 
             if (canSee == true)
             {
-                Debug.DrawRay(this.transform.position, direction, Color.green);
+                Debug.DrawRay(this.transform.position, direction, Color.red);
             }
         }  
     }
@@ -122,13 +116,9 @@ public class Hunter : MonoBehaviour
             for (int i = 0; i < preys.Count; i++)
             {
                 GameObject p = preys[i];
-
-                if (p == null)
-                {
-                    preys.Remove(p);
-                }
-                else if (Vector3.Distance(transform.position, p.transform.position) < distanceToPrey)
-                {
+ 
+                 if (Vector3.Distance(transform.position, p.transform.position) < distanceToPrey)
+                 {
                     prey = p;
                     distanceToPrey = Vector3.Distance(transform.position, p.transform.position);
                     anim.SetFloat("distance", distanceToPrey);
@@ -142,9 +132,7 @@ public class Hunter : MonoBehaviour
                         anim.SetBool("attackDistance", false);
                     }
                 }
-            }
-           
-           
+            }  
         }       
     }
 
@@ -158,6 +146,7 @@ public class Hunter : MonoBehaviour
 
     void searchRandomPoint(Vector3 searchingPosition)
     {
+        searchingPosition = this.searchingPosition;
         Vector3 randomPoint = Random.insideUnitSphere * searchingRadius + searchingPosition;
         randomPoint.y = 0;
         this.randomPoint = randomPoint;
@@ -167,7 +156,7 @@ public class Hunter : MonoBehaviour
     {
         while (true)
         {
-            searchRandomPoint(noisePosition);
+            searchRandomPoint(searchingPosition);
             yield return new WaitForSeconds(Random.Range(0.3f, 2f));
         }
     }
@@ -175,7 +164,6 @@ public class Hunter : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(3f, 10f));
         anim.SetBool("stopLookingAround", true);
-        Debug.Log("Fertsch mit Gucke");
     }
 
     void hungerCheck()
@@ -196,10 +184,11 @@ public class Hunter : MonoBehaviour
         if (TimeManager.Hour == sleepStart)
         {
             anim.SetBool("isTired", true);
+
         }
         if(TimeManager.Hour == sleepEnd)
         {
-            anim.SetBool("isTired", false);
+            anim.SetBool("sleeping", false);
         }
     }
 
@@ -209,10 +198,6 @@ public class Hunter : MonoBehaviour
         switch (name)
         {
             case "Wolf(Clone)":
-                preys = WorldManager.sheeps;
-                nest = GameObject.Find("WolfNest");
-                break;
-            case "Wolf Smell(Clone)":
                 preys = WorldManager.sheeps;
                 nest = GameObject.Find("WolfNest");
                 break;
@@ -226,17 +211,22 @@ public class Hunter : MonoBehaviour
         }
     }
 
+    // checks if the nearest prey can be seen
     void canSeePreyCheck()
     {
+        //angle between forward vector of this object and the direction to the nearest prey
            float angle = Vector3.Angle(direction, transform.forward);
+        // check if prey is inside vision of view
             if(direction.magnitude < visibleRange && angle < visibleAngle * 0.5f)
             {
                  RaycastHit hit;
-
+                       // raycast from hunter to nearest prey
                      if(Physics.Raycast(transform.position, direction.normalized, out hit, visibleRange, layer))
-                     {
+                     {  
+                        // check if ray hits prey
                          if(hit.collider.gameObject.name == prey.name)
                          {
+                            // if yes prey can be seen
                             GetComponent<Animator>().SetBool("canSeePrey", true);
                             canSee = true;
                          }  
@@ -244,17 +234,15 @@ public class Hunter : MonoBehaviour
             }
             else
             {
+                // prey can`t be seen
                 GetComponent<Animator>().SetBool("canSeePrey", false);
                 canSee = false;
             }
     }
+
     void canSmellPreyCheck(float distance)
     {
-        
-        //float smellDistance = Vector3.Distance(prey.transform.position + Wind.windDirection, transform.position);
-        //Debug.DrawLine(transform.position, prey.transform.position + Wind.windDirection - transform.position, Color.yellow);
-        
-        if(distance < smellRange || prey.GetComponent<Prey>().checkIfHunterCanSmellMe(transform.position) == true)
+        if(distance < smellRange || prey.GetComponent<Prey>().HunterCanSmellMe(transform.position) == true)
         {
             GetComponent<Animator>().SetBool("canSmellPrey", true);
             canSmell = true;
