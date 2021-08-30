@@ -43,12 +43,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2711476396f5a56498eb2d074eeb5117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prey: {fileID: 8157717994008527108, guid: 1328fb6626d910f4db58da8b50d9731f, type: 3}
-  preyNest: {fileID: 0}
-  preyNumber: 5
-  spawnTimePrey: 10
-  hunter: {fileID: 7029348029610069079, guid: f3ddbda3d2b3d854086cdee5dbf1f71d, type: 3}
-  hunterNest: {fileID: 0}
-  hunterNumber: 1
-  spawnTimeHunter: 10
-  tags: []
+  sheep: {fileID: 0}
+  sheepNest: {fileID: 0}
+  sheepNumber: 0
+  sheepSpawnTime: 0
+  wolf: {fileID: 0}
+  wolfNest: {fileID: 0}
+  wolfNumber: 0
+  wolfSpawnTime: 0
+  duck: {fileID: 0}
+  duckNest: {fileID: 0}
+  duckNumber: 0
+  duckSpawnTime: 0
+  fox: {fileID: 0}
+  foxNest: {fileID: 0}
+  foxNumber: 0
+  foxSpawnTime: 0
+  pig: {fileID: 0}
+  pigNest: {fileID: 0}
+  pigNumber: 0
+  pigSpawnTime: 0
+  plant: {fileID: 0}
+  plantNumber: 0
+  spawnTimePlant: 0

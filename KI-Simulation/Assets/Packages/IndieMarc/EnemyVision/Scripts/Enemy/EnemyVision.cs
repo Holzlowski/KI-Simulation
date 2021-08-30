@@ -77,6 +77,8 @@ namespace IndieMarc.EnemyVision
                 vision.vision_near_range = vision_near_range;
             }
 
+            vision_range = Wind.windDirection1.magnitude;
+
             if (enemy != null)
                 enemy.ChangeState(EnemyState.Patrol);
             seen_character = null;
@@ -84,6 +86,7 @@ namespace IndieMarc.EnemyVision
 
         void Update()
         {
+            vision_range = Wind.windDirection1.magnitude;
             //In case using vision without enemy behavior
             if (enemy == null)
                 DetectVisionTargetOnly();

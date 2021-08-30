@@ -22,7 +22,7 @@ public class HungerAllg : MonoBehaviour
     public float minusHunger;
     float healWithBite;
 
-    public float damage;
+    public float starvingDamage;
 
     private float maxLife = 100f;
     [HideInInspector]
@@ -59,12 +59,16 @@ public class HungerAllg : MonoBehaviour
         {
             hunger = maxHunger;
         }
-
         if(hunger == 0f) //hunger empty does deamage
         {
-         life -= damage * Time.deltaTime;
+         life -= starvingDamage * Time.deltaTime;
 
-        } else if(hunger > maxHunger*(whenIGetHealed/100) && life < maxLife) // full Hunger heals missing life
+        }
+        if (life > maxLife)
+        {
+            life = maxLife;
+        }
+        else if(hunger > maxHunger*(whenIGetHealed/100) && life < maxLife) // full Hunger heals missing life
         {
             life += 1f * Time.deltaTime;
         }

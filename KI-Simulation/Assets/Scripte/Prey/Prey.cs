@@ -79,13 +79,13 @@ public class Prey : MonoBehaviour
         tired = false;
         hungry = false;
         maxHunger = GetComponent<HungerAllg>().maxHunger;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        Debug.DrawLine(transform.position, transform.position + Wind.windDirection1, Color.yellow);
+        //Debug.DrawLine(transform.position, transform.position + Wind.windDirection1, Color.yellow);
         getListsOfWorldManager();
 
         //checking if Prey is hungry
@@ -128,6 +128,8 @@ public class Prey : MonoBehaviour
                 anim.SetBool("isWander", false);
             }
         }
+
+       
     }
 
     IEnumerator animalCall()
@@ -176,19 +178,18 @@ public class Prey : MonoBehaviour
         }
     }
 
-    public bool checkIfHunterCanSmellMe(Vector3 hunterPosition)
+    public bool HunterCanSmellMe(Vector3 hunterPosition)
     {
         Vector3 direction = hunterPosition - transform.position;
         float angle = Vector3.Angle(Wind.windDirection1, direction);
 
         if(direction.magnitude < Wind.windDirection1.magnitude && angle < 40 * 0.5f)
         {
-            //Debug.Log("Kann gerochen werden");
+            Debug.Log("Ich rieche dich");
             return true;
         }
         else
         {
-            //Debug.Log("Ich rieche nichts");
             return false;
         }
     }
