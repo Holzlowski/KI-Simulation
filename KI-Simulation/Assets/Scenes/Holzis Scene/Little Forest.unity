@@ -4290,7 +4290,7 @@ PrefabInstance:
       objectReference: {fileID: 868567807}
     - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
       propertyPath: foxNumber
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
       propertyPath: pigNumber
@@ -4302,7 +4302,7 @@ PrefabInstance:
       objectReference: {fileID: 828870458}
     - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
       propertyPath: duckNumber
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
       propertyPath: hunterNest
@@ -4310,7 +4310,7 @@ PrefabInstance:
       objectReference: {fileID: 868567807}
     - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
       propertyPath: wolfNumber
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
       propertyPath: plantNumber
@@ -4318,7 +4318,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
       propertyPath: sheepNumber
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8406616638948493872, guid: dea390127671812468251e3c2797c29a, type: 3}
       propertyPath: foxSpawnTime

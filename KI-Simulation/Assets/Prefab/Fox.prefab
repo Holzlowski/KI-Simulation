@@ -847,8 +847,8 @@ MonoBehaviour:
   smellRange: 15
   hearRange: 40
   noisePosition: {x: 0, y: 0, z: 0}
-  sleepStart: 23
-  sleepEnd: 0
+  sleepStart: 2
+  sleepEnd: 4
   attackDistance: 3
   damage: 10
   healWithBite: 5
@@ -869,7 +869,7 @@ MonoBehaviour:
   lifeSlider: {fileID: 6282561766297981391}
   life: 0
   minusHunger: 2
-  damage: 2
+  starvingDamage: 0
   maxHunger: 100
   whenIGetHealed: 90
 --- !u!95 &6282561766165987779
