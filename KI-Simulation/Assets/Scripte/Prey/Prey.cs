@@ -68,7 +68,7 @@ public class Prey : MonoBehaviour
     {
         getListsOfWorldManager();
 
-        StartCoroutine(waitSomeSeconds());
+        StartCoroutine(animalCall());
         chosenObject = WorldManager.hidingSpots[0];
 
 
@@ -79,14 +79,14 @@ public class Prey : MonoBehaviour
         tired = false;
         hungry = false;
         maxHunger = GetComponent<HungerAllg>().maxHunger;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Debug.DrawLine(transform.position, transform.position + Wind.windDirection1, Color.yellow);
         getListsOfWorldManager();
-
-        Debug.Log(isMakingSound);
 
         //checking if Prey is hungry
         float hunger = GetComponent<HungerAllg>().hunger;
@@ -129,10 +129,10 @@ public class Prey : MonoBehaviour
             }
         }
 
-
+       
     }
 
-    IEnumerator waitSomeSeconds()
+    IEnumerator animalCall()
     {
         while (true)
         {
@@ -140,7 +140,7 @@ public class Prey : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(5, 20));
             sound.Play();
             isMakingSound = true;
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(sound.clip.length);
             isMakingSound = false;
         }         
     }
@@ -175,6 +175,22 @@ public class Prey : MonoBehaviour
             default:
                 Debug.Log("wrong name:" + name);
                 break;
+        }
+    }
+
+    public bool HunterCanSmellMe(Vector3 hunterPosition)
+    {
+        Vector3 direction = hunterPosition - transform.position;
+        float angle = Vector3.Angle(Wind.windDirection1, direction);
+
+        if(direction.magnitude < Wind.windDirection1.magnitude && angle < 40 * 0.5f)
+        {
+            Debug.Log("Ich rieche dich");
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -222,10 +238,5 @@ public class Prey : MonoBehaviour
         {
             anim.SetBool("haveToHide", true);
         }
-    }
-
-    void playSoundAfterRandomDelay()
-    {
-        sound.PlayDelayed(Random.Range(5f, 20));
     }
 }

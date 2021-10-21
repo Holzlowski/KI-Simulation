@@ -8,13 +8,16 @@ public class ChaseFSM : FSMBase
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-        agent.speed = originalSpeed/2;
+        agent.speed = originalSpeed*0.8f;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agent.SetDestination(prey.transform.position);
+        if(prey != null)
+        {
+            agent.SetDestination(prey.transform.position);
+        } 
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
@@ -22,16 +25,4 @@ public class ChaseFSM : FSMBase
     {
        
     }
-
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
 }
