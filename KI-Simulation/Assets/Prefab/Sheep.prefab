@@ -2003,7 +2003,7 @@ MonoBehaviour:
   lifeSlider: {fileID: 5251938751031770036}
   life: 100
   minusHunger: 1
-  damage: 1
+  starvingDamage: 0
   maxHunger: 100
   whenIGetHealed: 60
 --- !u!65 &5389230294264917490

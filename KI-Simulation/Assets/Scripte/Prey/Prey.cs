@@ -185,7 +185,6 @@ public class Prey : MonoBehaviour
 
         if(direction.magnitude < Wind.windDirection1.magnitude && angle < 40 * 0.5f)
         {
-            Debug.Log("Ich rieche dich");
             return true;
         }
         else
@@ -220,7 +219,7 @@ public class Prey : MonoBehaviour
         Ray backRay = new Ray(chosenSpot, -chosenSpot.normalized);
         RaycastHit info;
         float aDistance = 100f;
-        //Ein Ray vom Baumcollider der vom Hunter ausgesehen hinter dem Baum langführt
+        //Ein Ray vom Baumcollider der vom Hunter ausgesehen hinter dem Baum langfï¿½hrt
         hideCol.Raycast(backRay, out info, aDistance);
 
         //Ort zum Verstecken befindet sich mit Abstand(*5) vom Collider 

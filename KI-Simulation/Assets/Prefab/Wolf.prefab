@@ -843,10 +843,10 @@ MonoBehaviour:
   wanderRadius: 10
   wanderJitter: 2
   searchingRadius: 6
-  visibleRange: 20
+  visibleRange: 40
   visibleAngle: 90
   smellRange: 15
-  hearRange: 40
+  hearRange: 60
   noisePosition: {x: 0, y: 0, z: 0}
   sleepStart: 1
   sleepEnd: 2
