@@ -842,10 +842,10 @@ MonoBehaviour:
   wanderRadius: 20
   wanderJitter: 6
   searchingRadius: 3
-  visibleRange: 25
+  visibleRange: 15
   visibleAngle: 60
-  smellRange: 15
-  hearRange: 40
+  smellRange: 30
+  hearRange: 25
   noisePosition: {x: 0, y: 0, z: 0}
   sleepStart: 2
   sleepEnd: 4

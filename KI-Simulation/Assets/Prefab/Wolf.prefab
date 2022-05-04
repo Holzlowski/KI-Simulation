@@ -843,10 +843,10 @@ MonoBehaviour:
   wanderRadius: 10
   wanderJitter: 2
   searchingRadius: 6
-  visibleRange: 40
+  visibleRange: 20
   visibleAngle: 90
-  smellRange: 15
-  hearRange: 60
+  smellRange: 40
+  hearRange: 10
   noisePosition: {x: 0, y: 0, z: 0}
   sleepStart: 1
   sleepEnd: 2
@@ -904,8 +904,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f2d63352d3cc446b192c9fe08c735e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vision_angle: 20
-  vision_range: 25
+  vision_angle: 90
+  vision_range: 20
   vision_near_range: 1
   vision_height_above: 1
   vision_height_below: 10
